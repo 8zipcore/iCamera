@@ -1,0 +1,6 @@
+framework module Pods_iCamera_iCameraUITests {
+  umbrella header "Pods-iCamera-iCameraUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
