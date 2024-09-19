@@ -12,13 +12,12 @@ struct ListView: View {
     @State var title: String
     @State var imageWidth: CGFloat
     
-    var action: () -> Void
-    
     var body: some View {
         HStack{
             Text(title)
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(.black)
             
             Spacer()
             
@@ -35,12 +34,9 @@ struct ListView: View {
             */
         }
         .contentShape(Rectangle()) // Spacer도 터치 가능하게 해줌
-        .onTapGesture {
-            action()
-        }
     }
 }
 
 #Preview {
-    ListView(title: "Camera", imageWidth: 15, action: { print("Button Tapped !")})
+    ListView(title: "Camera", imageWidth: 15)
 }
