@@ -60,8 +60,6 @@ class AlbumManager: ObservableObject {
         let systemAlbums = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: fetchOptions)
         
         systemAlbums.enumerateObjects { collection, _, _ in
-            print(collection.assetCollectionSubtype.rawValue)
-            print(collection.localizedTitle)
             if let subtype = PHAssetCollectionSubtype(rawValue: collection.assetCollectionSubtype.rawValue) {
                 categorizedCollections[subtype] = collection
             }
@@ -153,8 +151,6 @@ class AlbumManager: ObservableObject {
                     if let image = image {
                         DispatchQueue.main.async {
                             self.images.append(image)
-                            print("⭐️ index: \(index)")
-                            
                             if index == (limit * self.page) - 1 || index == photosCount - 1{
                                 print("⭐️ Loading end")
                                 self.isLoading = false
@@ -167,6 +163,33 @@ class AlbumManager: ObservableObject {
             if index > limit * self.page{
                 stop.pointee = true // 열거 중단
                 return
+            }
+        }
+    }
+    
+    func fetchRecentlyPhoto() async throws {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+        fetchOptions.fetchLimit = 1
+
+        let fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+
+        let imageManager = PHImageManager.default()
+        
+        if let asset = fetchResult.firstObject{
+            let imageSize = CGSize(width: 200, height: 200)
+
+            let requestOptions = PHImageRequestOptions()
+            requestOptions.isSynchronous = false
+            requestOptions.deliveryMode = .fastFormat
+
+            imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: requestOptions) { image, _ in
+                if let image = image {
+                    DispatchQueue.main.async {
+                        self.images.append(image)
+                    }
+                }
             }
         }
     }

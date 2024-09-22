@@ -11,7 +11,11 @@ import SwiftUI
 struct iCameraApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            if #available(iOS 16.0, *) {
+                MainView()
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 }

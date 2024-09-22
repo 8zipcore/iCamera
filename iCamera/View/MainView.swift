@@ -16,12 +16,14 @@ struct CustomRoundedRectangle: Shape {
     }
 }
 
+@available(iOS 16.0, *)
 struct MainView: View {
+    
+    @State private var navigationPath = NavigationPath()
 
     var body: some View {
-        NavigationView {
-            GeometryReader { geometry in
-                
+        GeometryReader { geometry in
+            NavigationStack(path: $navigationPath) {
                 let viewWidth = geometry.size.width
                 let viewHeight = geometry.size.height
                 
@@ -53,12 +55,12 @@ struct MainView: View {
                             let listViewHeight = rectangleHeight * 0.87 / 4
                             let listViewImageWidth = listViewHeight * 0.4
                             
-                            NavigationLink(destination: CameraView()) {
+                            NavigationLink(value: "CameraView") {
                                 ListView(title: "Camera", imageWidth: listViewImageWidth)
                                 .frame(width: listViewWidth, height: listViewHeight)
                             }
                             
-                            NavigationLink(destination: GalleryView()) {
+                            NavigationLink(value: "GalleryView") {
                                 ListView(title: "Photos", imageWidth: listViewImageWidth)
                                 .frame(width: listViewWidth, height: listViewHeight)
                             }
@@ -78,6 +80,16 @@ struct MainView: View {
                                 .frame(width: rectangleWidth, height: rectangleHeight)
                                 .position(x: geometry.size.width / 2, y: rectangleHeight / 2 + topMargin)
                         )
+                        .navigationDestination(for: String.self) { value in
+                            switch value {
+                            case "CameraView":
+                                CameraView(navigationPath: $navigationPath)
+                            case "GalleryView":
+                                GalleryView(navigationPath: $navigationPath)
+                            default:
+                                EmptyView()
+                            }
+                        }
                     }
                     
                 }
@@ -86,8 +98,4 @@ struct MainView: View {
             .navigationBarHidden(true)
         }
     }
-}
-
-#Preview {
-    MainView()
 }

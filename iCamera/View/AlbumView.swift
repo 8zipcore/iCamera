@@ -7,7 +7,10 @@
 
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct AlbumView: View {
+    @Binding var navigationPath: NavigationPath
+    
     @State var albumManager: AlbumManager
     
     var action: (Album) -> Void

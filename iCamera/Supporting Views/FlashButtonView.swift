@@ -5,25 +5,26 @@
 //  Created by 홍승아 on 9/11/24.
 //
 
+import AVFoundation
 import SwiftUI
 
 struct FlashButtonView: View {
     
-    @State var title: String
     @State var imageWidth: CGFloat
+    @StateObject var cameraManger: CameraManager
     
     var body: some View {
-        
         let cornerRadius: CGFloat = 20
         
         HStack(spacing: 0){
             Image("flash")
                 .resizable()
                 .frame(width: imageWidth, height: imageWidth)
-                .padding(EdgeInsets(top: 7, leading: 7, bottom: 7, trailing: 5))
+                .padding(EdgeInsets(top: 7, leading: 7, bottom: 7, trailing: 2))
             
-            Text(title)
+            Text(flashTypeToString(cameraManger.currentFlashMode))
                 .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(Color.black)
                 .padding(.trailing, 7)
         }
         .background(
@@ -32,9 +33,23 @@ struct FlashButtonView: View {
                 .background(.white.opacity(0.5))
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         )
+        .onTapGesture {
+            let currentRawValue = cameraManger.currentFlashMode.rawValue
+            let newRawValue = currentRawValue > 1 ? 0 : currentRawValue + 1
+            cameraManger.currentFlashMode = AVCaptureDevice.FlashMode(rawValue: newRawValue) ?? .auto
+        }
     }
-}
-
-#Preview {
-    FlashButtonView(title: "Auto", imageWidth: 20)
+    
+    private func flashTypeToString(_ type: AVCaptureDevice.FlashMode) -> String {
+        switch type{
+        case .auto:
+            return "Auto"
+        case .on:
+            return "ON"
+        case .off:
+            return "OFF"
+        @unknown default:
+            return ""
+        }
+    }
 }

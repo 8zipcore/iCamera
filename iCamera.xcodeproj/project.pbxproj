@@ -19,6 +19,7 @@
 		36810C532C8F1E7E002C680A /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C522C8F1E7E002C680A /* TopBarView.swift */; };
 		36810C552C8F287A002C680A /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C542C8F287A002C680A /* ListView.swift */; };
 		36810C572C8F3199002C680A /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C562C8F3199002C680A /* TestView.swift */; };
+		3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697D1B22C9FEF990012ABDC /* NotificationName.swift */; };
 		369E7BF52C8DAB970044EAF1 /* iCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */; };
 		369E7BF72C8DAB970044EAF1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7BF62C8DAB970044EAF1 /* ContentView.swift */; };
 		369E7BF92C8DAB980044EAF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 369E7BF82C8DAB980044EAF1 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		36810C522C8F1E7E002C680A /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		36810C542C8F287A002C680A /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		36810C562C8F3199002C680A /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		3697D1B22C9FEF990012ABDC /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		369E7BF12C8DAB970044EAF1 /* iCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCameraApp.swift; sourceTree = "<group>"; };
 		369E7BF62C8DAB970044EAF1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			children = (
 				3605F5672C917DBF00665348 /* CameraManager.swift */,
 				36BCF7232C94AA8500FF2529 /* AlbumManager.swift */,
+				3697D1B22C9FEF990012ABDC /* NotificationName.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				369E7BF52C8DAB970044EAF1 /* iCameraApp.swift in Sources */,
 				3601C59D2C954E6800E71978 /* AlbumView.swift in Sources */,
 				36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */,
+				3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */,
 				36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */,
 				3605F5682C917DBF00665348 /* CameraManager.swift in Sources */,
 				3605F5662C917CDD00665348 /* CameraView.swift in Sources */,
@@ -532,7 +536,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -589,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

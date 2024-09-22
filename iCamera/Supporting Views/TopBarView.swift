@@ -37,6 +37,8 @@ struct TopBarView: View {
             
             HStack(spacing: 0){
                 let buttonPadding: CGFloat = 12
+                let buttonWidth: CGFloat = imageSize.height * 0.75
+                
                 if !isLeadingButtonHidden{
                     Button(action: {
                         print("⭐️ xButton Tapped!")
@@ -44,7 +46,7 @@ struct TopBarView: View {
                     }) {
                         Image("xmark_button")
                             .resizable()
-                            .frame(width: imageSize.height * 0.65, height: imageSize.height * 0.65)
+                            .frame(width: buttonWidth, height: buttonWidth)
                     }
                     .padding(.leading, buttonPadding)
                 }
@@ -56,7 +58,7 @@ struct TopBarView: View {
                     }) {
                         Image(trailingButtonImage)
                             .resizable()
-                            .frame(width: imageSize.height * 0.65, height: imageSize.height * 0.65)
+                            .frame(width: buttonWidth, height: buttonWidth)
                     }
                     .padding(.trailing, buttonPadding)
                 }

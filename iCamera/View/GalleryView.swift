@@ -8,14 +8,18 @@
 import SwiftUI
 import Photos
 
+@available(iOS 16.0, *)
 struct GalleryView: View {
+    
+    @Binding var navigationPath: NavigationPath
+    
     @StateObject private var albumManager = AlbumManager()
     @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
     
     @State private var isShowingAlbumView = false
     
     @Environment(\.dismiss) var dismiss
-
+    
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -33,8 +37,9 @@ struct GalleryView: View {
                     
                     let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
                     
-                    TopBarView(title: "Gallery",
+                    TopBarView(title: "Photos",
                                imageSize: topBarSize,
+                               isLeadingButtonHidden: navigationPath.count == 1,
                                isTrailingButtonHidden: false,
                                isAlbumButtonHidden: false,
                                buttonManager: topBarViewButtonManager)
@@ -42,16 +47,16 @@ struct GalleryView: View {
                     .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
                         switch buttonType{
                         case .cancel:
-                            break
-                        case .home:
                             dismiss()
+                        case .home:
+                            navigationPath.removeLast(navigationPath.count)
                         case .album:
                             isShowingAlbumView = true
                         }
                     }
                     
                     if isShowingAlbumView {
-                        AlbumView(albumManager: albumManager){ album in
+                        AlbumView(navigationPath: $navigationPath, albumManager: albumManager){ album in
                             isShowingAlbumView = false
                             albumManager.resetAlbum(album)
                             Task{
@@ -123,8 +128,4 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
-}
-
-#Preview {
-    GalleryView()
 }
