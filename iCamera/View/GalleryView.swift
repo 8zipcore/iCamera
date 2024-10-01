@@ -59,25 +59,29 @@ struct GalleryView: View {
                         AlbumView(navigationPath: $navigationPath, albumManager: albumManager){ album in
                             isShowingAlbumView = false
                             albumManager.resetAlbum(album)
-                            Task{
-                                try await loadPhotos()
-                            }
+                            loadPhotos()
                         }
                     } else {
                         let imageViewWidth = viewWidth / 3
                         
                         ScrollViewWithOnScrollChanged(content: {
                             LazyVGrid(columns: columns, spacing: 3) {
-                                ForEach(albumManager.images, id: \.self) { image in
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: imageViewWidth, height: imageViewWidth)
-                                        .background(.clear)
-                                        .clipped()
+                                ForEach(albumManager.images.indices, id: \.self) { index in
+                                    let image = albumManager.images[index]
+                                    NavigationLink(value: index) {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: imageViewWidth, height: imageViewWidth)
+                                            .background(.clear)
+                                            .clipped()
+                                    }
                                 }
                             }
                             .background(.white)
+                            .navigationDestination(for: Int.self){ index in
+                                EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)
+                            }
                         }, scrollViewDidScroll: { scrollView in
                             // 💡 추측 : SwiftUI로 변환할때 scorllview가 그냥 viewWidth, viewHeight 사이즈로 인식 됨 ??
                             // ㄴ contentOffSet을 scorllView의 진짜크기(viewHeight - scrollView.height)으로 제대로 안받아옴
@@ -88,9 +92,7 @@ struct GalleryView: View {
                             let minY = scrollView.contentSize.height - scrollView.contentOffset.y
                             
                             if scrollViewHeight >= minY && !albumManager.isLoading{
-                                Task{
-                                    try await loadPhotos()
-                                }
+                                loadPhotos()
                             }
                         })
                         .frame(height: viewHeight - topBarSize.height) // 이 코드 안먹힘
@@ -100,20 +102,34 @@ struct GalleryView: View {
         }
         .navigationBarHidden(true)
         .onAppear{
-            Task{
-                try await loadPhotos()
-                try await albumManager.fetchAlbums()
-            }
+            loadPhotos()
+            albumManager.fetchAlbums()
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .finished:
+                        print("✅ 앨범 불러오기 완료")
+                    case .failure(_):
+                        print("🌀 앨범 불러오기 오류")
+                    }
+                }, receiveValue: {})
+                .store(in: &albumManager.cancellables)
         }
     }
     
-    func loadPhotos() async throws{
+    func loadPhotos(){
         PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
                 albumManager.page += 1
-                Task{
-                    try await albumManager.fetchPhotos()
-                }
+                albumManager.fetchPhotos()
+                    .sink(receiveCompletion: { completion in
+                        switch completion{
+                        case .finished:
+                            print("✅ 사진 불러오기 완료")
+                        case .failure(let error):
+                            print("🌀 error : \(error)")
+                        }
+                    }, receiveValue: {})
+                    .store(in: &albumManager.cancellables)
             } else {
                 print("사진 라이브러리 접근 권한이 없습니다.")
             }

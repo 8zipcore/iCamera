@@ -65,8 +65,10 @@ struct MainView: View {
                                 .frame(width: listViewWidth, height: listViewHeight)
                             }
                             
-                            ListView(title: "Calendar", imageWidth: listViewImageWidth)
-                            .frame(width: listViewWidth, height: listViewHeight)
+                            NavigationLink(value: "CalendarView") {
+                                ListView(title: "Calendar", imageWidth: listViewImageWidth)
+                                .frame(width: listViewWidth, height: listViewHeight)
+                            }
                             
                             ListView(title: "Setting", imageWidth: listViewImageWidth)
                             .frame(width: listViewWidth, height: listViewHeight)
@@ -86,6 +88,8 @@ struct MainView: View {
                                 CameraView(navigationPath: $navigationPath)
                             case "GalleryView":
                                 GalleryView(navigationPath: $navigationPath)
+                            case "CalendarView":
+                                TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())
                             default:
                                 EmptyView()
                             }

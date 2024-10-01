@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CameraPreview: UIViewRepresentable {
     @ObservedObject var cameraManager: CameraManager
@@ -152,9 +153,16 @@ struct CameraView: View {
         }
         .navigationBarHidden(true)
         .onAppear{
-            Task{
-                try await albumManager.fetchRecentlyPhoto()
-            }
+            albumManager.fetchRecentlyPhoto()
+                .sink(receiveCompletion: { completion in
+                    switch completion{
+                    case .finished:
+                        print("finish")
+                    case .failure(_):
+                        print("fail")
+                    }
+                }, receiveValue: {})
+                .store(in: &albumManager.cancellables)
         }
         .onChange(of: cameraManager.capturedImage) { newImage in
              if newImage != nil {

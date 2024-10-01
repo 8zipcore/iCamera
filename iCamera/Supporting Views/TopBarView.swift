@@ -14,6 +14,7 @@ enum TopBarViewButtonType{
 
 class TopBarViewButtonManager: ObservableObject {
     var buttonClicked = PassthroughSubject<TopBarViewButtonType, Never>()
+    var cancellables = Set<AnyCancellable>()
 }
 
 struct TopBarView: View {
