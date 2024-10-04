@@ -25,6 +25,8 @@
 		36810C532C8F1E7E002C680A /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C522C8F1E7E002C680A /* TopBarView.swift */; };
 		36810C552C8F287A002C680A /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C542C8F287A002C680A /* ListView.swift */; };
 		36810C572C8F3199002C680A /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C562C8F3199002C680A /* TestView.swift */; };
+		3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3688E9EC2CAE6933001DC9DC /* StickerView.swift */; };
+		3688E9EF2CAE7036001DC9DC /* StickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3688E9EE2CAE7036001DC9DC /* StickerManager.swift */; };
 		369651602CA9831E004E0134 /* TestPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3696515F2CA9831E004E0134 /* TestPhotoView.swift */; };
 		3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697D1B22C9FEF990012ABDC /* NotificationName.swift */; };
 		369E7BF52C8DAB970044EAF1 /* iCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */; };
@@ -77,6 +79,8 @@
 		36810C522C8F1E7E002C680A /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		36810C542C8F287A002C680A /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		36810C562C8F3199002C680A /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		3688E9EC2CAE6933001DC9DC /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
+		3688E9EE2CAE7036001DC9DC /* StickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerManager.swift; sourceTree = "<group>"; };
 		3696515F2CA9831E004E0134 /* TestPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPhotoView.swift; sourceTree = "<group>"; };
 		3697D1B22C9FEF990012ABDC /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		369E7BF12C8DAB970044EAF1 /* iCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +146,7 @@
 				362222372CA00E1F00AA9EA5 /* MenuButtonView.swift */,
 				36A12E082CA19D1F00228784 /* FilterImageView.swift */,
 				362BD6B42CAAE351000955D5 /* EditImageView.swift */,
+				3688E9EC2CAE6933001DC9DC /* StickerView.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 				362BD6B22CAADB4C000955D5 /* FilterManager.swift */,
 				362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */,
 				36447A372CAC0DDA008E1268 /* LUTManager.swift */,
+				3688E9EE2CAE7036001DC9DC /* StickerManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -491,8 +497,10 @@
 				36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */,
 				3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */,
 				362BD6B32CAADB4C000955D5 /* FilterManager.swift in Sources */,
+				3688E9EF2CAE7036001DC9DC /* StickerManager.swift in Sources */,
 				36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */,
 				362BD6B52CAAE351000955D5 /* EditImageView.swift in Sources */,
+				3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */,
 				36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */,
 				3605F5682C917DBF00665348 /* CameraManager.swift in Sources */,
 				3605F5662C917CDD00665348 /* CameraView.swift in Sources */,
