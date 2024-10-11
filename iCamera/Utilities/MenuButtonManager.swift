@@ -10,7 +10,7 @@ import Combine
 
 struct MenuButton: Hashable{
     enum ButtonType: Int{
-        case filter, sticker, frame, text
+        case filter, cut, sticker, frame, text
     }
     var type: ButtonType
     var isSelected: Bool = false
@@ -18,6 +18,8 @@ struct MenuButton: Hashable{
         switch type {
         case .filter:
             return "Filter"
+        case .cut:
+            return "Cut"
         case .sticker:
             return "Sticker"
         case .frame:
@@ -29,13 +31,20 @@ struct MenuButton: Hashable{
 }
 
 class MenuButtonManager: ObservableObject{
-    @Published var menuButtons = [ MenuButton(type: .filter, isSelected: true),
-                            MenuButton(type: .sticker),
-                            MenuButton(type: .frame),
-                            MenuButton(type: .text)]
+    @Published var menuButtons: [MenuButton] = []
     var buttonClicked = PassthroughSubject<MenuButton.ButtonType, Never>()
     
     var cancellables = Set<AnyCancellable>()
+    
+    init(){
+       menuButtons =  [
+        MenuButton(type: .filter, isSelected: true),
+        MenuButton(type: .cut),
+        MenuButton(type: .sticker),
+        MenuButton(type: .frame),
+        MenuButton(type: .text)
+       ]
+    }
     
     func setSelected(_ selectedIndex: Int){
         for index in menuButtons.indices{

@@ -54,7 +54,9 @@ struct EditPhotoView: View {
                     
                     ZStack{
                         Color.white
-                        EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType)
+                        
+                        EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType, superViewSize: CGSize(width: viewWidth, height: editImageViewHeight), menuButtonManager: menuButtonManager)
+                        
                         ForEach(stickerManager.stickerArray.indices, id:\.self){ index in
                             let sticker = stickerManager.stickerArray[index]
                             let resizeButtonWidth: CGFloat = 10
@@ -67,7 +69,7 @@ struct EditPhotoView: View {
                                 .gesture(
                                     DragGesture()
                                         .onChanged{ value in
-                                            var newIndex = stickerManager.stickerArray.count - 1
+                                            let newIndex = stickerManager.stickerArray.count - 1
                                             if isFirstDrag{
                                                 stickerManager.selectSticker(index: index)
                                                 isFirstDrag = false
@@ -147,7 +149,7 @@ struct EditPhotoView: View {
                         VStack{
                             HStack(spacing: 10){
                                 let menuButtons = menuButtonManager.menuButtons
-                                let menuButtonViewWidth = (viewWidth * 0.6) / CGFloat(menuButtons.count)
+                                let menuButtonViewWidth = (viewWidth * 0.7) / CGFloat(menuButtons.count)
                                 let menuButtonViewHeight = menuButtonViewWidth * 10 / 17
                                 
                                 ForEach(menuButtons.indices, id: \.self){ index in
@@ -199,6 +201,10 @@ struct EditPhotoView: View {
                                     stickerManager.addSticker(sticker)
                                 }
                             }
+                        }
+                        
+                        if menuButtonManager.isSelected(.cut){
+                            
                         }
                     }
                     .ignoresSafeArea(.all, edges: .bottom)

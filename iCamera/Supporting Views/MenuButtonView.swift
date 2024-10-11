@@ -23,11 +23,9 @@ struct MenuButtonView: View {
             VStack{
                 Spacer()
                 HStack{
-                    Spacer()
                     Text(menuButton.title)
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(textColor)
-                    Spacer()
                 }
                 Spacer()
             }

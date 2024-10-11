@@ -14,12 +14,38 @@ struct EditImageView: View {
     var inputImage: UIImage
     var value: CGFloat = 0
     var filterType: FilterType
+    var superViewSize: CGSize
+    
+    @StateObject var menuButtonManager: MenuButtonManager
     
     var body: some View {
         if let filteredImage = applyFilters(to: inputImage) {
-            Image(uiImage: filteredImage)
-                .resizable()
-                .scaledToFit()
+            let imageSize = imageSize(superViewSize)
+            if menuButtonManager.isSelected(.cut){
+                let padding: CGFloat = 15
+                let paddingImageSize = CGSize(width: imageSize.width - padding, height: imageSize.height - padding)
+                let paddingViewSize = CGSize(width: superViewSize.width - padding, height: superViewSize.height - padding)
+                
+                CutImageView(image: filteredImage,
+                             frameWidth: paddingImageSize.width,
+                             frameHeight: paddingImageSize.height,
+                             cutImageManager: CutImageManager())
+                .frame(width: paddingViewSize.width , height: paddingViewSize.height)
+            } else {
+                Image(uiImage: filteredImage)
+                    .resizable()
+                    .scaledToFit()
+            }
+        }
+    }
+    
+    func imageSize(_ viewSize: CGSize) -> CGSize{
+        let inputImageSize = inputImage.size
+        
+        if inputImageSize.width > inputImageSize.height{
+            return CGSize(width: viewSize.width, height: inputImageSize.height * viewSize.width / inputImageSize.width)
+        } else {
+            return CGSize(width: inputImageSize.width * viewSize.height / inputImageSize.height, height: viewSize.height)
         }
     }
     
