@@ -55,7 +55,7 @@ struct EditPhotoView: View {
                     ZStack{
                         Color.white
                         
-                        EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType, superViewSize: CGSize(width: viewWidth, height: editImageViewHeight), menuButtonManager: menuButtonManager)
+                        EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType, menuButtonManager: menuButtonManager)
                         
                         ForEach(stickerManager.stickerArray.indices, id:\.self){ index in
                             let sticker = stickerManager.stickerArray[index]

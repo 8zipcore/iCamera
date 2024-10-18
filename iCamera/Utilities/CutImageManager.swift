@@ -107,4 +107,16 @@ class CutImageManager: ObservableObject{
     var imageZoomEnded = PassthroughSubject<Void, Never>()
     var imageDrag = PassthroughSubject<CGPoint, Never>()
     var imageDragEnded = PassthroughSubject<CGPoint, Never>()
+    
+    func positionArray(center: CGPoint, width: CGFloat, height: CGFloat) -> [CGPoint]{
+        let halfWidth = width / 2
+        let halfHeight = height / 2
+        
+        let result = SelectionFrameRectangle.Location.allCases.map{ location in
+            let data = SelectionFrameRectangle(location: location)
+            return CGPoint(x: center.x + halfWidth * data.scale.x, y: center.y + halfHeight * data.scale.y)
+        }
+        
+        return result
+    }
 }

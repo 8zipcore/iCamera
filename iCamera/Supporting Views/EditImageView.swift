@@ -14,27 +14,32 @@ struct EditImageView: View {
     var inputImage: UIImage
     var value: CGFloat = 0
     var filterType: FilterType
-    var superViewSize: CGSize
     
     @StateObject var menuButtonManager: MenuButtonManager
     
     var body: some View {
-        if let filteredImage = applyFilters(to: inputImage) {
-            let imageSize = imageSize(superViewSize)
-            if menuButtonManager.isSelected(.cut){
-                let padding: CGFloat = 15
-                let paddingImageSize = CGSize(width: imageSize.width - padding, height: imageSize.height - padding)
-                let paddingViewSize = CGSize(width: superViewSize.width - padding, height: superViewSize.height - padding)
-                
-                CutImageView(image: filteredImage,
-                             frameWidth: paddingImageSize.width,
-                             frameHeight: paddingImageSize.height,
-                             cutImageManager: CutImageManager())
-                .frame(width: paddingViewSize.width , height: paddingViewSize.height)
-            } else {
-                Image(uiImage: filteredImage)
-                    .resizable()
-                    .scaledToFit()
+        GeometryReader { geometry in
+            let viewWidth = geometry.size.width
+            let viewHeight = geometry.size.height
+            
+            if let filteredImage = applyFilters(to: inputImage) {
+                let imageSize = imageSize(geometry.size)
+                if menuButtonManager.isSelected(.cut){
+                    let padding: CGFloat = 15
+                    let paddingImageSize = CGSize(width: imageSize.width - padding, height: imageSize.height - padding)
+                    
+                    CutImageView(image: filteredImage,
+                                 frameWidth: paddingImageSize.width,
+                                 frameHeight: paddingImageSize.height,
+                                 cutImageManager: CutImageManager(),
+                                 padding: padding)
+                    .frame(width: viewWidth , height: viewHeight)
+                } else {
+                    Image(uiImage: filteredImage)
+                        .resizable()
+                        .scaledToFit()
+                        .position(x: viewWidth / 2, y: viewHeight / 2)
+                }
             }
         }
     }

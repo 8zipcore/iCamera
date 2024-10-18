@@ -79,17 +79,18 @@ struct SelectionFrameView: View{
             .simultaneousGesture(
                 DragGesture()
                     .onChanged{ value in
-                        if isFrameDrag {
-                            return
-                        }
+                        if isFrameDrag { return }
                         
                         let startLocation = value.startLocation
                         
-                        if startLocation.x <= lineSize.height ||
-                            startLocation.x >= viewWidth - lineSize.height ||
-                            startLocation.y <= lineSize.height ||
-                            startLocation.y >= viewHeight - lineSize.height
+                        let plusTouchAreaSize: CGFloat = 5
+                        
+                        if startLocation.x <= lineSize.height + plusTouchAreaSize ||
+                            startLocation.x >= viewWidth - lineSize.height - plusTouchAreaSize ||
+                            startLocation.y <= lineSize.height + plusTouchAreaSize ||
+                            startLocation.y >= viewHeight - lineSize.height - plusTouchAreaSize
                         {
+                            print("frameDrag")
                             isFrameDrag = true
                             return
                         }
