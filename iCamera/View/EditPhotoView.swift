@@ -19,6 +19,7 @@ struct EditPhotoView: View {
     @StateObject var menuButtonManager = MenuButtonManager()
     @StateObject var filterManager = FilterManager()
     @StateObject var stickerManager = StickerManager()
+    @StateObject var cutImageManager = CutImageManager()
     
     @State private var filterValue: CGFloat = 0.0
     @State private var filterType: FilterType = .none
@@ -55,7 +56,7 @@ struct EditPhotoView: View {
                     ZStack{
                         Color.white
                         
-                        EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType, menuButtonManager: menuButtonManager)
+                        EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType, menuButtonManager: menuButtonManager, cutImageManger: cutImageManager)
                         
                         ForEach(stickerManager.stickerArray.indices, id:\.self){ index in
                             let sticker = stickerManager.stickerArray[index]
@@ -204,7 +205,14 @@ struct EditPhotoView: View {
                         }
                         
                         if menuButtonManager.isSelected(.cut){
-                            
+                            HStack{
+                                ForEach(cutImageManager.ratioArray, id: \.self){ ratio in
+                                    Button(ratio.string){
+                                        cutImageManager.frameRatioTapped.send(ratio)
+                                    }
+                                }
+                            }
+
                         }
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
@@ -225,6 +233,7 @@ struct EditPhotoView: View {
                     }, receiveValue: {})
                     .store(in: &albumManager.cancellables)
             }
+            
         }
     }
 }

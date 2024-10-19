@@ -90,7 +90,6 @@ struct SelectionFrameView: View{
                             startLocation.y <= lineSize.height + plusTouchAreaSize ||
                             startLocation.y >= viewHeight - lineSize.height - plusTouchAreaSize
                         {
-                            print("frameDrag")
                             isFrameDrag = true
                             return
                         }

@@ -16,6 +16,7 @@ struct EditImageView: View {
     var filterType: FilterType
     
     @StateObject var menuButtonManager: MenuButtonManager
+    @StateObject var cutImageManger: CutImageManager
     
     var body: some View {
         GeometryReader { geometry in
@@ -31,7 +32,7 @@ struct EditImageView: View {
                     CutImageView(image: filteredImage,
                                  frameWidth: paddingImageSize.width,
                                  frameHeight: paddingImageSize.height,
-                                 cutImageManager: CutImageManager(),
+                                 cutImageManager: cutImageManger,
                                  padding: padding)
                     .frame(width: viewWidth , height: viewHeight)
                 } else {
