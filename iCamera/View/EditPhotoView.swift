@@ -20,11 +20,14 @@ struct EditPhotoView: View {
     @StateObject var filterManager = FilterManager()
     @StateObject var stickerManager = StickerManager()
     @StateObject var cutImageManager = CutImageManager()
+    @StateObject var textManager = TextManager()
     
     @State private var filterValue: CGFloat = 0.0
     @State private var filterType: FilterType = .none
     
     @State private var isFirstDrag: Bool = true
+    
+    @State private var showTextInputView = false
     
     @Environment(\.dismiss) var dismiss
     
@@ -52,12 +55,12 @@ struct EditPhotoView: View {
                     }
                     
                     let editImageViewHeight = viewHeight * 0.6
-                    
+                    /* ⭐️ imageView 시작 */
                     ZStack{
                         Color.white
                         
                         EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType, menuButtonManager: menuButtonManager, cutImageManger: cutImageManager)
-                        
+                        /* ⭐️ StickerView 시작 */
                         ForEach(stickerManager.stickerArray.indices, id:\.self){ index in
                             let sticker = stickerManager.stickerArray[index]
                             let resizeButtonWidth: CGFloat = 10
@@ -130,11 +133,29 @@ struct EditPhotoView: View {
                                         }
                                     }
                                 }
-                                .position(stickerManager.stickerArray[index].location)
+                                .position(sticker.location)
                         }
+                        /* ⭐️ StickerView 끝 (ForEach) */
+                        /* ⭐️ TextView 시작 */
+                        ForEach(textManager.textArray.indices, id: \.self){ index in
+                            let data = textManager.textArray[index]
+                            TextView(index: index, textData: data, textManager: textManager)
+                                .hidden(textManager.isHidden(index: index) && showTextInputView)
+                                .frame(width: data.size.width, height: data.size.height)
+                                .position(data.location)
+                                .onReceive(textManager.deleteTextButtonTapped){
+                                    textManager.deleteText(index: index)
+                                }
+                                .onReceive(textManager.editTextButtonTapped){
+                                    textManager.selectText(index: index)
+                                    showTextInputView = true
+                                }
+                        }
+                        /* ⭐️ TextView 끝 */
                     }
                     .frame(height: editImageViewHeight)
-                    
+                    /* ⭐️ imageView 끝 */
+                    /* ⭐️ menuView 시작 */
                     ZStack{
                         Rectangle()
                             .fill(
@@ -150,7 +171,7 @@ struct EditPhotoView: View {
                         VStack{
                             HStack(spacing: 10){
                                 let menuButtons = menuButtonManager.menuButtons
-                                let menuButtonViewWidth = (viewWidth * 0.7) / CGFloat(menuButtons.count)
+                                let menuButtonViewWidth = (viewWidth * 0.6) / CGFloat(menuButtons.count)
                                 let menuButtonViewHeight = menuButtonViewWidth * 10 / 17
                                 
                                 ForEach(menuButtons.indices, id: \.self){ index in
@@ -164,7 +185,7 @@ struct EditPhotoView: View {
                                 if menuButtonManager.menuButtons[selectIndex].isSelected { return }
                                 menuButtonManager.setSelected(selectIndex)
                             }
-                            
+                            /* 📌 filter */
                             if menuButtonManager.isSelected(.filter){
                                 VStack{
                                     HStack(spacing: 0){
@@ -190,34 +211,73 @@ struct EditPhotoView: View {
                                     }
                                 }
                                 .padding(.top, 10)
+                                Spacer()
                             }
-                            
-                            Spacer()
-                        }
-                        
-                        if menuButtonManager.isSelected(.sticker){
-                            Button("추가"){
-                                if let image = UIImage(named: "star_sticker"){
-                                    let sticker = Sticker(image: image, location: CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2), size: image.size, isSelected: true)
-                                    stickerManager.addSticker(sticker)
-                                }
-                            }
-                        }
-                        
-                        if menuButtonManager.isSelected(.cut){
-                            HStack{
-                                ForEach(cutImageManager.ratioArray, id: \.self){ ratio in
-                                    Button(ratio.string){
-                                        cutImageManager.frameRatioTapped.send(ratio)
+                            /* 📌 Sticker */
+                            if menuButtonManager.isSelected(.sticker){
+                                Button("추가"){
+                                    if let image = UIImage(named: "star_sticker"){
+                                        let sticker = Sticker(image: image, location: CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2), size: image.size, isSelected: true)
+                                        stickerManager.addSticker(sticker)
                                     }
                                 }
+                                Spacer()
                             }
+                            /* 📌 Cut */
+                            if menuButtonManager.isSelected(.cut){
+                                HStack{
+                                    ForEach(cutImageManager.ratioArray, id: \.self){ ratio in
+                                        Button(ratio.string){
+                                            cutImageManager.frameRatioTapped.send(ratio)
+                                        }
+                                    }
+                                }
+                                Spacer()
+                            }
+                            /* 📌 Text */
+                            if menuButtonManager.isSelected(.text){
+                                if textManager.isSelected(.font){
+                                    HStack{
+                                        ForEach(textManager.fontArray, id: \.self){ font in
+                                            Button(font.fontName){
+                                                textManager.fontButtonTapped.send(font)
+                                                textManager.addNewText(location: CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2), size: CGSize(width: viewWidth, height: 50))
+                                            }
+                                        }
+                                    }
+                                    .padding(.top, 20)
+                                }
+                                
+                                if textManager.isSelected(.color){
+                                    SelectColorView(textManager: textManager)
+                                }
 
+                                Spacer()
+                                TextMenuView(textManager: textManager)
+                                    .padding(.bottom, 40)
+                            }
                         }
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
+                    /* ⭐️ menuView 끝 */
+                }
+                
+                if showTextInputView{
+                    if let textData = textManager.selectedTextData(){
+                        TextInputView(textData: textData, textManager: textManager)
+                            .onReceive(textManager.textInputCancelButtonTapped){ data in
+                                textManager.restoreTextData(textData: data)
+                                showTextInputView = false
+                            }
+                            .onReceive(textManager.textInputConfirmButtonTapped){ data in
+                                print(data.text)
+                                textManager.setTextData(textData: data)
+                                showTextInputView = false
+                            }
+                    }
                 }
             }
+            .ignoresSafeArea(.keyboard)
         }
         .navigationBarHidden(true)
         .onAppear{

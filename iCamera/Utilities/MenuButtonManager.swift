@@ -10,7 +10,7 @@ import Combine
 
 struct MenuButton: Hashable{
     enum ButtonType: Int{
-        case filter, cut, sticker, frame, text
+        case filter, cut, sticker, text
     }
     var type: ButtonType
     var isSelected: Bool = false
@@ -22,8 +22,6 @@ struct MenuButton: Hashable{
             return "Cut"
         case .sticker:
             return "Sticker"
-        case .frame:
-            return "Frame"
         case .text:
             return "Text"
         }
@@ -41,7 +39,6 @@ class MenuButtonManager: ObservableObject{
         MenuButton(type: .filter, isSelected: true),
         MenuButton(type: .cut),
         MenuButton(type: .sticker),
-        MenuButton(type: .frame),
         MenuButton(type: .text)
        ]
     }

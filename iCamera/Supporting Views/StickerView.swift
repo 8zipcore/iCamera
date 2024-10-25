@@ -14,9 +14,6 @@ struct StickerView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let viewWidth = geometry.size.width
-            let viewHeight = geometry.size.height
-            
             let imageWidth = sticker.size.width
             let imageHeight = sticker.size.height
             
