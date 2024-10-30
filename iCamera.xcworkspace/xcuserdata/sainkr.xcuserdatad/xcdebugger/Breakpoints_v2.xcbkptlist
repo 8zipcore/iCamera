@@ -126,8 +126,8 @@
             filePath = "iCamera/Utilities/CalendarManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "nextMonth()"
             landmarkType = "7">
          </BreakpointContent>

@@ -89,11 +89,11 @@ struct CalendarView: View {
                     VStack(spacing: 0){
                         let cellWidth: CGFloat = viewWidth / 7
                         let cellHeight: CGFloat = cellWidth * 4.5 / 3
-                        ForEach(1...5, id: \.self){ week in
+                        ForEach(1...calendarManager.weeks, id: \.self){ week in
                             HStack(spacing: 0){
                                 ForEach(1...7, id: \.self){ day in
                                     let dayToString = calendarManager.dayToString(week: week, day: day)
-                                    CalendarCellView(day: dayToString, image: nil, hiddenBottomLine: week != 5)
+                                    CalendarCellView(day: dayToString, image: nil, hiddenBottomLine: week != calendarManager.weeks)
                                         .frame(width: cellWidth, height: cellHeight)
                                 }
                             }
@@ -116,7 +116,6 @@ struct CalendarView: View {
                                     .padding([.leading, .trailing], 10)
                                     .font(Font(UIFont.systemFont(ofSize: 13, weight: .medium)))
                                 Spacer()
-                                
                             }
                             .padding(.top, 10)
                         }

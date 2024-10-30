@@ -28,6 +28,7 @@ class CalendarManager: ObservableObject{
     @Published var selectedYear: Int
     @Published var selectedMonth: Int
     @Published var selectedDay: Int
+    @Published var weeks: Int
     
     var monthToString: String{
         let monthArray: [String] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -39,6 +40,7 @@ class CalendarManager: ObservableObject{
         selectedYear = currentYear
         selectedMonth = currentMonth
         selectedDay = currentDay
+        weeks = 5
     }
     
     func daysInMonth(year: Int, month: Int) -> Int? {
@@ -54,6 +56,17 @@ class CalendarManager: ObservableObject{
         return range?.count
     }
     
+    func lastWeek() -> Int{
+        guard let startDay = startOfMonth(year: selectedYear, month: selectedMonth),
+              let lastDay = daysInMonth(year: selectedYear, month: selectedMonth) else { return 5 }
+        let daysOfWeek = 7
+        let weeks = (startDay - 1 + lastDay) / daysOfWeek
+        if weeks > 4 && (startDay - 1 + lastDay) % daysOfWeek == 0 {
+            return weeks
+        }
+        return weeks + 1
+    }
+    
     func previousMonth(){
         if selectedMonth == 1 {
             selectedMonth = 12
@@ -61,7 +74,7 @@ class CalendarManager: ObservableObject{
         } else {
             selectedMonth -= 1
         }
-        print(selectedMonth)
+        weeks = lastWeek()
     }
     
     func nextMonth(){
@@ -71,15 +84,34 @@ class CalendarManager: ObservableObject{
         } else {
             selectedMonth += 1
         }
-        print(selectedMonth)
+        weeks = lastWeek()
+    }
+    
+    func startOfMonth(year: Int, month: Int) -> Int?{
+        let calendar = Calendar.current
+        
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = 1 // 1일로 설정
+        
+        guard let date = calendar.date(from: dateComponents) else {
+            return nil // 유효하지 않은 날짜일 경우 nil 반환
+        }
+        
+        let weekday = calendar.component(.weekday, from: date)
+        
+        return weekday
     }
     
     func dayToString(week: Int, day: Int) -> String{
-        if let daysInMonth = daysInMonth(year: selectedYear, month: selectedMonth){
-            if week * day < daysInMonth{
-                return "\(week * day)"
-            }
+        guard let startDay = startOfMonth(year: selectedYear, month: selectedMonth),
+              let lastDay = daysInMonth(year: selectedYear, month: selectedMonth) else { return "" }
+        let daysOfWeek = 7
+        let day = (week * daysOfWeek) - (daysOfWeek - day) - startDay + 1
+        if day < 1 || day > lastDay{
+            return ""
         }
-        return ""
+        return "\(day)"
     }
 }
