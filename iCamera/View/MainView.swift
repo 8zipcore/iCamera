@@ -89,7 +89,9 @@ struct MainView: View {
                             case "GalleryView":
                                 GalleryView(navigationPath: $navigationPath)
                             case "CalendarView":
-                                TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())
+                                CalendarView(navigationPath: $navigationPath)
+                                /*
+                                TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())*/
                             default:
                                 EmptyView()
                             }

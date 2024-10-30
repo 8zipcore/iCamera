@@ -157,17 +157,7 @@ struct EditPhotoView: View {
                     /* ⭐️ imageView 끝 */
                     /* ⭐️ menuView 시작 */
                     ZStack{
-                        Rectangle()
-                            .fill(
-                                LinearGradient(
-                                    gradient: Gradient(stops: [
-                                        .init(color: .white, location: 0.05),
-                                        .init(color: Colors.silver, location: 1.0)
-                                    ]),
-                                    startPoint: .top, // 시작점
-                                    endPoint: .bottom // 끝점
-                                )
-                            )
+                        GradientRectangleView()
                         VStack{
                             HStack(spacing: 10){
                                 let menuButtons = menuButtonManager.menuButtons

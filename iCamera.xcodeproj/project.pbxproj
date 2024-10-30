@@ -24,6 +24,7 @@
 		362BD6B72CAAE3ED000955D5 /* MenuButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */; };
 		3634CAC32CC91DD20061D5DE /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3634CAC22CC91DD20061D5DE /* Extension+View.swift */; };
 		36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36447A372CAC0DDA008E1268 /* LUTManager.swift */; };
+		36697BFF2CD1241B00070A55 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36697BFE2CD1241B00070A55 /* CalendarManager.swift */; };
 		366AC8662CB1572B007A15D1 /* MaskRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */; };
 		366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */; };
 		36810C512C8F0F09002C680A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C502C8F0F09002C680A /* MainView.swift */; };
@@ -34,6 +35,7 @@
 		3682EF1C2CC8ECC500D18FE1 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3682EF1B2CC8ECC500D18FE1 /* TextView.swift */; };
 		3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3688E9EC2CAE6933001DC9DC /* StickerView.swift */; };
 		3688E9EF2CAE7036001DC9DC /* StickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3688E9EE2CAE7036001DC9DC /* StickerManager.swift */; };
+		368D426E2CCBCF9B00E3E0FB /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */; };
 		3692E40A2CC4D3AC003CBACB /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3692E4092CC4D3AC003CBACB /* TextInputView.swift */; };
 		3692E40C2CC4E540003CBACB /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3692E40B2CC4E540003CBACB /* CustomTextEditor.swift */; };
 		3692E40E2CC527E0003CBACB /* TextMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3692E40D2CC527E0003CBACB /* TextMenuView.swift */; };
@@ -54,6 +56,8 @@
 		36BCF7242C94AA8500FF2529 /* AlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BCF7232C94AA8500FF2529 /* AlbumManager.swift */; };
 		36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CF3DF22CB139C5004D58BF /* CutImageView.swift */; };
 		36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D096202C943DCA00F37AE0 /* GalleryView.swift */; };
+		36F84FB62CD1EA7D008275F5 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB52CD1EA7D008275F5 /* CalendarCellView.swift */; };
+		36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */; };
 		9C32D781FF23E52D4E3D0AED /* Pods_iCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD8CDA07FE90C39A19689A8 /* Pods_iCamera.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +95,7 @@
 		362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonManager.swift; sourceTree = "<group>"; };
 		3634CAC22CC91DD20061D5DE /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		36447A372CAC0DDA008E1268 /* LUTManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUTManager.swift; sourceTree = "<group>"; };
+		36697BFE2CD1241B00070A55 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskRectangleView.swift; sourceTree = "<group>"; };
 		366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionFrameView.swift; sourceTree = "<group>"; };
 		36810C502C8F0F09002C680A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -101,6 +106,7 @@
 		3682EF1B2CC8ECC500D18FE1 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		3688E9EC2CAE6933001DC9DC /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
 		3688E9EE2CAE7036001DC9DC /* StickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerManager.swift; sourceTree = "<group>"; };
+		368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3692E4092CC4D3AC003CBACB /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
 		3692E40B2CC4E540003CBACB /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		3692E40D2CC527E0003CBACB /* TextMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMenuView.swift; sourceTree = "<group>"; };
@@ -124,6 +130,8 @@
 		36BCF7232C94AA8500FF2529 /* AlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumManager.swift; sourceTree = "<group>"; };
 		36CF3DF22CB139C5004D58BF /* CutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutImageView.swift; sourceTree = "<group>"; };
 		36D096202C943DCA00F37AE0 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
+		36F84FB52CD1EA7D008275F5 /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
+		36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRectangleView.swift; sourceTree = "<group>"; };
 		46AE29EE4F917B66260485F5 /* Pods-iCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCamera.release.xcconfig"; path = "Target Support Files/Pods-iCamera/Pods-iCamera.release.xcconfig"; sourceTree = "<group>"; };
 		48749E9DD27FF6C0E7743471 /* Pods-iCamera-iCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCamera-iCameraUITests.release.xcconfig"; path = "Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4A294F65422997CABAAC1F83 /* Pods-iCameraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCameraTests.debug.xcconfig"; path = "Target Support Files/Pods-iCameraTests/Pods-iCameraTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +191,8 @@
 				3682EF192CC8BA5D00D18FE1 /* AttributedTextView.swift */,
 				3682EF1B2CC8ECC500D18FE1 /* TextView.swift */,
 				3634CAC22CC91DD20061D5DE /* Extension+View.swift */,
+				36F84FB52CD1EA7D008275F5 /* CalendarCellView.swift */,
+				36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -200,6 +210,7 @@
 				36A954C32CB25BDE00E43960 /* CutImageManager.swift */,
 				362940D52CC3F12C007C8A54 /* TextManager.swift */,
 				361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */,
+				36697BFE2CD1241B00070A55 /* CalendarManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -215,6 +226,7 @@
 				36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */,
 				362222352CA0087600AA9EA5 /* EditPhotoView.swift */,
 				3696515F2CA9831E004E0134 /* TestPhotoView.swift */,
+				368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -538,7 +550,9 @@
 				3692E4102CC544E9003CBACB /* SelectColorView.swift in Sources */,
 				362222362CA0087600AA9EA5 /* EditPhotoView.swift in Sources */,
 				36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */,
+				36F84FB62CD1EA7D008275F5 /* CalendarCellView.swift in Sources */,
 				36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */,
+				36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */,
 				362222382CA00E1F00AA9EA5 /* MenuButtonView.swift in Sources */,
 				366AC8662CB1572B007A15D1 /* MaskRectangleView.swift in Sources */,
 				369651602CA9831E004E0134 /* TestPhotoView.swift in Sources */,
@@ -547,9 +561,11 @@
 				36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */,
 				3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */,
 				362BD6B32CAADB4C000955D5 /* FilterManager.swift in Sources */,
+				36697BFF2CD1241B00070A55 /* CalendarManager.swift in Sources */,
 				3688E9EF2CAE7036001DC9DC /* StickerManager.swift in Sources */,
 				36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */,
 				362BD6B52CAAE351000955D5 /* EditImageView.swift in Sources */,
+				368D426E2CCBCF9B00E3E0FB /* CalendarView.swift in Sources */,
 				366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */,
 				3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */,
 				36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */,
