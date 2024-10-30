@@ -35,11 +35,11 @@ struct CalendarView: View {
                             dismiss()
                         }
                     }
-                    
+                    let titleViewHeight = viewHeight * 0.07
                     ZStack{
                         GradientRectangleView()
                         HStack{
-                            let buttonWidth: CGFloat = viewWidth * 0.055
+                            let buttonWidth: CGFloat = viewWidth * 0.045
                             let buttonHeight: CGFloat = buttonWidth * 8 / 7
                             Button(action:{
                                 calendarManager.previousMonth()
@@ -48,18 +48,16 @@ struct CalendarView: View {
                                     .resizable()
                                     .frame(width: buttonWidth, height: buttonHeight)
                             }
-                            .frame(width: 20, height: 20)
-                            .padding(.leading, 20)
                             Spacer()
                             ZStack{
                                 VStack{
                                     Text("\(calendarManager.selectedYear)")
-                                        .font(Font(UIFont.systemFont(ofSize: 13, weight: .medium)))
+                                        .font(.system(size: 13))
                                     Spacer()
                                 }
                                 Text(calendarManager.monthToString)
-                                    .font(Font(UIFont.systemFont(ofSize: 33, weight: .medium)))
-                                    .padding(.top, 3)
+                                    .font(.system(size: 35))
+                                    .padding(.top, 10)
                             }
                             Spacer()
                             Button(action:{
@@ -70,22 +68,25 @@ struct CalendarView: View {
                                     .rotationEffect(.degrees(180))
                                     .frame(width: buttonWidth, height: buttonHeight)
                             }
-                            .frame(width: 20, height: 20)
-                            .padding(.trailing, 20)
                         }
+                        .frame(width: viewWidth * 0.95)
+                        .position(x: viewWidth / 2, y: titleViewHeight / 2.3)
                     }
-                    .frame(height: viewHeight * 0.07)
+                    .frame(height: titleViewHeight)
                     
-                    HStack{
+                    let weekViewHeight = viewHeight * 0.01
+                    HStack(spacing: 0){
                         ForEach(calendarManager.week.indices, id: \.self){ index in
+                            let cellWidth: CGFloat = viewWidth / CGFloat(7)
+                            let xPosition: CGFloat = cellWidth / 2
                             let weekToString = calendarManager.week[index].rawValue
                             Text(weekToString)
-                            if index < calendarManager.week.count - 1 {
-                                Spacer()
-                            }
+                                .font(.system(size: 13))
+                                .frame(width: cellWidth)
+                                .position(x: xPosition, y: weekViewHeight / 2)
                         }
                     }
-                    .padding([.leading, .trailing], 10)
+                    .frame(height: weekViewHeight)
                     VStack(spacing: 0){
                         let cellWidth: CGFloat = viewWidth / 7
                         let cellHeight: CGFloat = cellWidth * 4.5 / 3
@@ -107,14 +108,14 @@ struct CalendarView: View {
                                         .resizable()
                                         .frame(width: viewWidth * 0.03, height: viewWidth * 0.03)
                                     Text("Agust 24th's comment")
-                                        .font(Font(UIFont.systemFont(ofSize: 15, weight: .medium)))
+                                        .font(.system(size: 15, weight: .semibold))
                                     Spacer()
                                 }
                                 .padding([.leading, .trailing], 10)
                                 Text("nothing . . .")
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding([.leading, .trailing], 10)
-                                    .font(Font(UIFont.systemFont(ofSize: 13, weight: .medium)))
+                                    .font(.system(size: 13))
                                 Spacer()
                             }
                             .padding(.top, 10)

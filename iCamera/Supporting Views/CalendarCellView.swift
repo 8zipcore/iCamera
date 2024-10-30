@@ -33,7 +33,7 @@ struct CalendarCellView: View {
                 HStack{
                     Spacer()
                     Text(day)
-                        .font(Font(UIFont.systemFont(ofSize: 10, weight: .medium)))
+                        .font(.system(size: 12))
                 }
                 .padding(.trailing, 5)
                 Spacer()

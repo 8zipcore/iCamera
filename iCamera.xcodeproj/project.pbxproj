@@ -58,6 +58,11 @@
 		36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D096202C943DCA00F37AE0 /* GalleryView.swift */; };
 		36F84FB62CD1EA7D008275F5 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB52CD1EA7D008275F5 /* CalendarCellView.swift */; };
 		36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */; };
+		36F84FBB2CD24A9C008275F5 /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F84FBA2CD24A9C008275F5 /* NotoSansKR-Regular.ttf */; };
+		36F84FBD2CD24AE5008275F5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FBC2CD24AE5008275F5 /* Font.swift */; };
+		36F84FBF2CD24BA1008275F5 /* NanumGothicCoding-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F84FBE2CD24BA1008275F5 /* NanumGothicCoding-Regular.ttf */; };
+		36F84FC12CD24CC3008275F5 /* IBMPlexSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F84FC02CD24CC3008275F5 /* IBMPlexSansKR-Regular.ttf */; };
+		36F84FC32CD25CA3008275F5 /* Karla-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F84FC22CD25CA3008275F5 /* Karla-Medium.ttf */; };
 		9C32D781FF23E52D4E3D0AED /* Pods_iCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD8CDA07FE90C39A19689A8 /* Pods_iCamera.framework */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +137,11 @@
 		36D096202C943DCA00F37AE0 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		36F84FB52CD1EA7D008275F5 /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
 		36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRectangleView.swift; sourceTree = "<group>"; };
+		36F84FBA2CD24A9C008275F5 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		36F84FBC2CD24AE5008275F5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		36F84FBE2CD24BA1008275F5 /* NanumGothicCoding-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NanumGothicCoding-Regular.ttf"; sourceTree = "<group>"; };
+		36F84FC02CD24CC3008275F5 /* IBMPlexSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		36F84FC22CD25CA3008275F5 /* Karla-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Medium.ttf"; sourceTree = "<group>"; };
 		46AE29EE4F917B66260485F5 /* Pods-iCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCamera.release.xcconfig"; path = "Target Support Files/Pods-iCamera/Pods-iCamera.release.xcconfig"; sourceTree = "<group>"; };
 		48749E9DD27FF6C0E7743471 /* Pods-iCamera-iCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCamera-iCameraUITests.release.xcconfig"; path = "Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4A294F65422997CABAAC1F83 /* Pods-iCameraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCameraTests.debug.xcconfig"; path = "Target Support Files/Pods-iCameraTests/Pods-iCameraTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -211,6 +221,7 @@
 				362940D52CC3F12C007C8A54 /* TextManager.swift */,
 				361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */,
 				36697BFE2CD1241B00070A55 /* CalendarManager.swift */,
+				36F84FBC2CD24AE5008275F5 /* Font.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -256,6 +267,7 @@
 		369E7BF32C8DAB970044EAF1 /* iCamera */ = {
 			isa = PBXGroup;
 			children = (
+				36F84FB92CD24A32008275F5 /* Font */,
 				36B2AC992CABC2EA00F28115 /* Cube */,
 				3605F5692C917DDA00665348 /* Utilities */,
 				3605F5622C913CCD00665348 /* Supporting Views */,
@@ -300,6 +312,17 @@
 				36B2ACA22CABDC3F00F28115 /* Going for a walk.CUBE */,
 			);
 			path = Cube;
+			sourceTree = "<group>";
+		};
+		36F84FB92CD24A32008275F5 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				36F84FC22CD25CA3008275F5 /* Karla-Medium.ttf */,
+				36F84FC02CD24CC3008275F5 /* IBMPlexSansKR-Regular.ttf */,
+				36F84FBE2CD24BA1008275F5 /* NanumGothicCoding-Regular.ttf */,
+				36F84FBA2CD24A9C008275F5 /* NotoSansKR-Regular.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		AB54171CED7E7CA70687D901 /* Pods */ = {
@@ -434,9 +457,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				369E7BFC2C8DAB980044EAF1 /* Preview Assets.xcassets in Resources */,
+				36F84FBF2CD24BA1008275F5 /* NanumGothicCoding-Regular.ttf in Resources */,
 				369E7BF92C8DAB980044EAF1 /* Assets.xcassets in Resources */,
+				36F84FC12CD24CC3008275F5 /* IBMPlexSansKR-Regular.ttf in Resources */,
 				36B2AC9B2CABC2F300F28115 /* test.CUBE in Resources */,
+				36F84FC32CD25CA3008275F5 /* Karla-Medium.ttf in Resources */,
 				36B2ACA32CABDC3F00F28115 /* Going for a walk.CUBE in Resources */,
+				36F84FBB2CD24A9C008275F5 /* NotoSansKR-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +592,7 @@
 				3688E9EF2CAE7036001DC9DC /* StickerManager.swift in Sources */,
 				36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */,
 				362BD6B52CAAE351000955D5 /* EditImageView.swift in Sources */,
+				36F84FBD2CD24AE5008275F5 /* Font.swift in Sources */,
 				368D426E2CCBCF9B00E3E0FB /* CalendarView.swift in Sources */,
 				366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */,
 				3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */,
