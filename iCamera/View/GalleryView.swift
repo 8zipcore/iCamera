@@ -10,10 +10,15 @@ import Photos
 
 @available(iOS 16.0, *)
 struct GalleryView: View {
+    enum PreviousViewType{
+        case main, camera, comments
+    }
     
     @Binding var navigationPath: NavigationPath
+    var viewType: PreviousViewType
+    @State var commentsManager = CommentsManager()
     
-    @StateObject private var albumManager = AlbumManager()
+    @StateObject var albumManager = AlbumManager()
     @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
     
     @State private var isShowingAlbumView = false
@@ -75,12 +80,20 @@ struct GalleryView: View {
                                             .frame(width: imageViewWidth, height: imageViewWidth)
                                             .background(.clear)
                                             .clipped()
+                                            .onTapGesture {
+                                                if viewType == .comments{
+                                                    commentsManager.selectedImage.send((albumManager, index))
+                                                    dismiss()
+                                                }
+                                            }
                                     }
                                 }
                             }
                             .background(.white)
                             .navigationDestination(for: Int.self){ index in
-                                EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)
+                                if viewType != .comments{
+                                    EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)
+                                }
                             }
                         }, scrollViewDidScroll: { scrollView in
                             // 💡 추측 : SwiftUI로 변환할때 scorllview가 그냥 viewWidth, viewHeight 사이즈로 인식 됨 ??
@@ -98,6 +111,7 @@ struct GalleryView: View {
                         .frame(height: viewHeight - topBarSize.height) // 이 코드 안먹힘
                     }
                 }
+                .background(.white)
             }
         }
         .navigationBarHidden(true)

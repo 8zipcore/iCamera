@@ -34,6 +34,7 @@ struct CalendarCellView: View {
                     Spacer()
                     Text(day)
                         .font(.system(size: 12))
+                        .foregroundStyle(.black)
                 }
                 .padding(.trailing, 5)
                 Spacer()
@@ -43,6 +44,7 @@ struct CalendarCellView: View {
                     .hidden(hiddenBottomLine)
             }
         }
+        .background(.white)
     }
 }
 

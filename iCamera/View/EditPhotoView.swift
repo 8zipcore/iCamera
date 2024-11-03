@@ -280,7 +280,7 @@ struct EditPhotoView: View {
                         case .failure(_):
                             print("fail")
                         }
-                    }, receiveValue: {})
+                    }, receiveValue: { _ in })
                     .store(in: &albumManager.cancellables)
             }
             

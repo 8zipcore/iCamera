@@ -74,32 +74,35 @@ struct AttributedTextView: View {
 
 struct CustomTextView: UIViewRepresentable {
     @State var textData: TextData
+    var textContainerInset: UIEdgeInsets = .zero
+    var textViewWidth: CGFloat = .zero
     var onTextChange: (String) -> Void
     var onSizeChange: (CGSize) -> Void
-    
     var lineHeight: CGFloat = .zero
 
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isEditable = true
+        textView.isScrollEnabled = false
         textView.backgroundColor = .clear
         textView.setAttributedString(from: textData)
         textView.font = textData.textFont.font
         textView.textAlignment = textData.textAlignment
         textView.delegate = context.coordinator
-        textView.textContainerInset = .zero
+        textView.textContainerInset = textContainerInset
+        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.textContainer.maximumNumberOfLines = 0
         return textView
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.setAttributedString(from: textData)
-        DispatchQueue.main.async{
-            var textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
-            if let lineHeight = uiView.font?.lineHeight {
-                textViewSize.width = uiView.getWidthOfLine(line: Int(textViewSize.height / lineHeight) - 1)
-            }
-            onSizeChange(textViewSize)
+        uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal) // 가로로 커지지않게
+        var textViewSize = uiView.sizeThatFits(CGSize(width: min(uiView.bounds.width, textViewWidth), height: .infinity))
+        if let lineHeight = uiView.font?.lineHeight {
+            textViewSize.width = uiView.getWidthOfLine(line: Int(textViewSize.height / lineHeight) - 1)
         }
+        onSizeChange(textViewSize)
     }
     
     func makeCoordinator() -> Coordinator {

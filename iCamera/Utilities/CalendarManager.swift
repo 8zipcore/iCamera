@@ -29,9 +29,10 @@ class CalendarManager: ObservableObject{
     @Published var selectedMonth: Int
     @Published var selectedDay: Int
     @Published var weeks: Int
+    @Published var dateComment: String = ""
     
+    private let monthArray: [String] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     var monthToString: String{
-        let monthArray: [String] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         return monthArray[selectedMonth - 1]
     }
     
@@ -41,6 +42,12 @@ class CalendarManager: ObservableObject{
         selectedMonth = currentMonth
         selectedDay = currentDay
         weeks = 5
+    }
+    
+    func todayDate(){
+        selectedYear = currentYear
+        selectedMonth = currentMonth
+        selectedDay = currentDay
     }
     
     func daysInMonth(year: Int, month: Int) -> Int? {
@@ -75,6 +82,7 @@ class CalendarManager: ObservableObject{
             selectedMonth -= 1
         }
         weeks = lastWeek()
+        selectedDay = 0
     }
     
     func nextMonth(){
@@ -85,6 +93,7 @@ class CalendarManager: ObservableObject{
             selectedMonth += 1
         }
         weeks = lastWeek()
+        selectedDay = 0
     }
     
     func startOfMonth(year: Int, month: Int) -> Int?{
@@ -105,13 +114,45 @@ class CalendarManager: ObservableObject{
     }
     
     func dayToString(week: Int, day: Int) -> String{
-        guard let startDay = startOfMonth(year: selectedYear, month: selectedMonth),
-              let lastDay = daysInMonth(year: selectedYear, month: selectedMonth) else { return "" }
-        let daysOfWeek = 7
-        let day = (week * daysOfWeek) - (daysOfWeek - day) - startDay + 1
-        if day < 1 || day > lastDay{
+        let day = dayOfMonth(week: week, day: day)
+        if day < 0 {
             return ""
         }
         return "\(day)"
+    }
+    
+    func dayOfMonth(week: Int, day: Int) -> Int {
+        guard let startDay = startOfMonth(year: selectedYear, month: selectedMonth),
+              let lastDay = daysInMonth(year: selectedYear, month: selectedMonth) else { return -1 }
+        let daysOfWeek = 7
+        let day = (week * daysOfWeek) - (daysOfWeek - day) - startDay + 1
+        if day < 1 || day > lastDay{
+            return -1
+        }
+        return day
+    }
+    
+    func yearToString() -> String{
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal // 기본 숫자 스타일 설정
+        if let formattedString = formatter.string(from: NSNumber(value: selectedYear)) {
+            return formattedString.replacingOccurrences(of: ",", with: "")
+        }
+        return ""
+    }
+    
+    func dateCommentToString() -> String {
+        var day: String = ""
+        switch selectedDay{
+        case 1:
+            day = "1st"
+        case 2:
+            day = "2nd"
+        case 3:
+            day = "3rd"
+        default:
+            day = "\(selectedDay)th"
+        }
+        return "\(monthArray[selectedMonth - 1]) \(day)'s comment"
     }
 }

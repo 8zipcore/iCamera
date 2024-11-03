@@ -55,6 +55,8 @@
 		36B2ACA32CABDC3F00F28115 /* Going for a walk.CUBE in Resources */ = {isa = PBXBuildFile; fileRef = 36B2ACA22CABDC3F00F28115 /* Going for a walk.CUBE */; };
 		36BCF7242C94AA8500FF2529 /* AlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BCF7232C94AA8500FF2529 /* AlbumManager.swift */; };
 		36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CF3DF22CB139C5004D58BF /* CutImageView.swift */; };
+		36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CFA3702CD345D100DF6E1E /* CommentsView.swift */; };
+		36CFA3732CD347E600DF6E1E /* CommentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CFA3722CD347E600DF6E1E /* CommentsManager.swift */; };
 		36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D096202C943DCA00F37AE0 /* GalleryView.swift */; };
 		36F84FB62CD1EA7D008275F5 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB52CD1EA7D008275F5 /* CalendarCellView.swift */; };
 		36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */; };
@@ -134,6 +136,8 @@
 		36B2ACA22CABDC3F00F28115 /* Going for a walk.CUBE */ = {isa = PBXFileReference; lastKnownFileType = text; name = "Going for a walk.CUBE"; path = "cube/Going for a walk.CUBE"; sourceTree = SOURCE_ROOT; };
 		36BCF7232C94AA8500FF2529 /* AlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumManager.swift; sourceTree = "<group>"; };
 		36CF3DF22CB139C5004D58BF /* CutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutImageView.swift; sourceTree = "<group>"; };
+		36CFA3702CD345D100DF6E1E /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
+		36CFA3722CD347E600DF6E1E /* CommentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsManager.swift; sourceTree = "<group>"; };
 		36D096202C943DCA00F37AE0 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		36F84FB52CD1EA7D008275F5 /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
 		36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRectangleView.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */,
 				36697BFE2CD1241B00070A55 /* CalendarManager.swift */,
 				36F84FBC2CD24AE5008275F5 /* Font.swift */,
+				36CFA3722CD347E600DF6E1E /* CommentsManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				362222352CA0087600AA9EA5 /* EditPhotoView.swift */,
 				3696515F2CA9831E004E0134 /* TestPhotoView.swift */,
 				368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */,
+				36CFA3702CD345D100DF6E1E /* CommentsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -577,6 +583,7 @@
 				3692E4102CC544E9003CBACB /* SelectColorView.swift in Sources */,
 				362222362CA0087600AA9EA5 /* EditPhotoView.swift in Sources */,
 				36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */,
+				36CFA3732CD347E600DF6E1E /* CommentsManager.swift in Sources */,
 				36F84FB62CD1EA7D008275F5 /* CalendarCellView.swift in Sources */,
 				36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */,
 				36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */,
@@ -595,6 +602,7 @@
 				36F84FBD2CD24AE5008275F5 /* Font.swift in Sources */,
 				368D426E2CCBCF9B00E3E0FB /* CalendarView.swift in Sources */,
 				366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */,
+				36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */,
 				3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */,
 				36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */,
 				3605F5682C917DBF00665348 /* CameraManager.swift in Sources */,

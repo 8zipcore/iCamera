@@ -172,7 +172,7 @@ class AlbumManager: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    func fetchSelectedPhoto(for index: Int) -> AnyPublisher<Void, Error>{
+    func fetchSelectedPhoto(for index: Int) -> AnyPublisher<UIImage, Error>{
         Future { promise in
             DispatchQueue.main.async {
                 self.selectedImage = nil
@@ -204,6 +204,7 @@ class AlbumManager: ObservableObject {
                 if let image = image {
                     DispatchQueue.main.async {
                         self.selectedImage = image
+                        promise(.success(image))
                     }
                 }
             }

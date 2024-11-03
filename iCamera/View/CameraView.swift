@@ -121,7 +121,7 @@ struct CameraView: View {
                             }
                             .navigationDestination(for: String.self){ value in
                                 if value == "GalleryView"{
-                                    GalleryView(navigationPath: $navigationPath)
+                                    GalleryView(navigationPath: $navigationPath, viewType: .camera)
                                 }
                             }
                             
@@ -149,6 +149,7 @@ struct CameraView: View {
                     )
                     .frame(width: viewWidth)
                 }
+                .background(.white)
             }
         }
         .navigationBarHidden(true)

@@ -87,18 +87,19 @@ struct MainView: View {
                             case "CameraView":
                                 CameraView(navigationPath: $navigationPath)
                             case "GalleryView":
-                                GalleryView(navigationPath: $navigationPath)
+                                GalleryView(navigationPath: $navigationPath, viewType: .main)
                             case "CalendarView":
                                 CalendarView(navigationPath: $navigationPath)
                                 /*
                                 TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())*/
                             default:
-                                EmptyView()
+                                TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())
                             }
                         }
                     }
                     
                 }
+                .background(.white)
                 .edgesIgnoringSafeArea(.bottom) // 상위 뷰에서 하단 안전 영역 무시
             }
             .navigationBarHidden(true)

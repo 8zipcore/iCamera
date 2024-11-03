@@ -22,20 +22,40 @@ struct CalendarView: View {
                 let viewWidth = geometry.size.width
                 let viewHeight = geometry.size.height
                 
-                VStack{
+                VStack(spacing: 0){
                     let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
                     
-                    TopBarView(title: "Calendar",
-                               imageSize: topBarSize,
-                               isTrailingButtonHidden: false,
-                               buttonManager: topBarViewButtonManager)
-                    .frame(width: topBarSize.width, height: topBarSize.height)
-                    .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-                        if buttonType == .home {
-                            dismiss()
+                    ZStack{
+                        TopBarView(title: "Calendar",
+                                   imageSize: topBarSize,
+                                   isTrailingButtonHidden: false,
+                                   buttonManager: topBarViewButtonManager)
+                        .frame(width: topBarSize.width, height: topBarSize.height)
+                        .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+                            if buttonType == .home {
+                                dismiss()
+                            }
                         }
+                        HStack{
+                            Button(action:{
+                                calendarManager.todayDate()
+                            }){
+                                let imageWidth: CGFloat = viewWidth * 0.17
+                                let imageHeight: CGFloat = imageWidth * 54 / 119
+                                ZStack{
+                                    Image("blue_button")
+                                        .resizable()
+                                        .frame(width: imageWidth, height: imageHeight)
+                                    Text("Today")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundStyle(.white)
+                                }
+                            }
+                            Spacer()
+                        }
+                        .padding(.leading, 12)
                     }
-                    let titleViewHeight = viewHeight * 0.07
+                    let titleViewHeight = viewWidth * 172 / 1123
                     ZStack{
                         GradientRectangleView()
                         HStack{
@@ -51,13 +71,16 @@ struct CalendarView: View {
                             Spacer()
                             ZStack{
                                 VStack{
-                                    Text("\(calendarManager.selectedYear)")
+                                    Text(calendarManager.yearToString())
                                         .font(.system(size: 13))
+                                        .foregroundStyle(.black)
                                     Spacer()
                                 }
+                                .padding(.top, 10)
                                 Text(calendarManager.monthToString)
                                     .font(.system(size: 35))
-                                    .padding(.top, 10)
+                                    .foregroundStyle(.black)
+                                    .padding(.top, 20)
                             }
                             Spacer()
                             Button(action:{
@@ -74,7 +97,7 @@ struct CalendarView: View {
                     }
                     .frame(height: titleViewHeight)
                     
-                    let weekViewHeight = viewHeight * 0.01
+                    let weekViewHeight = viewWidth * 88 / 1125
                     HStack(spacing: 0){
                         ForEach(calendarManager.week.indices, id: \.self){ index in
                             let cellWidth: CGFloat = viewWidth / CGFloat(7)
@@ -82,11 +105,13 @@ struct CalendarView: View {
                             let weekToString = calendarManager.week[index].rawValue
                             Text(weekToString)
                                 .font(.system(size: 13))
+                                .foregroundStyle(.black)
                                 .frame(width: cellWidth)
                                 .position(x: xPosition, y: weekViewHeight / 2)
                         }
                     }
                     .frame(height: weekViewHeight)
+                    .background(.white)
                     VStack(spacing: 0){
                         let cellWidth: CGFloat = viewWidth / 7
                         let cellHeight: CGFloat = cellWidth * 4.5 / 3
@@ -96,36 +121,69 @@ struct CalendarView: View {
                                     let dayToString = calendarManager.dayToString(week: week, day: day)
                                     CalendarCellView(day: dayToString, image: nil, hiddenBottomLine: week != calendarManager.weeks)
                                         .frame(width: cellWidth, height: cellHeight)
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {
+                                            let selectedDay = calendarManager.dayOfMonth(week: week, day: day)
+                                            if selectedDay > 0 {
+                                                calendarManager.selectedDay = selectedDay
+                                                calendarManager.dateComment = calendarManager.dateCommentToString()
+                                            }
+                                        }
                                 }
                             }
                         }
                         
                         ZStack{
                             GradientRectangleView()
-                            VStack{
-                                HStack{
-                                    Image("pink_circle")
-                                        .resizable()
-                                        .frame(width: viewWidth * 0.03, height: viewWidth * 0.03)
-                                    Text("Agust 24th's comment")
-                                        .font(.system(size: 15, weight: .semibold))
-                                    Spacer()
-                                }
-                                .padding([.leading, .trailing], 10)
-                                Text("nothing . . .")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            if calendarManager.selectedDay > 0{
+                                VStack{
+                                    HStack{
+                                        Image("pink_circle")
+                                            .resizable()
+                                            .frame(width: viewWidth * 0.03, height: viewWidth * 0.03)
+                                        Text(calendarManager.dateComment)
+                                            .font(.system(size: 15, weight: .medium))
+                                            .foregroundStyle(.black)
+                                        Spacer()
+                                    }
                                     .padding([.leading, .trailing], 10)
-                                    .font(.system(size: 13))
-                                Spacer()
+                                    Text("nothing . . .")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding([.leading, .trailing], 10)
+                                        .font(.system(size: 13))
+                                        .foregroundStyle(.black)
+                                    Spacer()
+                                    HStack{
+                                        Spacer()
+                                        NavigationLink(destination: CommentsView(navigationPath: $navigationPath, calendarManager: calendarManager)){
+                                            let imageWidth: CGFloat = viewWidth * 0.2
+                                            let imageHeight: CGFloat = imageWidth * 101 / 238
+                                            ZStack{
+                                                Image("blue_button")
+                                                    .resizable()
+                                                    .frame(width: imageWidth, height: imageHeight)
+                                                Text("Details")
+                                                    .font(.system(size: 15, weight: .semibold))
+                                                    .foregroundStyle(.white)
+                                            }
+                                        }
+                                    }
+                                    .frame(width: viewWidth * 0.85)
+                                    .padding(.bottom, 30)
+                                }
+                                .padding(.top, 10)
                             }
-                            .padding(.top, 10)
                         }
                     }
                 }
+                .background(.white)
                 .ignoresSafeArea(edges: .bottom)
             }
         }
         .navigationBarHidden(true)
+        .onAppear{
+            calendarManager.dateComment = calendarManager.dateCommentToString()
+        }
     }
 }
 
