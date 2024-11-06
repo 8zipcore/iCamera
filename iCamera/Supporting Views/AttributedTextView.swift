@@ -30,7 +30,7 @@ struct AttributedTextView: View {
                         .position(x: viewWidth / 2, y: (viewHeight / 2) + (backgroundViewSizeArray[index].height * multiple(index: index)))
                 }
                 
-                CustomTextView(textData: textData, 
+                CustomTextView(textData: $textData, 
                                onTextChange: { onTextChange($0) },
                                onSizeChange: { textViewSize = $0; onSizeChange($0) })
                 .frame(height: textViewSize.height)
@@ -73,7 +73,7 @@ struct AttributedTextView: View {
 }
 
 struct CustomTextView: UIViewRepresentable {
-    @State var textData: TextData
+    @Binding var textData: TextData
     var textContainerInset: UIEdgeInsets = .zero
     var textViewWidth: CGFloat = .zero
     var onTextChange: (String) -> Void
@@ -86,6 +86,7 @@ struct CustomTextView: UIViewRepresentable {
         textView.isScrollEnabled = false
         textView.backgroundColor = .clear
         textView.setAttributedString(from: textData)
+        print("text : ", textData.text)
         textView.font = textData.textFont.font
         textView.textAlignment = textData.textAlignment
         textView.delegate = context.coordinator

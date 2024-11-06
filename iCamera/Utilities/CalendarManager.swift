@@ -5,7 +5,8 @@
 //  Created by 홍승아 on 10/29/24.
 //
 
-import Foundation
+import UIKit
+import Combine
 
 enum Week: String, CaseIterable{
     case sun = "Sun"
@@ -35,6 +36,10 @@ class CalendarManager: ObservableObject{
     var monthToString: String{
         return monthArray[selectedMonth - 1]
     }
+    
+    var selectedImage = PassthroughSubject<(AlbumManager, Int), Never>()
+    @Published var calendarDataArray: [CalendarData] = []
+    private var cancellables = Set<AnyCancellable>()
     
     init(){
         week = Week.allCases.map{ return $0 }
@@ -154,5 +159,80 @@ class CalendarManager: ObservableObject{
             day = "\(selectedDay)th"
         }
         return "\(monthArray[selectedMonth - 1]) \(day)'s comment"
+    }
+    
+    func createDate(year: Int, month: Int, day: Int) -> Date? {
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        return Calendar.current.date(from: dateComponents)
+    }
+    
+    func selectedDate() -> Date?{
+        return createDate(year: selectedYear, month: selectedMonth, day: selectedDay)
+    }
+    
+    func selectedCommnets() -> String{
+        let nothingComments = "noting . . ."
+        if let index = calendarDataArrayIndex() {
+            if calendarDataArray[index].comments.count == 0 {
+                return nothingComments
+            }
+            return calendarDataArray[index].comments
+        }
+        return nothingComments
+    }
+}
+// CalendarData
+extension CalendarManager{
+    func calendarDataArrayIndex(week: Int, day: Int) -> Int?{
+        if let date = createDate(year: selectedYear, month: selectedMonth, day: dayOfMonth(week: week, day: day)){
+            for index in calendarDataArray.indices{
+                if date == calendarDataArray[index].date{
+                    return index
+                }
+            }
+        }
+        return nil
+    }
+    
+    func calendarDataArrayIndex() -> Int?{
+        if let selectedDate = createDate(year: selectedYear, month: selectedMonth, day: selectedDay){
+            for index in calendarDataArray.indices{
+                let date = calendarDataArray[index].date
+                if Calendar.current.isDate(selectedDate, inSameDayAs: date){
+                    return index
+                }
+            }
+        }
+        return nil
+    }
+    
+    func updateData(_ calendarData: CalendarData){
+        if calendarDataArray.filter({ $0.id == calendarData.id }).count == 0 {
+            CoreDataManager.shared.saveData(calendarData)
+            calendarDataArray.append(calendarData)
+        } else {
+            CoreDataManager.shared.updateData(calendarData)
+            if let index = calendarDataArrayIndex(){
+                calendarDataArray[index] = calendarData
+            }
+        }
+    }
+    
+    func fetchData(){
+        CoreDataManager.shared.fetchData()
+            .sink(receiveCompletion: { completion in
+                  switch completion{
+                  case .finished:
+                      print("finish")
+                  case .failure(_):
+                      print("fail")
+                  }
+              }, receiveValue: { value in
+                  self.calendarDataArray = value
+              })
+              .store(in: &cancellables)
     }
 }

@@ -11,8 +11,8 @@ import SwiftUI
 struct CalendarView: View {
     @Binding var navigationPath: NavigationPath
     
+    @StateObject var calendarManager: CalendarManager
     @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
-    @StateObject private var calendarManager = CalendarManager()
     
     @Environment(\.dismiss) var dismiss
     
@@ -55,6 +55,7 @@ struct CalendarView: View {
                         }
                         .padding(.leading, 12)
                     }
+                    let titleViewWidth = viewWidth * 0.95
                     let titleViewHeight = viewWidth * 172 / 1123
                     ZStack{
                         GradientRectangleView()
@@ -82,6 +83,7 @@ struct CalendarView: View {
                                     .foregroundStyle(.black)
                                     .padding(.top, 20)
                             }
+                            .padding(.bottom, 10)
                             Spacer()
                             Button(action:{
                                 calendarManager.nextMonth()
@@ -92,8 +94,7 @@ struct CalendarView: View {
                                     .frame(width: buttonWidth, height: buttonHeight)
                             }
                         }
-                        .frame(width: viewWidth * 0.95)
-                        .position(x: viewWidth / 2, y: titleViewHeight / 2.3)
+                        .frame(width: titleViewWidth)
                     }
                     .frame(height: titleViewHeight)
                     
@@ -119,7 +120,10 @@ struct CalendarView: View {
                             HStack(spacing: 0){
                                 ForEach(1...7, id: \.self){ day in
                                     let dayToString = calendarManager.dayToString(week: week, day: day)
-                                    CalendarCellView(day: dayToString, image: nil, hiddenBottomLine: week != calendarManager.weeks)
+                                    let index = calendarManager.calendarDataArrayIndex(week: week, day: day)
+                                    CalendarCell(day: dayToString,
+                                                     image: index == nil ? nil : calendarManager.calendarDataArray[index!].image,
+                                                     hiddenBottomLine: week != calendarManager.weeks)
                                         .frame(width: cellWidth, height: cellHeight)
                                         .contentShape(Rectangle())
                                         .onTapGesture {
@@ -147,7 +151,7 @@ struct CalendarView: View {
                                         Spacer()
                                     }
                                     .padding([.leading, .trailing], 10)
-                                    Text("nothing . . .")
+                                    Text(calendarManager.selectedCommnets())
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding([.leading, .trailing], 10)
                                         .font(.system(size: 13))
@@ -189,5 +193,5 @@ struct CalendarView: View {
 
 @available(iOS 16.0, *)
 #Preview {
-    CalendarView(navigationPath: .constant(NavigationPath()))
+    CalendarView(navigationPath: .constant(NavigationPath()), calendarManager: CalendarManager())
 }

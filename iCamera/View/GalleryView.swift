@@ -16,7 +16,7 @@ struct GalleryView: View {
     
     @Binding var navigationPath: NavigationPath
     var viewType: PreviousViewType
-    @State var commentsManager = CommentsManager()
+    @State var calendarManager = CalendarManager()
     
     @StateObject var albumManager = AlbumManager()
     @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
@@ -44,7 +44,7 @@ struct GalleryView: View {
                     
                     TopBarView(title: "Photos",
                                imageSize: topBarSize,
-                               isLeadingButtonHidden: navigationPath.count == 1,
+                               isLeadingButtonHidden: viewType == .main,
                                isTrailingButtonHidden: false,
                                isAlbumButtonHidden: false,
                                buttonManager: topBarViewButtonManager)
@@ -73,7 +73,7 @@ struct GalleryView: View {
                             LazyVGrid(columns: columns, spacing: 3) {
                                 ForEach(albumManager.images.indices, id: \.self) { index in
                                     let image = albumManager.images[index]
-                                    NavigationLink(value: index) {
+                                    if viewType == .comments{
                                         Image(uiImage: image)
                                             .resizable()
                                             .scaledToFill()
@@ -81,20 +81,22 @@ struct GalleryView: View {
                                             .background(.clear)
                                             .clipped()
                                             .onTapGesture {
-                                                if viewType == .comments{
-                                                    commentsManager.selectedImage.send((albumManager, index))
-                                                    dismiss()
-                                                }
+                                                calendarManager.selectedImage.send((albumManager, index))
+                                                dismiss()
                                             }
+                                    } else {
+                                        NavigationLink(value: index) {
+                                            Image(uiImage: image)
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: imageViewWidth, height: imageViewWidth)
+                                                .background(.clear)
+                                                .clipped()
+                                        }
                                     }
                                 }
                             }
                             .background(.white)
-                            .navigationDestination(for: Int.self){ index in
-                                if viewType != .comments{
-                                    EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)
-                                }
-                            }
                         }, scrollViewDidScroll: { scrollView in
                             // 💡 추측 : SwiftUI로 변환할때 scorllview가 그냥 viewWidth, viewHeight 사이즈로 인식 됨 ??
                             // ㄴ contentOffSet을 scorllView의 진짜크기(viewHeight - scrollView.height)으로 제대로 안받아옴
@@ -109,6 +111,11 @@ struct GalleryView: View {
                             }
                         })
                         .frame(height: viewHeight - topBarSize.height) // 이 코드 안먹힘
+                        .navigationDestination(for: Int.self){ index in
+                            if viewType != .comments{
+                                EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)
+                            }
+                        }
                     }
                 }
                 .background(.white)

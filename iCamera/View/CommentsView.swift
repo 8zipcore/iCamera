@@ -13,15 +13,16 @@ struct CommentsView: View {
     @StateObject var calendarManager: CalendarManager
     
     @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
-    @StateObject private var commentsManager = CommentsManager()
     @StateObject private var albumManager = AlbumManager()
     @StateObject private var keyboardObserver = KeyboardObserver()
     @State private var imageViewHeight: CGFloat = .zero
-    @State private var textInput: String = ""
     @State private var textViewSize: CGSize = .zero
     @State private var scrollViewHeight: CGFloat = .zero
     @State private var contentHeight: CGFloat = .zero
     @State private var spacerHeight: CGFloat = .zero
+    
+    @State private var calendarData: CalendarData = CalendarData(date: Date(), comments: "")
+    @State private var textData: TextData = .emptyTextData()
     
     @Environment(\.dismiss) var dismiss
     
@@ -32,6 +33,7 @@ struct CommentsView: View {
             GeometryReader { geometry in
                 let viewWidth = geometry.size.width
                 let viewHeight = geometry.size.height
+                let imageWidth = viewWidth
                 let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
                 let barSize = CGSize(width: viewWidth, height: viewHeight * 0.05)
                 let buttonSize = CGSize(width: barSize.height * 0.75, height: barSize.height * 0.75)
@@ -57,37 +59,51 @@ struct CommentsView: View {
                         }
                         ScrollViewReader { scrollProxy in
                             ScrollView{
-                                let imageWidth = viewWidth
                                 VStack(spacing: 0){
                                     ZStack{
-                                        if let image = albumManager.selectedImage {
-                                            Image(uiImage: image)
-                                                .resizable()
-                                                .frame(height: imageViewHeight)
-                                        } else {
+                                        if let image = calendarData.image {
+                                        // if let image = UIImage(named: "test") {
                                             ZStack{
-                                                Rectangle()
-                                                    .fill(.white)
-                                                let buttonWidth = viewWidth * 0.08
-                                                Image("plus_button")
-                                                    .resizable()
-                                                    .frame(width: buttonWidth, height: buttonWidth)
+                                                NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager)){
+                                                    Image(uiImage: image)
+                                                        .resizable()
+                                                }
+                                                
+                                                VStack{
+                                                    Spacer()
+                                                    HStack{
+                                                        Spacer()
+                                                        let imageWidth: CGFloat = viewWidth * 0.16
+                                                        let imageHeight: CGFloat = imageWidth * 101 / 238
+                                                        ZStack{
+                                                            Image("blue_button")
+                                                                .resizable()
+                                                                .frame(width: imageWidth, height: imageHeight)
+                                                            Text("Delete")
+                                                                .font(.system(size: 13, weight: .semibold))
+                                                                .foregroundStyle(.white)
+                                                        }
+                                                    }
+                                                }
+                                                .padding([.bottom, .trailing], 15)
+                                                .onTapGesture{
+                                                    calendarData.image = nil
+                                                    setImageViewHeight(viewWidth: viewWidth)
+                                                }
                                             }
-                                            .frame(height: imageViewHeight)
+                                        } else {
+                                            NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager)){
+                                                ZStack{
+                                                    let buttonWidth = viewWidth * 0.08
+                                                    Rectangle()
+                                                        .fill(.white)
+                                                    Image("plus_button")
+                                                        .resizable()
+                                                        .frame(width: buttonWidth, height: buttonWidth)
+                                                }
+                                            }
                                         }
-                                        NavigationLink(value: "GalleryView"){
-                                            Rectangle()
-                                                .fill(.clear)
-                                        }
-                                    }
-                                    .navigationDestination(for: String.self) { value in
-                                        if value == "GalleryView" {
-                                            GalleryView(navigationPath: $navigationPath,
-                                                                                    viewType: .comments,
-                                                                                    commentsManager: commentsManager,
-                                                                                    albumManager: albumManager)
-                                        }
-                                    }
+                                    }.frame(height: imageViewHeight)
                                     /*
                                      1. 키보드 올라가면 topbarview + 키보드view + 키보드 위에 bar View 제외한 값 구해서 스크롤뷰 높이로 설정해줌
                                      2. textView 밑에 spacer 추가해서 글자수 적을때 스크롤 시점 commentsTitle로 고정시킴
@@ -107,21 +123,11 @@ struct CommentsView: View {
                                     .padding([.leading, .trailing], 15)
                                     
                                     let textEditorCornerRadius: CGFloat = 10
-                                    let textData = TextData(text: textInput,
-                                                            textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "System"),
-                                                            textAlignment: .left,
-                                                            textColor: .black,
-                                                            backgroundColor: .clear,
-                                                            location: .zero,
-                                                            size: .zero,
-                                                            scale: 1.0,
-                                                            angle: .zero,
-                                                            isSelected: false)
                                     let textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-                                    CustomTextView(textData: textData,
+                                    CustomTextView(textData: $textData,
                                                    textContainerInset: textContainerInset,
                                                    textViewWidth: viewWidth * 0.88,
-                                                   onTextChange: { textInput = $0 },
+                                                   onTextChange: { calendarData.comments = $0 },
                                                    onSizeChange: { if isFocused || textViewSize == .zero {textViewSize = $0} })
                                     .focused($isFocused)
                                     .background(Color.white)
@@ -134,13 +140,15 @@ struct CommentsView: View {
                                     .padding(.bottom, 20)
                                     .id("textView")
                                     .onChange(of: textViewSize) { _ in
-                                        if spacerHeight != .zero{
-                                            spacerHeight = scrollViewHeight - (contentHeight - (textData.textFont.font.lineHeight) + textViewSize.height)
-                                        }
-                                        if spacerHeight < 0 {
-                                            scrollProxy.scrollTo("textView", anchor: .bottom)
-                                        } else {
-                                            scrollProxy.scrollTo("commentsTitle", anchor: .top)
+                                        if isFocused{
+                                            if spacerHeight != .zero{
+                                                spacerHeight = scrollViewHeight - (contentHeight - (textData.textFont.font.lineHeight) + textViewSize.height)
+                                            }
+                                            if spacerHeight < 0 {
+                                                scrollProxy.scrollTo("textView", anchor: .bottom)
+                                            } else {
+                                                scrollProxy.scrollTo("commentsTitle", anchor: .top)
+                                            }
                                         }
                                     }
                                     if isFocused{
@@ -155,7 +163,7 @@ struct CommentsView: View {
                                         }
                                     }
                                 )
-                                .onReceive(commentsManager.selectedImage){ (albumManager, index) in
+                                .onReceive(calendarManager.selectedImage){ (albumManager, index) in
                                     self.albumManager.fetchSelectedPhoto(for: index)
                                         .sink(receiveCompletion: { completion in
                                             switch completion{
@@ -166,6 +174,7 @@ struct CommentsView: View {
                                             }
                                         }, receiveValue: { image in
                                             imageViewHeight = imageWidth * image.size.height / image.size.width
+                                            calendarData.image = image
                                         })
                                         .store(in: &albumManager.cancellables)
                                 }
@@ -186,9 +195,30 @@ struct CommentsView: View {
                     } // VStack 끝
                 }
                 .onAppear{
-                    if imageViewHeight == .zero{
-                        imageViewHeight = viewWidth * 667 / 1125
+                    setImageViewHeight(viewWidth: viewWidth)
+                    if let index = calendarManager.calendarDataArrayIndex(){
+                        self.calendarData = calendarManager.calendarDataArray[index]
+                        print("같")
+                        if let image = calendarData.image {
+                            imageViewHeight = imageWidth * image.size.height / image.size.width
+                        }
+                    } else {
+                        print("다")
+                        calendarData = CalendarData(date: calendarManager.selectedDate()!, image: nil, comments: "")
                     }
+                    self.textData = TextData(text: calendarData.comments,
+                                            textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "System"),
+                                            textAlignment: .left,
+                                            textColor: .black,
+                                            backgroundColor: .clear,
+                                            location: .zero,
+                                            size: .zero,
+                                            scale: 1.0,
+                                            angle: .zero,
+                                            isSelected: false)
+                }
+                .onDisappear{
+                    calendarManager.updateData(calendarData)
                 }
                 /* KeyboardView */
                 if isFocused{
@@ -214,8 +244,11 @@ struct CommentsView: View {
         }
         .navigationBarHidden(true)
     }
+    
+    private func setImageViewHeight(viewWidth: CGFloat){
+        imageViewHeight = viewWidth * 667 / 1125
+    }
 }
-
 @available(iOS 16.0, *)
 #Preview {
     CommentsView(navigationPath: .constant(NavigationPath()), calendarManager: CalendarManager())

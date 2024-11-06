@@ -24,6 +24,10 @@ struct TextData {
     var scale: CGFloat
     var angle: Angle
     var isSelected: Bool
+    
+    static func emptyTextData() -> TextData{
+        return TextData(text: "", textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: ""), textAlignment: .left, textColor: .black, backgroundColor: .clear, location: .zero, size: .zero, scale: .zero, angle: .zero, isSelected: false)
+    }
 }
 
 struct TextFont: Hashable{

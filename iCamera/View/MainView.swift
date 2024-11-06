@@ -20,6 +20,7 @@ struct CustomRoundedRectangle: Shape {
 struct MainView: View {
     
     @State private var navigationPath = NavigationPath()
+    @State private var calendarManager = CalendarManager()
 
     var body: some View {
         GeometryReader { geometry in
@@ -89,7 +90,7 @@ struct MainView: View {
                             case "GalleryView":
                                 GalleryView(navigationPath: $navigationPath, viewType: .main)
                             case "CalendarView":
-                                CalendarView(navigationPath: $navigationPath)
+                                CalendarView(navigationPath: $navigationPath, calendarManager: calendarManager)
                                 /*
                                 TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())*/
                             default:
@@ -101,6 +102,11 @@ struct MainView: View {
                 }
                 .background(.white)
                 .edgesIgnoringSafeArea(.bottom) // 상위 뷰에서 하단 안전 영역 무시
+                .onAppear{
+                    // CoreDataManager.shared.deleteAllData()
+                    calendarManager.fetchData()
+                    calendarManager.todayDate()
+                }
             }
             .navigationBarHidden(true)
         }

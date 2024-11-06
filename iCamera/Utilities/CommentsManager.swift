@@ -10,5 +10,5 @@ import SwiftUI
 import Combine
 
 class CommentsManager: ObservableObject{
-    var selectedImage = PassthroughSubject<(AlbumManager, Int), Never>()
+
 }
