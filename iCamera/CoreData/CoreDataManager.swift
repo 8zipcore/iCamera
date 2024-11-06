@@ -33,7 +33,6 @@ class CoreDataManager{
         if context.hasChanges{
             do{
                 try context.save()
-                print("✅ 저장 성공")
             } catch {
                 let error = error as NSError
                 fatalError("Unresolved error \(error), \(error.userInfo)")

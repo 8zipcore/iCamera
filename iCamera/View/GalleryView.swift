@@ -85,7 +85,7 @@ struct GalleryView: View {
                                                 dismiss()
                                             }
                                     } else {
-                                        NavigationLink(value: index) {
+                                        NavigationLink(destination: EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)) {
                                             Image(uiImage: image)
                                                 .resizable()
                                                 .scaledToFill()
@@ -111,11 +111,6 @@ struct GalleryView: View {
                             }
                         })
                         .frame(height: viewHeight - topBarSize.height) // 이 코드 안먹힘
-                        .navigationDestination(for: Int.self){ index in
-                            if viewType != .comments{
-                                EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)
-                            }
-                        }
                     }
                 }
                 .background(.white)
@@ -123,6 +118,7 @@ struct GalleryView: View {
         }
         .navigationBarHidden(true)
         .onAppear{
+            print("GalleryView")
             loadPhotos()
             albumManager.fetchAlbums()
                 .sink(receiveCompletion: { completion in

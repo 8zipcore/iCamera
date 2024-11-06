@@ -23,6 +23,7 @@ struct CommentsView: View {
     
     @State private var calendarData: CalendarData = CalendarData(date: Date(), comments: "")
     @State private var textData: TextData = .emptyTextData()
+    @State private var isNavigationLinkActive = false
     
     @Environment(\.dismiss) var dismiss
     
@@ -64,9 +65,12 @@ struct CommentsView: View {
                                         if let image = calendarData.image {
                                         // if let image = UIImage(named: "test") {
                                             ZStack{
-                                                NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager)){
+                                                NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager), isActive: $isNavigationLinkActive){
                                                     Image(uiImage: image)
                                                         .resizable()
+                                                        .onTapGesture {
+                                                            isNavigationLinkActive = true
+                                                        }
                                                 }
                                                 
                                                 VStack{
@@ -91,8 +95,9 @@ struct CommentsView: View {
                                                     setImageViewHeight(viewWidth: viewWidth)
                                                 }
                                             }
+                                            
                                         } else {
-                                            NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager)){
+                                            /*NavigationLink(value: DestinationView.galleryView){
                                                 ZStack{
                                                     let buttonWidth = viewWidth * 0.08
                                                     Rectangle()
@@ -101,9 +106,11 @@ struct CommentsView: View {
                                                         .resizable()
                                                         .frame(width: buttonWidth, height: buttonWidth)
                                                 }
-                                            }
+                                            }*/
                                         }
-                                    }.frame(height: imageViewHeight)
+                                    }
+                                    .frame(height: imageViewHeight)
+                                    
                                     /*
                                      1. 키보드 올라가면 topbarview + 키보드view + 키보드 위에 bar View 제외한 값 구해서 스크롤뷰 높이로 설정해줌
                                      2. textView 밑에 spacer 추가해서 글자수 적을때 스크롤 시점 commentsTitle로 고정시킴
@@ -198,12 +205,10 @@ struct CommentsView: View {
                     setImageViewHeight(viewWidth: viewWidth)
                     if let index = calendarManager.calendarDataArrayIndex(){
                         self.calendarData = calendarManager.calendarDataArray[index]
-                        print("같")
                         if let image = calendarData.image {
                             imageViewHeight = imageWidth * image.size.height / image.size.width
                         }
                     } else {
-                        print("다")
                         calendarData = CalendarData(date: calendarManager.selectedDate()!, image: nil, comments: "")
                     }
                     self.textData = TextData(text: calendarData.comments,
@@ -216,9 +221,7 @@ struct CommentsView: View {
                                             scale: 1.0,
                                             angle: .zero,
                                             isSelected: false)
-                }
-                .onDisappear{
-                    calendarManager.updateData(calendarData)
+                    isNavigationLinkActive = false
                 }
                 /* KeyboardView */
                 if isFocused{
@@ -240,7 +243,10 @@ struct CommentsView: View {
                     .position(x: viewWidth / 2, y: viewHeight - keyboardObserver.keyboardHeight - (barSize.height / 2))
                 }
             }
-            .ignoresSafeArea(edges: .bottom)
+            .edgesIgnoringSafeArea(.bottom)
+            .onDisappear{
+                calendarManager.updateData(calendarData)
+            }
         }
         .navigationBarHidden(true)
     }

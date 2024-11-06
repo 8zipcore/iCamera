@@ -86,7 +86,6 @@ struct CustomTextView: UIViewRepresentable {
         textView.isScrollEnabled = false
         textView.backgroundColor = .clear
         textView.setAttributedString(from: textData)
-        print("text : ", textData.text)
         textView.font = textData.textFont.font
         textView.textAlignment = textData.textAlignment
         textView.delegate = context.coordinator
