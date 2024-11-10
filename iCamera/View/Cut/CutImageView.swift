@@ -19,13 +19,12 @@ struct CutImageView: View {
     
     @State private var frameLocation: CGPoint = .zero
     @State private var maskRectangleViewLocation: CGPoint = .zero
-    
     @State private var imagePosition: CGPoint = .zero
     @State private var lastImagePosition: CGPoint = .zero
     @State private var zoomScale: CGFloat = 1.0
     @State private var lastZoomScale: CGFloat = 1
     @State private var originalImageSize: CGSize = .zero
-    
+    @State private var imageSize: CGSize = .zero
     @State private var previousFrameSize: CGSize = .zero
     
     var body: some View {
@@ -41,6 +40,8 @@ struct CutImageView: View {
                     .resizable()
                     .scaledToFill()
                     .scaleEffect(zoomScale)
+                    .scaleEffect(x: cutImageManager.currentFlipHorizontal.x, y: cutImageManager.currentFlipHorizontal.y)
+                    .rotationEffect(.degrees(cutImageManager.currentDegree))
                     .onReceive(cutImageManager.imageZoom){ value in
                         let minScale: CGFloat = 1
                         let maxScale: CGFloat = 10
@@ -55,27 +56,15 @@ struct CutImageView: View {
                         zoomScale = newScale
                     }
                     .onReceive(cutImageManager.imageZoomEnded) {
-                        
-                        if zoomScale * originalImageSize.width < frameWidth{
-                            zoomScale *= frameWidth / (zoomScale * originalImageSize.width)
-                        } else if zoomScale * originalImageSize.height < frameHeight {
-                            zoomScale *= frameHeight / (zoomScale * originalImageSize.height)
-                        }
-                        
+                        // 최소 줌을 frameWidth / frameHeight 에 맞게 설정함
+                        applyMinimumZoomScale(frameWidth: frameWidth, frameHeight: frameHeight)
                         lastZoomScale = zoomScale
-                        
-                        let framePositionArray = cutImageManager.positionArray(center: frameLocation, width: frameWidth, height: frameHeight)
-                        let imagePositionArray = cutImageManager.positionArray(center: imagePosition, width: originalImageSize.width * zoomScale, height: originalImageSize.height * zoomScale)
-                        
-                        // Selectionframe과 공간이 생길 때 frame이에 맞게 position 옮겨주는 작업
-                        imagePosition = cutImageManager.updateImagePosition(framePositionArray: framePositionArray,
-                                                                            imagePositionArray: imagePositionArray,
-                                                                            imagePosition: imagePosition)
+                        updateImagePosition()
                     }
                     .onReceive(cutImageManager.imageDrag){ value in
                         let newPositionX = lastImagePosition.x + value.x
                         let newPositionY = lastImagePosition.y + value.y
-                        
+                        // frameWidth 넘게 drag 되지 않게
                         if frameLocation.x - frameWidth / 2 < newPositionX - (originalImageSize.width * zoomScale / 2){
                             imagePosition.x = frameLocation.x + (originalImageSize.width * zoomScale - frameWidth) / 2
                         } else if frameLocation.x + frameWidth / 2 > newPositionX + (originalImageSize.width * zoomScale / 2){
@@ -83,7 +72,7 @@ struct CutImageView: View {
                         } else {
                             imagePosition.x = newPositionX
                         }
-                        
+                        // FrameHeight 넘게 Drag 되지 않게
                         if frameLocation.y - frameHeight / 2 < newPositionY - (originalImageSize.height * zoomScale / 2){
                             imagePosition.y = frameLocation.y + (originalImageSize.height * zoomScale - frameHeight) / 2
                         } else if frameLocation.y + frameHeight / 2 > newPositionY + (originalImageSize.height * zoomScale / 2){
@@ -95,16 +84,69 @@ struct CutImageView: View {
                     .onReceive(cutImageManager.imageDragEnded){ value in
                         lastImagePosition = imagePosition
                     }
-                    .frame(width: originalImageSize.width, height: originalImageSize.height)
+                    .onReceive(cutImageManager.rotateDegreeTapped){ _ in
+                        cutImageManager.rotateDegree()
+                        
+                        var newFrameWidth = frameHeight
+                        var newFrameHeight = frameWidth
+                        // FrameWIdth 뷰사이즈에 맞게 조정
+                        if newFrameWidth > newFrameHeight{
+                            newFrameWidth = viewWidth
+                            newFrameHeight = newFrameWidth * frameWidth / frameHeight
+                        } else {
+                            newFrameHeight = viewHeight
+                            newFrameWidth = newFrameHeight * frameHeight / frameWidth
+                        }
+                        
+                        frameWidth = newFrameWidth
+                        frameHeight = newFrameHeight
+                        previousFrameSize = CGSize(width: frameWidth, height: frameHeight)
+                        maskRectangleViewLocation = CGPoint(x: frameLocation.x - frameWidth / 2, y: frameLocation.y - frameHeight / 2)
+
+                        // image는 원래 세로로 고정되어있고 rotation 값만 수정하는 경우라
+                        // -90 , -270도에선 이미지 비율을 가로 세로 바꿔야됨
+                        if cutImageManager.isHorizontalDegree(){
+                            var newImageWidth = imageSize.height
+                            var newImageHeight = imageSize.width
+                            if newImageWidth > newImageHeight {
+                                newImageWidth = viewWidth
+                                newImageHeight = newImageWidth * imageSize.width / imageSize.height
+                            } else {
+                                newImageHeight = viewHeight
+                                newImageWidth = newImageHeight * imageSize.height / imageSize.width
+                            }
+                            imageSize.width = newImageHeight
+                            imageSize.height = newImageWidth
+                        } else {
+                            var newImageWidth = imageSize.width
+                            var newImageHeight = imageSize.height
+                            
+                            if newImageWidth > newImageHeight {
+                                newImageWidth = viewWidth
+                                newImageHeight = newImageWidth * imageSize.height / imageSize.width
+                            } else {
+                                newImageHeight = viewHeight
+                                newImageWidth = newImageHeight * imageSize.width / imageSize.height
+                            }
+                            imageSize.width = newImageWidth
+                            imageSize.height = newImageHeight
+                        }
+                        // originalImage는 화면에 보여지는 image 크기 그대로임
+                        originalImageSize.width = cutImageManager.isHorizontalDegree() ? imageSize.height : imageSize.width
+                        originalImageSize.height = cutImageManager.isHorizontalDegree() ? imageSize.width : imageSize.height
+                        
+                        updateImagePosition()
+                    }
+                    .frame(width: imageSize.width, height: imageSize.height)
                     .position(imagePosition)
                     .clipped()
                 
                 MaskRectangleView(overlayColor: UIColor.black.withAlphaComponent(0.3),
                                   rectangleSize: geometry.size,
-                                  maskRectangleSize: CGSize(width: frameWidth + lineSize.width, height: frameHeight),
-                                  maskPosition: CGPoint(x: maskRectangleViewLocation.x - lineSize.width / 2, y: maskRectangleViewLocation.y))
+                                  maskRectangleSize: CGSize(width: frameWidth, height: frameHeight),
+                                  maskPosition: CGPoint(x: maskRectangleViewLocation.x, y: maskRectangleViewLocation.y))
                 
-                SelectionFrameView(imageWidth: frameWidth + lineSize.width, imageHeight: frameHeight, lineSize: lineSize, cutImageManager: cutImageManager)
+                SelectionFrameView(imageWidth: frameWidth, imageHeight: frameHeight, lineSize: lineSize, cutImageManager: cutImageManager)
                     .frame(width: frameWidth + padding, height: frameHeight + padding)
                     .onReceive(cutImageManager.selectionFrameDrag){ data in
                         let currentSize = CGSize(width: frameWidth, height: frameHeight)
@@ -113,27 +155,27 @@ struct CutImageView: View {
                         let scale = data.selectionFrameRectangle.scale
                         var newLocation: CGPoint = frameLocation
                         let location = selectionFrameRectangle.location
-                        
                         switch location{
-                        case .tt:
-                            let widthDifferenceValue = (newSize.width - currentSize.width) * scale.x // 1
-                            let heightDifferenceValue = newSize.height * scale.y // -1
-                            newSize = CGSize(width: currentSize.width + widthDifferenceValue, height: currentSize.height + heightDifferenceValue)
-                            newLocation = CGPoint(x: frameLocation.x + widthDifferenceValue / 2, y: frameLocation.y - heightDifferenceValue / 2)
-                        case .tb:
-                            let widthDifferenceValue = (newSize.width - currentSize.width) * scale.x
-                            let heightDifferenceValue = (newSize.height - currentSize.height) * scale.y
-                            newSize = CGSize(width: currentSize.width + widthDifferenceValue, height: currentSize.height + heightDifferenceValue)
-                            newLocation = CGPoint(x: frameLocation.x + widthDifferenceValue / 2, y: frameLocation.y + heightDifferenceValue / 2)
                         case .lt:
+                            // (0,0)에서 시작되기때문에 드래그한 값 = 이동량
                             let widthDifferenceValue = newSize.width
                             let heightDifferenceValue = newSize.height
                             newSize = CGSize(width: currentSize.width - widthDifferenceValue, height: currentSize.height - heightDifferenceValue)
+                            newLocation = CGPoint(x: frameLocation.x + widthDifferenceValue / 2, y: frameLocation.y + heightDifferenceValue / 2)
+                        case .tt:
+                            let widthDifferenceValue = (newSize.width - currentSize.width)
+                            let heightDifferenceValue = newSize.height
+                            newSize = CGSize(width: currentSize.width + widthDifferenceValue, height: currentSize.height - heightDifferenceValue)
                             newLocation = CGPoint(x: frameLocation.x + widthDifferenceValue / 2, y: frameLocation.y + heightDifferenceValue / 2)
                         case .lb:
                             let widthDifferenceValue = newSize.width
                             let heightDifferenceValue = (newSize.height - currentSize.height)
                             newSize = CGSize(width: currentSize.width - widthDifferenceValue, height: currentSize.height + heightDifferenceValue)
+                            newLocation = CGPoint(x: frameLocation.x + widthDifferenceValue / 2, y: frameLocation.y + heightDifferenceValue / 2)
+                        case .tb:
+                            let widthDifferenceValue = (newSize.width - currentSize.width)
+                            let heightDifferenceValue = (newSize.height - currentSize.height)
+                            newSize = CGSize(width: currentSize.width + widthDifferenceValue, height: currentSize.height + heightDifferenceValue)
                             newLocation = CGPoint(x: frameLocation.x + widthDifferenceValue / 2, y: frameLocation.y + heightDifferenceValue / 2)
                         case .tc: fallthrough
                         case .b:
@@ -149,56 +191,23 @@ struct CutImageView: View {
                             newLocation = CGPoint(x: frameLocation.x - widthDifferenceValue / 2, y: frameLocation.y - heightDifferenceValue / 2)
                         }
                         
-                        let previousFramePositionArray = cutImageManager.positionArray(center: viewCenter, width: previousFrameSize.width, height: previousFrameSize.height)
-                        let framePositionArray = cutImageManager.positionArray(center: newLocation, width: newSize.width, height: newSize.height)
-                        let imagePositionArray = cutImageManager.positionArray(center: imagePosition, width: originalImageSize.width * zoomScale, height: originalImageSize.height * zoomScale)
+                        let newFrame = cutImageManager.adjustFrameToImageSize(newSize: newSize, newLocation: newLocation,
+                                                                              viewSize: geometry.size,
+                                                                              previousFrameSize: previousFrameSize,
+                                                                              frameLocation: frameLocation,
+                                                                              frameSize: CGSize(width: frameWidth, height: frameHeight),
+                                                                              originalImageSize: originalImageSize,
+                                                                              imagePosition: imagePosition,
+                                                                              zoomScale: zoomScale,
+                                                                              padding: padding, 
+                                                                              location: location)
                         
-                        // frame이 이미지 사이즈 넘어가지 않도록 조정하는 작업
-                        let updateData = cutImageManager.updateFrameData(location: location,
-                                                                         previousFramePositionArray: previousFramePositionArray,
-                                                                         framePositionArray: framePositionArray,
-                                                                         imagePositionArray: imagePositionArray,
-                                                                         viewWidth: geometry.size.width, viewHeight: geometry.size.height,
-                                                                         viewCenter: viewCenter,
-                                                                         newSize: newSize, newLocation: newLocation,
-                                                                         framePosition: frameLocation,
-                                                                         frameWidth: frameWidth,
-                                                                         frameHeight: frameHeight)
-                        newSize = updateData.0
-                        newLocation = updateData.1
-                        
-                        let minimumSize = CGSize(width: viewWidth * 0.2, height: viewWidth * 0.2)
-                        // 조건 1. 최소 사이즈보다 작아지지 않을 것
-                        if newSize.width < minimumSize.width || newSize.height < minimumSize.height{
-                            return
+                        if let newFrame = newFrame{
+                            self.frameWidth = newFrame.size.width
+                            self.frameHeight = newFrame.size.height
+                            self.frameLocation = newFrame.location
+                            maskRectangleViewLocation = CGPoint(x: frameLocation.x - frameWidth / 2, y: frameLocation.y - frameHeight / 2)
                         }
-                        // 조건 2. Frame이 viewSize를 넘어가지 말 것
-                        if newLocation.x - (newSize.width / 2) < padding / 2 {
-                            if location == .lt || location == .lc || location == .lb{
-                                newSize.width = previousFramePositionArray[4].x - padding / 2
-                                newLocation.x = frameLocation.x + (newSize.width - frameWidth) / 2
-                            }
-                        } else if newLocation.x + (newSize.width / 2) > geometry.size.width - padding / 2 {
-                            if location == .tt || location == .tc || location == .tb{
-                                newSize.width =  geometry.size.width - padding / 2 - previousFramePositionArray[3].x
-                                newLocation.x = frameLocation.x - (newSize.width - frameWidth) / 2
-                            }
-                        } else if newLocation.y - (newSize.height / 2) < padding / 2 {
-                            if location == .t || location == .lt || location == .tt{
-                                newSize.height = geometry.size.height - padding / 2 - previousFramePositionArray[1].y
-                                newLocation.y = frameLocation.y - (newSize.height - frameHeight) / 2
-                            }
-                        } else if newLocation.y + (newSize.height / 2) > geometry.size.height - padding / 2 {
-                            if location == .b || location == .lb || location == .tb{
-                                newSize.height = previousFramePositionArray[6].y - padding / 2
-                                newLocation.y = frameLocation.y + (newSize.height - frameHeight) / 2
-                            }
-                        }
-                        
-                        self.frameWidth = newSize.width
-                        self.frameHeight = newSize.height
-                        self.frameLocation = newLocation
-                        maskRectangleViewLocation = CGPoint(x: frameLocation.x - frameWidth / 2, y: frameLocation.y - frameHeight / 2)
                     }
                     .onReceive(cutImageManager.selectionFrameDragEnded){ data in
                         if frameWidth < viewWidth || frameHeight < viewHeight {
@@ -214,7 +223,7 @@ struct CutImageView: View {
                             } else {
                                 newFrameWidth = min(viewHeight * frameWidth / frameHeight, viewWidth)
                                 newFrameHeight = newFrameWidth * frameHeight / frameWidth
-                                imageScale = previousFrameSize.height / frameHeight
+                                imageScale = newFrameHeight / frameHeight
                             }
                             
                             frameLocation = viewCenter
@@ -269,51 +278,84 @@ struct CutImageView: View {
                             previousFrameSize = CGSize(width: newFrameWidth, height: newFrameHeight)
                             lastImagePosition = imagePosition
                             maskRectangleViewLocation = CGPoint(x: frameLocation.x - frameWidth / 2, y: frameLocation.y - frameHeight / 2)
+                        
+                            updateImagePosition()
                         }
                     }
                     .onReceive(cutImageManager.frameRatioTapped){ ratio in
                         var newFrameWidth = frameWidth
                         var newFrameHeight = frameHeight
                         
-                        if frameWidth > frameHeight{
-                            newFrameHeight = min(frameWidth * ratio.heightRatio / ratio.widthRatio, viewHeight)
+                        print(ratio)
+                        
+                        if originalImageSize.width > originalImageSize.height{
+                            newFrameHeight = min(viewWidth * ratio.heightRatio / ratio.widthRatio, viewHeight)
                             newFrameWidth = newFrameHeight * ratio.widthRatio / ratio.heightRatio
                         } else {
-                            newFrameWidth = min(frameHeight * ratio.widthRatio / ratio.heightRatio, viewWidth)
+                            newFrameWidth = min(viewHeight * ratio.widthRatio / ratio.heightRatio, viewWidth)
                             newFrameHeight = newFrameWidth * ratio.heightRatio / ratio.widthRatio
                         }
 
-                        if zoomScale * originalImageSize.width < newFrameWidth{
-                            zoomScale *= newFrameWidth / (zoomScale * originalImageSize.width)
-                        }
-                        
-                        if zoomScale * originalImageSize.height < newFrameHeight {
-                            zoomScale *= newFrameHeight / (zoomScale * originalImageSize.height)
-                        }
-                        
+                        applyMinimumZoomScale(frameWidth: newFrameWidth, frameHeight: newFrameHeight)
+
                         frameWidth = newFrameWidth
                         frameHeight = newFrameHeight
-                        
+                        previousFrameSize = CGSize(width: newFrameWidth, height: newFrameHeight)
                         maskRectangleViewLocation = CGPoint(x: frameLocation.x - frameWidth / 2, y: frameLocation.y - frameHeight / 2)
+                        
+                        updateImagePosition()
                     }
                     .position(frameLocation)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .background(.clear)
             .onAppear(perform: {
-                imagePosition = viewCenter
+                imagePosition = cutImageManager.imagePosition
                 lastImagePosition = imagePosition
                 
                 frameLocation = viewCenter
                 maskRectangleViewLocation = CGPoint(x: frameLocation.x - frameWidth / 2, y: frameLocation.y - frameHeight / 2)
                 
-                originalImageSize = CGSizeMake(frameWidth, frameHeight)
-                previousFrameSize = CGSizeMake(frameWidth, frameHeight)
+                originalImageSize = cutImageManager.originalImageSize
+                previousFrameSize = CGSize(width: frameWidth, height: frameHeight)
+                imageSize = cutImageManager.imageSize
                 
-                if let imageRatio = cutImageManager.reduceFraction(numerator: Int(frameWidth), denominator: Int(frameHeight)){
-                    cutImageManager.imageRatio = CGSize(width: imageRatio.0, height: imageRatio.1)
+                zoomScale = cutImageManager.zoomScale
+                lastZoomScale = cutImageManager.zoomScale
+                
+                if cutImageManager.imageRatio == .zero{
+                    if let imageRatio = cutImageManager.reduceFraction(numerator: Int(frameWidth), denominator: Int(frameHeight)){
+                        cutImageManager.imageRatio = CGSize(width: imageRatio.0, height: imageRatio.1)
+                    }
                 }
             })
+            .onDisappear{
+                cutImageManager.frameWidth = frameWidth
+                cutImageManager.frameHeight = frameHeight
+                cutImageManager.imagePosition = imagePosition
+                cutImageManager.zoomScale = zoomScale
+                cutImageManager.originalImageSize = originalImageSize
+                cutImageManager.imageSize = imageSize
+            }
+        }
+    }
+    
+    private func updateImagePosition(){
+        let framePositionArray = cutImageManager.positionArray(center: frameLocation, width: frameWidth, height: frameHeight)
+        let imagePositionArray = cutImageManager.positionArray(center: imagePosition, width: originalImageSize.width * zoomScale, height: originalImageSize.height * zoomScale)
+        
+        // Selectionframe과 공간이 생길 때 frame이에 맞게 position 옮겨주는 작업
+        imagePosition = cutImageManager.updateImagePosition(framePositionArray: framePositionArray,
+                                                            imagePositionArray: imagePositionArray,
+                                                            imagePosition: imagePosition)
+    }
+    
+    private func applyMinimumZoomScale(frameWidth: CGFloat, frameHeight: CGFloat){
+        if zoomScale * originalImageSize.width < frameWidth{
+            zoomScale *= frameWidth / (zoomScale * originalImageSize.width)
+        }
+        if zoomScale * originalImageSize.height < frameHeight {
+            zoomScale *= frameHeight / (zoomScale * originalImageSize.height)
         }
     }
 }

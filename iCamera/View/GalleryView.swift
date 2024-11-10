@@ -118,7 +118,6 @@ struct GalleryView: View {
         }
         .navigationBarHidden(true)
         .onAppear{
-            print("GalleryView")
             loadPhotos()
             albumManager.fetchAlbums()
                 .sink(receiveCompletion: { completion in

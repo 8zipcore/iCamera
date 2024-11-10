@@ -94,7 +94,6 @@ struct SelectionFrameView: View{
                             return
                         }
                         
-                        
                         let movingValuePoint = CGPoint(x: value.location.x - startLocation.x, y: value.location.y - startLocation.y)
                         cutImageManager.imageDrag.send(movingValuePoint)
                     }

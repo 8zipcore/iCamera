@@ -27,7 +27,7 @@ struct TextMenuView: View {
             }) {
                 Image(alignmentImageStringArray[currentAlignmentIndex])
                     .resizable()
-                    .frame(width: 20, height: 20)
+                    .frame(width: 25, height: 25)
             }
             .foregroundStyle(.black)
             
@@ -36,7 +36,7 @@ struct TextMenuView: View {
             }){
                 Image("color")
                     .resizable()
-                    .frame(width: 20, height: 20)
+                    .frame(width: 25, height: 25)
             }
             .foregroundColor(.red)
         }

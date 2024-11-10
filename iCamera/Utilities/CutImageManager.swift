@@ -8,105 +8,22 @@
 import SwiftUI
 import Combine
 
-struct SelectionFrameRectangleData{
-    var selectionFrameRectangle: SelectionFrameRectangle
-    var position: CGPoint
-}
-
-struct SelectionFrameRectangle: Hashable{
-    enum Location: CaseIterable{
-        case lt, t, tt
-        case lc, tc
-        case lb, b, tb
-    }
-    
-    enum LocationType{
-        case vertex, edge
-    }
-    
-    var location: Location
-    var type: LocationType{
-        switch location {
-        case .lt: fallthrough
-        case .tt: fallthrough
-        case .lb: fallthrough
-        case .tb:
-            return .vertex
-        case .t: fallthrough
-        case .lc: fallthrough
-        case .tc: fallthrough
-        case .b:
-            return .edge
-        }
-    }
-    
-    var scale: CGPoint{
-        switch location {
-        case .lt:
-            return CGPoint(x: -1, y: -1)
-        case .t:
-            return CGPoint(x: 0, y: -1)
-        case .tt:
-            return CGPoint(x: 1, y: -1)
-        case .lc:
-            return CGPoint(x: -1, y: 0)
-        case .tc:
-            return CGPoint(x: 1, y: 0)
-        case .lb:
-            return CGPoint(x: -1, y: 1)
-        case .b:
-            return CGPoint(x: 0, y: 1)
-        case .tb:
-            return CGPoint(x: 1, y: 1)
-        }
-    }
-    
-    func maskRectangleSize(lineSize: CGSize) -> CGSize{
-        let lineWidth = lineSize.width
-        let lineHeight = lineSize.height
-        switch type{
-        case .vertex:
-            return CGSize(width: lineHeight - lineWidth, height: lineHeight - lineWidth)
-        case.edge:
-            if location == .t || location == .b{
-                return CGSize(width: lineHeight, height: lineHeight - lineWidth)
-            } else {
-                return CGSize(width: lineHeight - lineWidth, height: lineHeight)
-            }
-        }
-    }
-    
-    func maskPosition(lineSize: CGSize) -> CGPoint{
-        let lineWidth = lineSize.width
-        switch location {
-        case .lt:
-            return CGPoint(x: lineWidth, y: lineWidth)
-        case .t:
-            return CGPoint(x: 0, y: lineWidth)
-        case .tt:
-            return CGPoint(x: 0, y: lineWidth)
-        case .lc:
-            return CGPoint(x: lineWidth, y: 0)
-        case .tc:
-            return CGPoint(x: 0, y: 0)
-        case .lb:
-            return CGPoint(x: lineWidth, y: 0)
-        case .b:
-            return CGPoint(x: 0, y: 0)
-        case .tb:
-            return CGPoint(x: 0, y: 0)
-        }
-    }
-}
-
 struct FrameRatio: Hashable{
     var widthRatio: CGFloat
     var heightRatio: CGFloat
     var string: String{
-        return "\(widthRatio) : \(heightRatio)"
+        return "\(Int(widthRatio)) : \(Int(heightRatio))"
     }
 }
 
+struct NewFrame{
+    var size: CGSize
+    var location: CGPoint
+}
+
+enum RatioDirection{
+    case horizontal, vertical
+}
 
 class CutImageManager: ObservableObject{
     var selectionFrameDrag = PassthroughSubject<SelectionFrameRectangleData, Never>()
@@ -116,25 +33,70 @@ class CutImageManager: ObservableObject{
     var imageDrag = PassthroughSubject<CGPoint, Never>()
     var imageDragEnded = PassthroughSubject<CGPoint, Never>()
     var frameRatioTapped = PassthroughSubject<FrameRatio, Never>()
+    var rotateDegreeTapped = PassthroughSubject<Void, Never>()
     
-    @Published var imageRatio: CGSize = .zero
-    var ratioArray: [FrameRatio] {
-        var ratioArray: [FrameRatio] = []
-        ratioArray =  [
-            FrameRatio(widthRatio: imageRatio.width, heightRatio: imageRatio.height),
-            frameRatio(aspectRatio: CGSize(width: 1, height: 1)),
-            frameRatio(aspectRatio: CGSize(width: 9, height: 16)),
-            frameRatio(aspectRatio: CGSize(width: 4, height: 5)),
-            frameRatio(aspectRatio: CGSize(width: 5, height: 7)),
-            frameRatio(aspectRatio: CGSize(width: 3, height: 4)),
-            frameRatio(aspectRatio: CGSize(width: 3, height: 5)),
-            frameRatio(aspectRatio: CGSize(width: 2, height: 3)),
-        ]
-        return ratioArray
+    @Published var imageRatio: CGSize = .zero {
+        didSet{
+            ratioArray = [
+                FrameRatio(widthRatio: imageRatio.width, heightRatio: imageRatio.height),
+                frameRatio(aspectRatio: CGSize(width: 1, height: 1)),
+                frameRatio(aspectRatio: CGSize(width: 9, height: 16)),
+                frameRatio(aspectRatio: CGSize(width: 4, height: 5)),
+                frameRatio(aspectRatio: CGSize(width: 5, height: 7)),
+                frameRatio(aspectRatio: CGSize(width: 3, height: 4)),
+                frameRatio(aspectRatio: CGSize(width: 3, height: 5)),
+                frameRatio(aspectRatio: CGSize(width: 2, height: 3)),
+            ]
+        }
+    }
+    @Published var currentRatioDirection: RatioDirection = .horizontal
+    @Published var currentFlipHorizontal: CGPoint = CGPoint(x: 1, y: 1)
+    @Published var currentDegree: CGFloat = .zero
+    
+    @Published var frameWidth: CGFloat = .zero
+    @Published var frameHeight: CGFloat = .zero
+    @Published var imagePosition: CGPoint = .zero
+    @Published var zoomScale: CGFloat = 1.0
+    @Published var originalImageSize: CGSize = .zero
+    @Published var imageSize: CGSize = .zero
+    
+    var ratioArray: [FrameRatio] = []
+    
+    
+    func initFrameSize(_ size: CGSize){
+        print("initFrame", size)
+        frameWidth = size.width
+        frameHeight = size.height
+        originalImageSize = size
+        imageSize = size
+    }
+    
+    func flipHorizontalToggle(){
+        currentFlipHorizontal.x *= -1
+    }
+    
+    func rotateDegree(){
+        currentDegree -= 90
+        if currentDegree < -360{
+            currentDegree = -90
+        }
+        currentRatioDirection = isHorizontalDegree() ? .horizontal : .vertical
+        
+        let originRatio: FrameRatio = FrameRatio(widthRatio: ratioArray[0].widthRatio, heightRatio: ratioArray[0].heightRatio)
+        ratioArray[0].widthRatio = originRatio.heightRatio
+        ratioArray[0].heightRatio = originRatio.widthRatio
+    }
+    
+    func isHorizontalDegree() -> Bool{
+        return currentDegree == -90 || currentDegree == -270
+    }
+    
+    func ratioDriectionToggle(){
+        currentRatioDirection = currentRatioDirection == .horizontal ? .vertical : .horizontal
     }
     
     func frameRatio(aspectRatio: CGSize) -> FrameRatio{
-        if imageRatio.width > imageRatio.height{
+        if currentRatioDirection == .horizontal{
             return FrameRatio(widthRatio: max(aspectRatio.width, aspectRatio.height), heightRatio: min(aspectRatio.width, aspectRatio.height))
         } else {
             return FrameRatio(widthRatio: min(aspectRatio.width, aspectRatio.height), heightRatio: max(aspectRatio.width, aspectRatio.height))
@@ -144,7 +106,7 @@ class CutImageManager: ObservableObject{
     func gcd(_ a: Int, _ b: Int) -> Int {
         return b == 0 ? a : gcd(b, a % b)
     }
-
+    
     // 분수를 약분하는 함수
     func reduceFraction(numerator: Int, denominator: Int) -> (Int, Int)? {
         guard denominator != 0 else {
@@ -180,18 +142,18 @@ class CutImageManager: ObservableObject{
             resultPosition.y += framePositionArray[2].y - imagePositionArray[2].y
             // print("우상단")
         } else if framePositionArray[1].y < imagePositionArray[1].y { // 상단
-            resultPosition.y += imagePositionArray[1].y - framePositionArray[1].y
+            resultPosition.y += framePositionArray[1].y - imagePositionArray[1].y
             // print("상단")
         } else if framePositionArray[5].x < imagePositionArray[5].x && framePositionArray[5].y > imagePositionArray[5].y { // 좌하단
             resultPosition.x += framePositionArray[5].x - imagePositionArray[5].x
             resultPosition.y += framePositionArray[5].y - imagePositionArray[5].y
-            // print("좌하단")
+           // print("좌하단")
         } else if framePositionArray[7].x > imagePositionArray[7].x && framePositionArray[7].y > imagePositionArray[7].y { // 우하단
             resultPosition.x += framePositionArray[7].x - imagePositionArray[7].x
             resultPosition.y += framePositionArray[7].y - imagePositionArray[7].y
             // print("우하단")
         } else if framePositionArray[6].y > imagePositionArray[6].y { // 하단
-            resultPosition.y += imagePositionArray[6].y - framePositionArray[6].y
+            resultPosition.y += framePositionArray[6].y - imagePositionArray[6].y
             // print("하단")
         } else if framePositionArray[3].x < imagePositionArray[3].x { // 중간 좌측
             resultPosition.x += framePositionArray[3].x - imagePositionArray[3].x
@@ -204,69 +166,127 @@ class CutImageManager: ObservableObject{
         return resultPosition
     }
     
-    func updateFrameData(location: SelectionFrameRectangle.Location, previousFramePositionArray: [CGPoint], framePositionArray: [CGPoint], imagePositionArray: [CGPoint], viewWidth: CGFloat, viewHeight: CGFloat, viewCenter: CGPoint, newSize: CGSize, newLocation: CGPoint, framePosition: CGPoint, frameWidth: CGFloat, frameHeight: CGFloat) -> (CGSize, CGPoint){
+    func resizeFrameToFitImage(previousFramePositionArray: [CGPoint], framePositionArray: [CGPoint], imagePositionArray: [CGPoint], viewWidth: CGFloat, viewHeight: CGFloat, viewCenter: CGPoint, newSize: CGSize, newLocation: CGPoint, framePosition: CGPoint, frameWidth: CGFloat, frameHeight: CGFloat, location: SelectionFrameRectangle.Location) -> (CGSize, CGPoint){
         var newSize = newSize
         var newLocation = newLocation
         
         switch location{
-        case .lt:
-            if framePositionArray[0].x < imagePositionArray[0].x { // 좌상단
-                newSize.width = viewWidth - (imagePositionArray[0].x * 2)
-                newLocation.x = viewCenter.x
+            case .lt:
+                if framePositionArray[0].x < imagePositionArray[0].x { // 좌상단
+                    newSize.width = viewWidth - (imagePositionArray[0].x * 2)
+                    newLocation.x = viewCenter.x
+                }
+                if framePositionArray[0].y < imagePositionArray[0].y {
+                    newSize.height = viewHeight - (imagePositionArray[0].y * 2)
+                    newLocation.y = viewCenter.y
+                }
+            case .tt:
+                if framePositionArray[2].x > imagePositionArray[2].x { // 우상단
+                    newSize.width = viewWidth - (viewWidth - imagePositionArray[2].x) * 2
+                    newLocation.x = viewCenter.x
+                }
+                if framePositionArray[2].y < imagePositionArray[2].y {
+                    newSize.height = viewHeight - (imagePositionArray[2].y * 2)
+                    newLocation.y = viewCenter.y
+                }
+            case .lb:
+                if framePositionArray[5].x < imagePositionArray[5].x{ // 좌하단
+                    newSize.width = viewWidth - (imagePositionArray[5].x * 2)
+                    newLocation.x = viewCenter.x
+                }
+                if framePositionArray[5].y > imagePositionArray[5].y {
+                    newSize.height = viewHeight - (viewHeight - imagePositionArray[5].y) * 2
+                    newLocation.y = viewCenter.y
+                }
+            case .tb:
+                if framePositionArray[7].x > imagePositionArray[7].x{ // 우하단
+                    newSize.width = viewWidth - (viewWidth - imagePositionArray[7].x) * 2
+                    newLocation.x = viewCenter.x
+                }
+                if framePositionArray[7].y > imagePositionArray[7].y {
+                    newSize.height = viewHeight - (viewHeight - imagePositionArray[7].y) * 2
+                    newLocation.y = viewCenter.y
+                }
+            case .t:
+                if framePositionArray[1].y < imagePositionArray[1].y { // 상단
+                    newSize.height = previousFramePositionArray[6].y - imagePositionArray[1].y
+                    newLocation.y = framePosition.y - (newSize.height - frameHeight) / 2
+                }
+            case .b:
+                if framePositionArray[6].y > imagePositionArray[6].y { // 하단
+                    newSize.height = imagePositionArray[6].y - previousFramePositionArray[1].y
+                    newLocation.y = framePosition.y + (newSize.height - frameHeight) / 2
+                }
+            case .lc:
+                if framePositionArray[3].x < imagePositionArray[3].x { // 중간 좌측
+                    newSize.width = previousFramePositionArray[4].x - imagePositionArray[3].x
+                    newLocation.x = framePosition.x - (newSize.width - frameWidth) / 2
+                }
+            case .tc:
+                if framePositionArray[4].x > imagePositionArray[4].x { // 중간 우측
+                    newSize.width = imagePositionArray[4].x - previousFramePositionArray[3].x
+                    newLocation.x = framePosition.x + (newSize.width - frameWidth) / 2
+                }
             }
-            if framePositionArray[0].y < imagePositionArray[0].y {
-                newSize.height = viewHeight - (imagePositionArray[0].y * 2)
-                newLocation.y = viewCenter.y
-            }
-        case .tt:
-            if framePositionArray[2].x > imagePositionArray[2].x { // 우상단
-                newSize.width = viewWidth - (viewWidth - imagePositionArray[2].x) * 2
-                newLocation.x = viewCenter.x
-            }
-            if framePositionArray[2].y < imagePositionArray[2].y {
-                newSize.height = viewHeight - (imagePositionArray[2].y * 2)
-                newLocation.y = viewCenter.y
-            }
-        case .lb:
-            if framePositionArray[5].x < imagePositionArray[5].x{ // 좌하단
-                newSize.width = viewWidth - (imagePositionArray[5].x * 2)
-                newLocation.x = viewCenter.x
-            }
-            if framePositionArray[5].y > imagePositionArray[5].y {
-                newSize.height = viewHeight - (viewHeight - imagePositionArray[5].y) * 2
-                newLocation.y = viewCenter.y
-            }
-        case .tb:
-            if framePositionArray[7].x > imagePositionArray[7].x{ // 우하단
-                newSize.width = viewWidth - (viewWidth - imagePositionArray[7].x) * 2
-                newLocation.x = viewCenter.x
-            }
-            if framePositionArray[7].y > imagePositionArray[7].y {
-                newSize.height = viewHeight - (viewHeight - imagePositionArray[7].y) * 2
-                newLocation.y = viewCenter.y
-            }
-        case .t:
-            if framePositionArray[1].y < imagePositionArray[1].y { // 상단
-                newSize.height = previousFramePositionArray[6].y - imagePositionArray[1].y
-                newLocation.y = framePosition.y - (newSize.height - frameHeight) / 2
-            }
-        case .b:
-            if framePositionArray[6].y > imagePositionArray[6].y { // 하단
-                newSize.height = imagePositionArray[6].y - previousFramePositionArray[1].y
-                newLocation.y = framePosition.y + (newSize.height - frameHeight) / 2
-            }
-        case .lc:
-            if framePositionArray[3].x < imagePositionArray[3].x { // 중간 좌측
-                newSize.width = previousFramePositionArray[4].x - imagePositionArray[3].x
-                newLocation.x = framePosition.x - (newSize.width - frameWidth) / 2
-            }
-        case .tc:
-            if framePositionArray[4].x > imagePositionArray[4].x { // 중간 우측
-                newSize.width = imagePositionArray[4].x - previousFramePositionArray[3].x
-                newLocation.x = framePosition.x + (newSize.width - frameWidth) / 2
-            }
-        }
         
         return (newSize, newLocation)
+    }
+    
+    func adjustFrameToImageSize(newSize: CGSize, newLocation: CGPoint, viewSize: CGSize, previousFrameSize: CGSize, frameLocation: CGPoint, frameSize: CGSize, originalImageSize: CGSize, imagePosition: CGPoint, zoomScale: CGFloat, padding: CGFloat, location: SelectionFrameRectangle.Location) -> NewFrame? {
+        let viewCenter: CGPoint = CGPoint(x: viewSize.width / 2, y: viewSize.height / 2)
+        let previousFramePositionArray = positionArray(center: viewCenter, width: previousFrameSize.width, height: previousFrameSize.height)
+        let framePositionArray = positionArray(center: newLocation, width: newSize.width, height: newSize.height)
+        let imagePositionArray = positionArray(center: imagePosition, width: originalImageSize.width * zoomScale, height: originalImageSize.height * zoomScale)
+        
+        var newSize = newSize
+        var newLocation = newLocation
+        let frameWidth = frameSize.width
+        let frameHeight = frameSize.height
+        let viewWidth = viewSize.width
+        let viewHeight = viewSize.height
+        
+        // frame이 이미지 사이즈 넘어가지 않도록 조정하는 작업
+        let updateData = resizeFrameToFitImage(
+            previousFramePositionArray: previousFramePositionArray,
+            framePositionArray: framePositionArray,
+            imagePositionArray: imagePositionArray,
+            viewWidth: viewSize.width, viewHeight: viewSize.height,
+            viewCenter: viewCenter,
+            newSize: newSize, newLocation: newLocation,
+            framePosition: frameLocation,
+            frameWidth: frameWidth,
+            frameHeight: frameHeight, 
+            location: location)
+        newSize = updateData.0
+        newLocation = updateData.1
+        
+        let minimumSize = CGSize(width: viewWidth * 0.2, height: viewWidth * 0.2)
+        // 조건 1. 최소 사이즈보다 작아지지 않을 것
+        if newSize.width < minimumSize.width || newSize.height < minimumSize.height{
+            return nil
+        }
+        // 조건 2. Frame이 viewSize를 넘어가지 말 것
+        if newLocation.x - (newSize.width / 2) < padding / 2 {
+            if location == .lt || location == .lc || location == .lb{
+                newSize.width = previousFramePositionArray[4].x - padding / 2
+                newLocation.x = frameLocation.x + (newSize.width - frameWidth) / 2
+            }
+        } else if newLocation.x + (newSize.width / 2) > viewWidth - padding / 2 {
+            if location == .tt || location == .tc || location == .tb{
+                newSize.width =  viewWidth - padding / 2 - previousFramePositionArray[3].x
+                newLocation.x = frameLocation.x - (newSize.width - frameWidth) / 2
+            }
+        } else if newLocation.y - (newSize.height / 2) < padding / 2 {
+            if location == .t || location == .lt || location == .tt{
+                newSize.height = viewHeight - padding / 2 - previousFramePositionArray[1].y
+                newLocation.y = frameLocation.y - (newSize.height - frameHeight) / 2
+            }
+        } else if newLocation.y + (newSize.height / 2) > viewHeight - padding / 2 {
+            if location == .b || location == .lb || location == .tb{
+                newSize.height = previousFramePositionArray[6].y - padding / 2
+                newLocation.y = frameLocation.y + (newSize.height - frameHeight) / 2
+            }
+        }
+        return NewFrame(size: newSize, location: newLocation)
     }
 }

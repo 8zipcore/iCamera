@@ -25,6 +25,8 @@
 		3634CAC32CC91DD20061D5DE /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3634CAC22CC91DD20061D5DE /* Extension+View.swift */; };
 		36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36447A372CAC0DDA008E1268 /* LUTManager.swift */; };
 		364B4C482CD8F20400CE5627 /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364B4C472CD8F20400CE5627 /* DestinationView.swift */; };
+		366306782CDF2B0D008F16E9 /* CutMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366306772CDF2B0D008F16E9 /* CutMenuView.swift */; };
+		3663067D2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3663067C2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift */; };
 		36697BFF2CD1241B00070A55 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36697BFE2CD1241B00070A55 /* CalendarManager.swift */; };
 		366AC8662CB1572B007A15D1 /* MaskRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */; };
 		366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */; };
@@ -61,6 +63,7 @@
 		36D221BB2CDA4C000007A0D3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D221BA2CDA4C000007A0D3 /* CoreDataManager.swift */; };
 		36D221C12CDA5C760007A0D3 /* CalendarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D221C02CDA5C760007A0D3 /* CalendarData.swift */; };
 		36D221D02CDA6F1E0007A0D3 /* iCamera.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 36D221CE2CDA6F1E0007A0D3 /* iCamera.xcdatamodeld */; };
+		36D782B02CE0884F003F07B8 /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D782AF2CE0884F003F07B8 /* ImageInfo.swift */; };
 		36F84FB62CD1EA7D008275F5 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */; };
 		36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */; };
 		36F84FBB2CD24A9C008275F5 /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F84FBA2CD24A9C008275F5 /* NotoSansKR-Regular.ttf */; };
@@ -106,6 +109,8 @@
 		3634CAC22CC91DD20061D5DE /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		36447A372CAC0DDA008E1268 /* LUTManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUTManager.swift; sourceTree = "<group>"; };
 		364B4C472CD8F20400CE5627 /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
+		366306772CDF2B0D008F16E9 /* CutMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutMenuView.swift; sourceTree = "<group>"; };
+		3663067C2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionFrameRectangle.swift; sourceTree = "<group>"; };
 		36697BFE2CD1241B00070A55 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskRectangleView.swift; sourceTree = "<group>"; };
 		366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionFrameView.swift; sourceTree = "<group>"; };
@@ -145,6 +150,7 @@
 		36D221BA2CDA4C000007A0D3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		36D221C02CDA5C760007A0D3 /* CalendarData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarData.swift; sourceTree = "<group>"; };
 		36D221CF2CDA6F1E0007A0D3 /* iCamera.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iCamera.xcdatamodel; sourceTree = "<group>"; };
+		36D782AF2CE0884F003F07B8 /* ImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
 		36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRectangleView.swift; sourceTree = "<group>"; };
 		36F84FBA2CD24A9C008275F5 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
@@ -201,15 +207,7 @@
 				36A12E082CA19D1F00228784 /* FilterImageView.swift */,
 				362BD6B42CAAE351000955D5 /* EditImageView.swift */,
 				3688E9EC2CAE6933001DC9DC /* StickerView.swift */,
-				36CF3DF22CB139C5004D58BF /* CutImageView.swift */,
-				366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */,
-				366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */,
-				3692E4092CC4D3AC003CBACB /* TextInputView.swift */,
 				3692E40B2CC4E540003CBACB /* CustomTextEditor.swift */,
-				3692E40D2CC527E0003CBACB /* TextMenuView.swift */,
-				3692E40F2CC544E9003CBACB /* SelectColorView.swift */,
-				3682EF192CC8BA5D00D18FE1 /* AttributedTextView.swift */,
-				3682EF1B2CC8ECC500D18FE1 /* TextView.swift */,
 				3634CAC22CC91DD20061D5DE /* Extension+View.swift */,
 				36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */,
 				36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */,
@@ -237,6 +235,38 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		366306792CDF2D49008F16E9 /* Cut */ = {
+			isa = PBXGroup;
+			children = (
+				366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */,
+				366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */,
+				366306772CDF2B0D008F16E9 /* CutMenuView.swift */,
+				36CF3DF22CB139C5004D58BF /* CutImageView.swift */,
+			);
+			path = Cut;
+			sourceTree = "<group>";
+		};
+		3663067A2CDF2D80008F16E9 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				3692E4092CC4D3AC003CBACB /* TextInputView.swift */,
+				3682EF192CC8BA5D00D18FE1 /* AttributedTextView.swift */,
+				3682EF1B2CC8ECC500D18FE1 /* TextView.swift */,
+				3692E40F2CC544E9003CBACB /* SelectColorView.swift */,
+				3692E40D2CC527E0003CBACB /* TextMenuView.swift */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
+		3663067B2CDF2F4A008F16E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3663067C2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift */,
+				36D782AF2CE0884F003F07B8 /* ImageInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		36810C4D2C8F0ED4002C680A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +280,8 @@
 				3696515F2CA9831E004E0134 /* TestPhotoView.swift */,
 				368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */,
 				36CFA3702CD345D100DF6E1E /* CommentsView.swift */,
+				3663067A2CDF2D80008F16E9 /* Text */,
+				366306792CDF2D49008F16E9 /* Cut */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -284,6 +316,7 @@
 				36B2AC992CABC2EA00F28115 /* Cube */,
 				3605F5692C917DDA00665348 /* Utilities */,
 				3605F5622C913CCD00665348 /* Supporting Views */,
+				3663067B2CDF2F4A008F16E9 /* Model */,
 				36810C4D2C8F0ED4002C680A /* View */,
 				369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */,
 				369E7BF62C8DAB970044EAF1 /* ContentView.swift */,
@@ -600,6 +633,8 @@
 				36D221BB2CDA4C000007A0D3 /* CoreDataManager.swift in Sources */,
 				36A954C42CB25BDE00E43960 /* CutImageManager.swift in Sources */,
 				3692E4102CC544E9003CBACB /* SelectColorView.swift in Sources */,
+				366306782CDF2B0D008F16E9 /* CutMenuView.swift in Sources */,
+				36D782B02CE0884F003F07B8 /* ImageInfo.swift in Sources */,
 				362222362CA0087600AA9EA5 /* EditPhotoView.swift in Sources */,
 				36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */,
 				36F84FB62CD1EA7D008275F5 /* CalendarCell.swift in Sources */,
@@ -619,6 +654,7 @@
 				36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */,
 				362BD6B52CAAE351000955D5 /* EditImageView.swift in Sources */,
 				36F84FBD2CD24AE5008275F5 /* Font.swift in Sources */,
+				3663067D2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift in Sources */,
 				368D426E2CCBCF9B00E3E0FB /* CalendarView.swift in Sources */,
 				366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */,
 				364B4C482CD8F20400CE5627 /* DestinationView.swift in Sources */,

@@ -59,7 +59,7 @@ struct EditPhotoView: View {
                     ZStack{
                         Color.white
                         
-                        EditImageView(inputImage: albumManager.selectedImage ?? UIImage(), value: filterValue, filterType: filterType, menuButtonManager: menuButtonManager, cutImageManger: cutImageManager)
+                        EditImageView(inputImage: $albumManager.selectedImage, value: filterValue, filterType: filterType, menuButtonManager: menuButtonManager, cutImageManager: cutImageManager)
                         /* ⭐️ StickerView 시작 */
                         ForEach(stickerManager.stickerArray.indices, id:\.self){ index in
                             let sticker = stickerManager.stickerArray[index]
@@ -215,13 +215,24 @@ struct EditPhotoView: View {
                             }
                             /* 📌 Cut */
                             if menuButtonManager.isSelected(.cut){
-                                HStack{
-                                    ForEach(cutImageManager.ratioArray, id: \.self){ ratio in
-                                        Button(ratio.string){
-                                            cutImageManager.frameRatioTapped.send(ratio)
+                                ScrollView(.horizontal, showsIndicators: false){
+                                    HStack(spacing: 20){
+                                        ForEach(cutImageManager.ratioArray.indices, id: \.self){ index in
+                                            let ratio = cutImageManager.ratioArray[index]
+                                            Button(action: {
+                                                cutImageManager.frameRatioTapped.send(ratio)
+                                            }){
+                                                let text = index == 0 ? "원본" : ratio.string
+                                                Text(text)
+                                                    .font(.system(size: 18, weight: .medium))
+                                                    .foregroundStyle(.black)
+                                            }
                                         }
                                     }
+                                    .padding([.leading, .trailing], 20)
                                 }
+                                .frame(height: viewHeight * 0.13)
+                                CutMenuView(cutImageManager: cutImageManager)
                                 Spacer()
                             }
                             /* 📌 Text */
