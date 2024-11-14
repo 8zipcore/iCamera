@@ -24,19 +24,23 @@ struct AttributedTextView: View {
             
             ZStack{
                 ForEach(backgroundViewSizeArray.indices, id: \.self){ index in
+                    let backgroundViewSize = backgroundViewSizeArray[index]
                     Rectangle()
                         .fill(textData.backgroundColor)
-                        .frame(width: backgroundViewSizeArray[index].width, height: backgroundViewSizeArray[index].height)
-                        .position(x: viewWidth / 2, y: (viewHeight / 2) + (backgroundViewSizeArray[index].height * multiple(index: index)))
+                        .frame(width: backgroundViewSize.width, height: backgroundViewSize.height)
+                        .position(x: viewWidth / 2, y: (viewHeight / 2) + (backgroundViewSize.height * multiple(index: index)))
                 }
                 
                 CustomTextView(textData: $textData, 
                                onTextChange: { onTextChange($0) },
-                               onSizeChange: { textViewSize = $0; onSizeChange($0) })
+                               onSizeChange: { textViewSize = $0; onSizeChange($0) }, updateData: { newArray, newSize in
+                    backgroundViewSizeArray = newArray
+                    textViewSize = newSize
+                })
                 .frame(height: textViewSize.height)
                     .position(x: viewWidth / 2, y: viewHeight / 2)
                     .onChange(of: textViewSize){ newSize in
-                        if backgroundViewSizeArray.count == 0 {
+                        /*if backgroundViewSizeArray.count == 0 {
                             backgroundViewSizeArray.append(newSize)
                             lastTextViewHeight = newSize.height
                             return
@@ -44,7 +48,7 @@ struct AttributedTextView: View {
                         
                         let lastIndex = backgroundViewSizeArray.count - 1
                         let lineHeight = backgroundViewSizeArray.first?.height ?? 18
-
+                        
                         if lastTextViewHeight < newSize.height {
                             backgroundViewSizeArray.append(CGSize(width: newSize.width, height: lineHeight))
                             // print("append")
@@ -60,14 +64,16 @@ struct AttributedTextView: View {
                             backgroundViewSizeArray.removeLast()
                         }
                         lastTextViewHeight = newSize.height
+                         */
                     }
             }
         }
     }
     
     private func multiple(index: Int) -> CGFloat{
-        let centerIndex = backgroundViewSizeArray.count % 2 == 0 ?
-        CGFloat(backgroundViewSizeArray.count - 1) / 2 : CGFloat(backgroundViewSizeArray.count / 2)
+        let arrayCount = backgroundViewSizeArray.count
+        let centerIndex = arrayCount % 2 == 0 ?
+        CGFloat(arrayCount - 1) / 2 : CGFloat(arrayCount / 2)
         return CGFloat(index) - centerIndex
     }
 }
@@ -78,8 +84,9 @@ struct CustomTextView: UIViewRepresentable {
     var textViewWidth: CGFloat = .zero
     var onTextChange: (String) -> Void
     var onSizeChange: (CGSize) -> Void
+    var updateData: ([CGSize], CGSize) -> Void
     var lineHeight: CGFloat = .zero
-
+    
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isEditable = true
@@ -98,11 +105,24 @@ struct CustomTextView: UIViewRepresentable {
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.setAttributedString(from: textData)
         uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal) // 가로로 커지지않게
-        var textViewSize = uiView.sizeThatFits(CGSize(width: min(uiView.bounds.width, textViewWidth), height: .infinity))
-        if let lineHeight = uiView.font?.lineHeight {
-            textViewSize.width = uiView.getWidthOfLine(line: Int(textViewSize.height / lineHeight) - 1)
+        let lineHeight = textData.textFont.font.lineHeight
+        var textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
+        let lineNumber = Int(textViewSize.height / lineHeight)
+        
+        var backgroundViewSizeArray: [CGSize] = []
+        for line in 0..<lineNumber{
+            let lineWidth = uiView.getWidthOfLine(line: line)
+            backgroundViewSizeArray.append(CGSize(width: lineWidth, height: round(lineHeight)))
         }
-        onSizeChange(textViewSize)
+        DispatchQueue.main.async{
+            updateData(backgroundViewSizeArray, textViewSize)
+        }
+
+            // var textViewSize = uiView.sizeThatFits(CGSize(width: min(uiView.bounds.width, textViewWidth), height: .infinity))
+            ///textViewSize.width = uiView.getWidthOfLine(line: lineNumber - 1)
+             /*DispatchQueue.main.async{
+                onSizeChange(textViewSize)
+            }*/
     }
     
     func makeCoordinator() -> Coordinator {
@@ -145,17 +165,18 @@ struct NonEditableCustomTextView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.setAttributedString(from: textData)
+        let lineHeight = textData.textFont.font.lineHeight
+        let textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
+        let lineNumber = Int(textViewSize.height / lineHeight)
+        var backgroundViewSizeArray: [CGSize] = []
+        
         DispatchQueue.main.async{
-            if let lineHeight = uiView.font?.lineHeight {
-                let textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
-                let lineNumber = Int(textViewSize.height / lineHeight)
-                var backgroundViewSizeArray: [CGSize] = []
-                for line in 0..<lineNumber{
-                    let lineWidth = uiView.getWidthOfLine(line: line)
-                    backgroundViewSizeArray.append(CGSize(width: lineWidth, height: round(lineHeight)))
-                }
-                updateData(backgroundViewSizeArray, textViewSize)
+            for line in 0..<lineNumber{
+                let lineWidth = uiView.getWidthOfLine(line: line)
+                print(line, lineWidth)
+                backgroundViewSizeArray.append(CGSize(width: lineWidth, height: round(lineHeight)))
             }
+            updateData(backgroundViewSizeArray, textViewSize)
         }
     }
 }

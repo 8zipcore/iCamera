@@ -21,6 +21,7 @@ struct EditPhotoView: View {
     @StateObject var stickerManager = StickerManager()
     @StateObject var cutImageManager = CutImageManager()
     @StateObject var textManager = TextManager()
+    @StateObject var customSliderManager = CustomSliderManager()
     
     @State private var filterValue: CGFloat = 0.0
     @State private var filterType: FilterType = .none
@@ -138,17 +139,17 @@ struct EditPhotoView: View {
                         /* ⭐️ StickerView 끝 (ForEach) */
                         /* ⭐️ TextView 시작 */
                         ForEach(textManager.textArray.indices, id: \.self){ index in
-                            let data = textManager.textArray[index]
-                            TextView(index: index, textData: data, textManager: textManager)
+                            let data = textManager.setTextPlaceHolder(index: index)
+                            TextView(index: index, textData: data, textManager: textManager, cutImageManager: cutImageManager)
                                 .hidden(textManager.isHidden(index: index) && showTextInputView)
-                                .frame(width: data.size.width, height: data.size.height)
+                                // .frame(width: data.size.width, height: data.size.height)
+                                // .zIndex(data.isSelected ? 1 : 0)
                                 .position(data.location)
-                                .onReceive(textManager.deleteTextButtonTapped){
-                                    textManager.deleteText(index: index)
-                                }
                                 .onReceive(textManager.editTextButtonTapped){
-                                    textManager.selectText(index: index)
                                     showTextInputView = true
+                                }
+                                .onTapGesture {
+                                    textManager.selectText(index: index)
                                 }
                         }
                         /* ⭐️ TextView 끝 */
@@ -237,25 +238,10 @@ struct EditPhotoView: View {
                             }
                             /* 📌 Text */
                             if menuButtonManager.isSelected(.text){
-                                if textManager.isSelected(.font){
-                                    HStack{
-                                        ForEach(textManager.fontArray, id: \.self){ font in
-                                            Button(font.fontName){
-                                                textManager.fontButtonTapped.send(font)
-                                                textManager.addNewText(location: CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2), size: CGSize(width: viewWidth, height: 50))
-                                            }
-                                        }
+                                TextEditView(textManager: textManager)
+                                    .onReceive(textManager.textAddButtonTapped){ _ in
+                                        textManager.addNewText(location: CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2), size: .zero)
                                     }
-                                    .padding(.top, 20)
-                                }
-                                
-                                if textManager.isSelected(.color){
-                                    SelectColorView(textManager: textManager)
-                                }
-
-                                Spacer()
-                                TextMenuView(textManager: textManager)
-                                    .padding(.bottom, 40)
                             }
                         }
                     }

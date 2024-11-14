@@ -135,7 +135,8 @@ struct CommentsView: View {
                                                    textContainerInset: textContainerInset,
                                                    textViewWidth: viewWidth * 0.88,
                                                    onTextChange: { calendarData.comments = $0 },
-                                                   onSizeChange: { if isFocused || textViewSize == .zero {textViewSize = $0} })
+                                                   onSizeChange: { if isFocused || textViewSize == .zero {textViewSize = $0} }, 
+                                                   updateData: { _, _ in })
                                     .focused($isFocused)
                                     .background(Color.white)
                                     .cornerRadius(textEditorCornerRadius)

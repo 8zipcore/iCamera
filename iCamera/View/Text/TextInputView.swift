@@ -29,7 +29,11 @@ struct TextInputView: View {
             VStack {
                 AttributedTextView(textData: $textData,
                                    onTextChange: { textInput = $0 },
-                                   onSizeChange: { textViewSize = $0 })
+                                   onSizeChange: { _ in
+                    DispatchQueue.main.async{
+                        // textViewSize = $0
+                    }
+                })
                     .focused($isFocused)
                     .position(x: viewWidth * 0.9 / 2, y: textViewMaxHeight / 2)
                     .frame(maxWidth: viewWidth * 0.9) // TextView도 같은 값

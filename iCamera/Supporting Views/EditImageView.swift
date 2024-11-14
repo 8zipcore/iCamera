@@ -25,19 +25,16 @@ struct EditImageView: View {
             let viewWidth = geometry.size.width
             let viewHeight = geometry.size.height
             
-            let padding: CGFloat = 15
-            
             VStack{
                 if let filteredImage = applyFilters(to: image) {
                     if menuButtonManager.isSelected(.cut){
                         CutImageView(image: filteredImage,
                                      frameWidth: cutImageManager.frameWidth,
                                      frameHeight: cutImageManager.frameHeight,
-                                     cutImageManager: cutImageManager,
-                                     padding: padding)
+                                     cutImageManager: cutImageManager)
                         .frame(width: viewWidth , height: viewHeight)
                     } else {
-                        let imageSize = imageSize(imageSize: image.size, viewSize: geometry.size)
+                        let imageSize = cutImageManager.imageSize(imageSize: image.size, viewSize: geometry.size)
                         
                         ZStack{
                             var imagePosition = cutImageManager.imagePosition
@@ -56,7 +53,7 @@ struct EditImageView: View {
                                 .position(x: cutImageManager.imagePosition.x, y: imagePosition.y)
                             
                             // ⚠️ imagePosition 약간 어긋나는 오류 해결할 것 !!
-                            let maskRectangleSize = paddingImageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), padding: padding, multiple: 1)
+                            let maskRectangleSize = cutImageManager.paddingImageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), multiple: 1)
                             let maskRectangleViewLocation = CGPoint(x: (viewWidth - maskRectangleSize.width) / 2, y: (viewHeight - maskRectangleSize.height) / 2)
                             MaskRectangleView(overlayColor: .white,
                                               rectangleSize: geometry.size,
@@ -70,34 +67,14 @@ struct EditImageView: View {
             .onChange(of: inputImage) { _ in
                 if let inputImage = inputImage{
                     image = inputImage
-                    let imageSize = imageSize(imageSize: image.size, viewSize: geometry.size)
-                    let paddingImageSize = paddingImageSize(imageSize: imageSize, padding: padding, multiple: -1)
+                    let imageSize = cutImageManager.imageSize(imageSize: image.size, viewSize: geometry.size)
+                    let paddingImageSize = cutImageManager.paddingImageSize(imageSize: imageSize, multiple: -1)
                     cutImageManager.initFrameSize(paddingImageSize)
                     cutImageManager.imagePosition = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
+                    cutImageManager.editImageViewSize = geometry.size
                 }
             }
         }
-    }
-    
-    private func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
-        if imageSize.width > imageSize.height{
-            return CGSize(width: viewSize.width, height: imageSize.height * viewSize.width / imageSize.width)
-        } else {
-            return CGSize(width: imageSize.width * viewSize.height / imageSize.height, height: viewSize.height)
-        }
-    }
-    
-    private func paddingImageSize(imageSize: CGSize, padding: CGFloat, multiple: CGFloat) -> CGSize{
-        var size: CGSize = .zero
-        if imageSize.width > imageSize.height {
-            let newImageWidth: CGFloat = imageSize.width + padding * multiple
-            size = CGSize(width: newImageWidth, height: imageSize.height * newImageWidth / imageSize.width)
-        } else {
-            let newImageHeight: CGFloat = imageSize.height + padding * multiple
-            size = CGSize(width: imageSize.width * newImageHeight / imageSize.height, height: newImageHeight)
-        }
-        print("후", size)
-        return size
     }
     
     private func applyFilters(to image: UIImage) -> UIImage? {

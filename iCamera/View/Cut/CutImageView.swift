@@ -15,8 +15,6 @@ struct CutImageView: View {
     
     @StateObject var cutImageManager: CutImageManager
     
-    @State var padding: CGFloat
-    
     @State private var frameLocation: CGPoint = .zero
     @State private var maskRectangleViewLocation: CGPoint = .zero
     @State private var imagePosition: CGPoint = .zero
@@ -29,6 +27,8 @@ struct CutImageView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let padding = cutImageManager.padding
+            
             let viewWidth = geometry.size.width - padding
             let viewHeight = geometry.size.height - padding
             
@@ -285,8 +285,6 @@ struct CutImageView: View {
                     .onReceive(cutImageManager.frameRatioTapped){ ratio in
                         var newFrameWidth = frameWidth
                         var newFrameHeight = frameHeight
-                        
-                        print(ratio)
                         
                         if originalImageSize.width > originalImageSize.height{
                             newFrameHeight = min(viewWidth * ratio.heightRatio / ratio.widthRatio, viewHeight)

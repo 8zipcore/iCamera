@@ -46,6 +46,7 @@ class TextManager: ObservableObject{
     var textMenuButtonTapped = PassthroughSubject<TextMenu, Never>()
     var deleteTextButtonTapped = PassthroughSubject<Void, Never>()
     var editTextButtonTapped = PassthroughSubject<Void, Never>()
+    var textAddButtonTapped = PassthroughSubject<Void, Never>()
     
     @Published var textArray: [TextData] = []
     @Published var currentTextMenu: TextMenu = .font
@@ -54,15 +55,22 @@ class TextManager: ObservableObject{
     
     var selectedText: TextData?
     
+    private var fontManager = FontManager()
+    
     var fontArray: [TextFont] {
-        return [
-            TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "title"),
-            TextFont(font: UIFont.systemFont(ofSize: 10), fontName: "body"),
-            TextFont(font: UIFont.systemFont(ofSize: 8), fontName: "caption")
-        ]
+        // 첫번째는 + 버튼임
+        var textFontArray: [TextFont] = [TextFont(font: UIFont.systemFont(ofSize: 20), fontName: "title")]
+        FontManager.Font.allCases.forEach{ font in
+            let fontName = fontManager.fontNameToString(font)
+            let uiFont = fontManager.fontToUIFont(font, size: 18)
+            textFontArray.append(TextFont(font:uiFont, fontName: fontName))
+        }
+        return textFontArray
     }
     
     private var textPlaceHolder = "텍스트를 입력해주세요."
+    
+    var isFirstDrag = true
     
     func isHidden(index: Int) -> Bool{
         return textArray[index].isSelected
@@ -92,7 +100,19 @@ class TextManager: ObservableObject{
     
     func addNewText(location: CGPoint, size: CGSize){
         textArray.indices.forEach{ textArray[$0].isSelected = false}
-        textArray.append(TextData(text: textPlaceHolder, textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "body"), textAlignment: .center, textColor: .black, backgroundColor: .yellow, location: location, size: size, scale: 1, angle: Angle(degrees: 0), isSelected: true))
+        let textData = TextData(
+            text: "",
+            textFont: TextFont(font: fontManager.fontToUIFont(.myungjo, size: 15), fontName: fontManager.fontNameToString(.myungjo)),
+            textAlignment: .center,
+            textColor: .black,
+            backgroundColor: .clear,
+            location: location,
+            size: size,
+            scale: 1,
+            angle: Angle(degrees: 0),
+            isSelected: true)
+        textArray.append(textData)
+        selectedText = textData
     }
     
     func addText(textData: TextData){
@@ -105,16 +125,35 @@ class TextManager: ObservableObject{
     }
     
     func selectText(index: Int) {
-        selectedText = textArray[index]
-        
         var textData = textArray[index]
+        if textData.isSelected{
+            return
+        }
         textData.isSelected = true
-        textData.text = ""
         textArray.remove(at: index)
         addText(textData: textData)
+        selectedText = textData
+    }
+    
+    func selectText(id: UUID) {
+        for index in textArray.indices{
+            if textArray[index].id == id {
+                var textData = textArray[index]
+                if textData.isSelected{
+                    return
+                }
+                textData.isSelected = true
+                textArray.remove(at: index)
+                addText(textData: textData)
+                selectedText = textData
+            }
+        }
     }
     
     func deleteText(index: Int){
+        if textArray[index].isSelected{
+            selectedText = nil
+        }
         textArray.remove(at: index)
     }
     
@@ -126,38 +165,76 @@ class TextManager: ObservableObject{
         return currentTextMenu == textMenu
     }
     
-    func selectedTextIndex() -> Int {
+    func isSelected(_ textData: TextData) -> Bool{
+        return textData.id == selectedText?.id
+    }
+
+    func selectedTextIndex() -> Int? {
         for index in textArray.indices {
-            return index
+            if textArray[index].isSelected{
+                return index
+            }
         }
-        return 0
+        return nil
+    }
+    
+    func isSameFont(_ font: TextFont) -> Bool{
+        if let selectedText = selectedText{
+            return selectedText.textFont.fontName == font.fontName
+        }
+        return false
     }
     
     func setAlignment() {
-        let index = selectedTextIndex()
-        let currentAlignment = textArray[index].textAlignment.rawValue
-        textArray[index].textAlignment = NSTextAlignment(rawValue: (currentAlignment + 1) % 3) ?? .center
+        if let index = selectedTextIndex(){
+            let currentAlignment = textArray[index].textAlignment.rawValue
+            textArray[index].textAlignment = NSTextAlignment(rawValue: (currentAlignment + 1) % 3) ?? .center
+        }
     }
     
     func setTextColor(color: Color){
-        let index = selectedTextIndex()
-        textArray[index].textColor = color
+        if let index = selectedTextIndex(){
+            textArray[index].textColor = color
+        }
     }
     
     func setBackgroundColor(color: Color){
-        let index = selectedTextIndex()
-        textArray[index].backgroundColor = color
+        if let index = selectedTextIndex(){
+            textArray[index].backgroundColor = color
+        }
     }
     
     func textInput() -> String{
         guard let selectedText = selectedText else { return "" }
-        
-        print(selectedText)
-        
-        if selectedText.text == textPlaceHolder{
-            return ""
-        }
-        
         return selectedText.text
+    }
+    
+    func setTextPlaceHolder(index: Int) -> TextData{
+        var textData = textArray[index]
+        if textData.text.count == 0{
+            textData.text = textPlaceHolder
+        }
+        return textData
+    }
+    
+    func setTextLocation(_ translation: CGSize){
+        let index = textArray.count - 1
+        textArray[index].location = CGPoint(x: translation.width, y: translation.height)
+    }
+    
+    func updateFont(_ textFont: TextFont){
+        if let index = selectedTextIndex(){
+            var textFont = textFont
+            textFont.font = textFont.font.withSize(textArray[index].textFont.font.pointSize)
+            textArray[index].textFont = textFont
+            selectedText = textArray[index]
+        }
+    }
+    
+    func setFontSize(_ size: CGFloat){
+        if let index = selectedTextIndex(){
+            let font = textArray[index].textFont.font
+            textArray[index].textFont.font = font.withSize(size)
+        }
     }
 }

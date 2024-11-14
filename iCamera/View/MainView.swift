@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct CustomRoundedRectangle: Shape {
-    var cornerRadius: CGFloat
-
-    func path(in rect: CGRect) -> Path {
-        let roundedRect = RoundedRectangle(cornerRadius: cornerRadius)
-        return roundedRect.path(in: rect)
-    }
-}
-
 @available(iOS 16.0, *)
 struct MainView: View {
     
@@ -76,7 +67,7 @@ struct MainView: View {
                         }
                         .position(x: geometry.size.width / 2, y: rectangleHeight / 2 + topMargin)
                         .background(
-                            CustomRoundedRectangle(cornerRadius: cornerRadius)
+                            RoundedRectangle(cornerRadius: cornerRadius)
                                 .stroke(Color.black, lineWidth: 1)
                                 .background(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))

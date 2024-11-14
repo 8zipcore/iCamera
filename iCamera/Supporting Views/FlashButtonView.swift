@@ -28,7 +28,7 @@ struct FlashButtonView: View {
                 .padding(.trailing, 7)
         }
         .background(
-            CustomRoundedRectangle(cornerRadius: cornerRadius)
+            RoundedRectangle(cornerRadius: cornerRadius)
                 .stroke(Color.black, lineWidth: 1)
                 .background(.white.opacity(0.5))
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))

@@ -62,9 +62,11 @@ class CutImageManager: ObservableObject{
     
     var ratioArray: [FrameRatio] = []
     
+    let padding: CGFloat = 15
+    
+    var editImageViewSize: CGSize = .zero
     
     func initFrameSize(_ size: CGSize){
-        print("initFrame", size)
         frameWidth = size.width
         frameHeight = size.height
         originalImageSize = size
@@ -288,5 +290,32 @@ class CutImageManager: ObservableObject{
             }
         }
         return NewFrame(size: newSize, location: newLocation)
+    }
+    
+    func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
+        if imageSize.width > imageSize.height{
+            return CGSize(width: viewSize.width, height: imageSize.height * viewSize.width / imageSize.width)
+        } else {
+            return CGSize(width: imageSize.width * viewSize.height / imageSize.height, height: viewSize.height)
+        }
+    }
+    
+    func paddingImageSize(imageSize: CGSize, multiple: CGFloat) -> CGSize{
+        var size: CGSize = .zero
+        if imageSize.width > imageSize.height {
+            let newImageWidth: CGFloat = imageSize.width + padding * multiple
+            size = CGSize(width: newImageWidth, height: imageSize.height * newImageWidth / imageSize.width)
+        } else {
+            let newImageHeight: CGFloat = imageSize.height + padding * multiple
+            size = CGSize(width: imageSize.width * newImageHeight / imageSize.height, height: newImageHeight)
+        }
+        return size
+    }
+    
+    func editImagePositionArray() -> [CGPoint]{
+        let imageSize = paddingImageSize(imageSize: CGSize(width: frameWidth, height: frameHeight), multiple: 1.0)
+        let leadingTopPosition = CGPoint(x: (editImageViewSize.width / 2) - (imageSize.width / 2), y: (editImageViewSize.height / 2) - (imageSize.height / 2))
+        let trailingBottomPosition = CGPoint(x: (editImageViewSize.width / 2) + (imageSize.width / 2), y: (editImageViewSize.height / 2) + (imageSize.height / 2))
+        return [leadingTopPosition, trailingBottomPosition]
     }
 }
