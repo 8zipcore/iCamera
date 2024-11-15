@@ -15,19 +15,19 @@ struct TextMenuView: View {
     @State private var currentAlignmentIndex = 0
     
     var body: some View {
-        HStack(spacing: 20){
+        HStack(spacing: 23){
             Button("Aa"){
                 textManager.setCurrentTextMenu(.font)
             }
             .foregroundStyle(.black)
             
             Button(action: {
-                // textManager.setCurrentTextMenu(.alignment)
+                textManager.setTextAlignment()
                 currentAlignmentIndex = (currentAlignmentIndex + 1) % 3
             }) {
                 Image(alignmentImageStringArray[currentAlignmentIndex])
                     .resizable()
-                    .frame(width: 25, height: 25)
+                    .frame(width: 28, height: 28)
             }
             .foregroundStyle(.black)
             

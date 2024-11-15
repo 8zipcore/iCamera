@@ -16,8 +16,19 @@ struct TextEditView: View {
         GeometryReader{ geometry in
             VStack{
                 if textManager.isSelected(.font){
+                    let minFontSize: CGFloat = 15
+                    let maxFontSize: CGFloat = 80
+                    let percentage = fontSizeToPercentage(minFontSize: minFontSize, maxFontSize: maxFontSize)
+                    
+                    CustomSlider(value: percentage,customSliderManager: customSliderManager)
+                        .padding([.top, .leading, .trailing], 10)
+                        .frame(height: 30)
+                        .onReceive(customSliderManager.onChange){ value in
+                            textManager.setFontSize((maxFontSize - minFontSize) * value + minFontSize)
+                        }
+                    
                     ScrollView(.horizontal, showsIndicators: false){
-                        Spacer()
+                        
                         HStack(spacing: 10){
                             ForEach(textManager.fontArray.indices, id: \.self){ index in
                                 if index == 0 {
@@ -34,7 +45,7 @@ struct TextEditView: View {
                                 } else {
                                     let textFont = textManager.fontArray[index]
                                     SelectedTextCell(title: textFont.fontName, font: Font(textFont.font), isSelected: textManager.isSameFont(textFont))
-                                        .frame(height: 40)
+                                        .frame(height: 30)
                                         .onTapGesture{
                                             textManager.updateFont(textFont)
                                         }
@@ -44,16 +55,6 @@ struct TextEditView: View {
                         }
                         .padding([.leading, .trailing], 20)
                     }
-                    
-                    let minFontSize: CGFloat = 15
-                    let maxFontSize: CGFloat = 80
-                    let percentage = fontSizeToPercentage(minFontSize: minFontSize, maxFontSize: maxFontSize)
-                    
-                    CustomSlider(value: percentage,customSliderManager: customSliderManager)
-                        .padding([.top, .leading, .trailing], 10)
-                        .onReceive(customSliderManager.onChange){ value in
-                            textManager.setFontSize((maxFontSize - minFontSize) * value + minFontSize)
-                        }
                 }
                 
                 if textManager.isSelected(.color){

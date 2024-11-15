@@ -20,59 +20,94 @@ struct TextView: View {
     @State private var lastScale: CGFloat = 1.0
     @State private var lastAngle: Angle = .zero
     
+    @State private var showRectangle = false
+    
+    @State private var isHidden = true
+    
     var body: some View {
         GeometryReader { geometry in
             let viewWidth = geometry.size.width
             let viewHeight = geometry.size.height
             
-            let padding: CGFloat = 3
-            let buttonWidth: CGFloat = 18
+            let padding: CGFloat = 10
+            let buttonWidth: CGFloat = 20
             
             ZStack{
-                ForEach(backgroundViewSizeArray.indices, id: \.self){ index in
-                    Rectangle()
-                        // .fill(.yellow)
-                        .fill(textData.backgroundColor)
-                        .frame(width: backgroundViewSizeArray[index].width, height: backgroundViewSizeArray[index].height)
-                        .position(x: viewWidth / 2, y: (viewHeight / 2) + (backgroundViewSizeArray[index].height * multiple(index: index)))
-                }
-                
-                NonEditableCustomTextView(textData: textData){ newArray, newSize in
-                    backgroundViewSizeArray = newArray
-                    textViewSize = newSize
-                }
-                .frame(width: textViewSize.width, height: textViewSize.height)
-                .position(x: viewWidth / 2, y: viewHeight / 2)
-                .onChange(of: textViewSize){ _ in
-                    // print(textViewSize)
-                    // textManager.textArray[index].size = textViewSize
-                }
-                
-                if textData.isSelected{
-                    Rectangle()
-                        .stroke(.white, lineWidth: 1.5)
-                        .frame(width: textViewSize.width + padding, height: textViewSize.height + (padding * 2))
-                        .position(x: viewWidth / 2, y: viewHeight / 2)
+                    ForEach(backgroundViewSizeArray.indices, id: \.self){ index in
+                        let position = backgroundArrayPosition(index: index, viewSize: geometry.size)
+                        Rectangle()
+                            .fill(textData.backgroundColor)
+                            .frame(width: backgroundViewSizeArray[index].width, height: backgroundViewSizeArray[index].height)
+                            .position(x: position.x, y: position.y) // 애니메이션 적용
+                    }
                     
-                    Image("xmark_button")
-                        .resizable()
-                        .frame(width: buttonWidth, height: buttonWidth)
-                        .padding(30)
-                        .position(x: viewWidth / 2 - (textViewSize.width / 2), y: (viewHeight / 2) - (textViewSize.height / 2))
-                        .onTapGesture{
-                            textManager.deleteText(index: index)
+                    NonEditableCustomTextView(textData: .constant(textData)){ newArray, newSize in
+                        // 🌀 textView textContainer(?) 업데이트 바로 안되서 width값 제대로 못받아오는 경우가 있어
+                        // textInputView에서 width받아온거 저장해서 적용해줌
+                        // 맨처음 추가했을때 || font크기 변경할 때
+                        if textData.text == textManager.textPlaceHolder || isHidden == false {
+                            backgroundViewSizeArray = newArray
+                            textViewSize = newSize
+                        } else {
+                            backgroundViewSizeArray = textData.backgroundColorSizeArray
+                            textViewSize = textData.size
                         }
+                        
+                        if isHidden {
+                            isHidden = false
+                        }
+                        
+                    }
+                    .frame(height: textViewSize.height)
+                    .position(x: viewWidth / 2, y: viewHeight / 2)
+                    .onChange(of: textViewSize){ _ in
+                        textManager.textArray[index].size = textViewSize
+                    }
+                    //.opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
+                    .animation(.easeInOut(duration: 0.1), value: isHidden)
                     
-                    Image("xmark_button")
-                        .resizable()
-                        .frame(width: buttonWidth, height: buttonWidth)
-                        .padding(30)
-                        .position(x: viewWidth / 2 + (textViewSize.width / 2), y: (viewHeight / 2) + (textViewSize.height / 2))
-                        .onTapGesture{
-                            print("Tap")
-                            textManager.editTextButtonTapped.send()
-                        }
+                    if textData.isSelected && showRectangle {
+                        let rectangleWidth = textViewSize.width + padding
+                        let rectangleHeight = textViewSize.height + (padding * 2)
+                        Rectangle()
+                            .stroke(.white, lineWidth: 1.5)
+                            .frame(width: rectangleWidth, height: rectangleHeight)
+                            .position(x: viewWidth / 2, y: viewHeight / 2)
+                            // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
+                            .animation(.easeInOut(duration: 0.1), value: isHidden)
+                        
+                        Image("xmark_button")
+                            .resizable()
+                            .frame(width: buttonWidth, height: buttonWidth)
+                            .position(x: viewWidth / 2 - (rectangleWidth / 2), y: (viewHeight / 2) - (rectangleHeight / 2))
+                            .onTapGesture{
+                                textManager.deleteText(index: index)
+                            }
+                            // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
+                            .animation(.easeInOut(duration: 0.1), value: isHidden)
+                        
+                        Image("xmark_button")
+                            .resizable()
+                            .frame(width: buttonWidth, height: buttonWidth)
+                            .position(x: viewWidth / 2 + (rectangleWidth / 2), y: (viewHeight / 2) + (rectangleHeight / 2))
+                            .onTapGesture{
+                                print("Tap")
+                                textManager.editTextButtonTapped.send()
+                            }
+                            // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
+                            .animation(.easeInOut(duration: 0.1), value: isHidden)
+                    }
+            }
+            .onAppear{
+                textViewSize = textData.size
+                isHidden = false
+                // 딜레이줘서 뷰 튀는거 방지
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
+                    showRectangle = true
                 }
+            }
+            .onChange(of: textData){ _ in
+                isHidden = true
             }
             // .scaleEffect(textData.scale)
             .rotationEffect(textData.angle) // 회전 효과 적용
@@ -104,14 +139,16 @@ struct TextView: View {
                         ),
                         DragGesture()
                             .onChanged{ value in
-                                var translation = CGSize(width: textData.location.x + value.translation.width, height: textData.location.y + value.translation.height)
+                                let translation = CGSize(width: textData.location.x + value.translation.width, height: textData.location.y + value.translation.height)
+                                /*
+                                // textView 드래그 범위 제한
                                 let viewWidth = textViewSize.width + buttonWidth
                                 let viewHeight = textViewSize.height + buttonWidth
                                 let verticalPadding: CGFloat = 20
                                 let textViewPositionArray = [CGPoint(x: translation.width - viewWidth / 2, y: translation.height - viewHeight / 2), CGPoint(x: translation.width + viewWidth / 2, y: translation.height + viewHeight / 2)]
                                 
                                 let imagePositionArray = cutImageManager.editImagePositionArray()
-                                /*
+                               
                                 if textViewPositionArray[0].x < imagePositionArray[0].x {
                                     translation.width = viewWidth / 2
                                 } else if textViewPositionArray[1].x > imagePositionArray[1].x{
@@ -126,11 +163,11 @@ struct TextView: View {
                                 */
                                 
                                 if textManager.isFirstDrag{
-                                    textManager.selectText(id: textData.id)
+                                    textManager.selectText(index: index)
                                     textManager.isFirstDrag = false
                                 }
                                 
-                                textManager.setTextLocation(translation)
+                                textManager.setTextLocation(index: index, translation: translation)
                             }
                         .onEnded{ _ in
                             textManager.isFirstDrag = true
@@ -144,5 +181,22 @@ struct TextView: View {
         let centerIndex = backgroundViewSizeArray.count % 2 == 0 ?
         CGFloat(backgroundViewSizeArray.count - 1) / 2 : CGFloat(backgroundViewSizeArray.count / 2)
         return CGFloat(index) - centerIndex
+    }
+    
+    private func backgroundArrayPosition(index: Int, viewSize: CGSize) -> CGPoint{
+        let size = backgroundViewSizeArray[index]
+        var position: CGPoint = .zero
+        switch textData.textAlignment {
+        case .left:
+            position.x = (viewSize.width - textViewSize.width + size.width) / 2
+        case .center:
+            position.x = viewSize.width / 2
+        case .right:
+            position.x = (viewSize.width + textViewSize.width - size.width) / 2
+        default:
+            break
+        }
+        position.y = (viewSize.height / 2) + (size.height * multiple(index: index))
+        return position
     }
 }

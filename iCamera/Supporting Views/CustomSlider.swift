@@ -20,8 +20,8 @@ struct CustomSlider: View {
     
     var body: some View {
         GeometryReader{ geometry in
-            let barHeight: CGFloat = 13
-            let imageWidth: CGFloat = 23
+            let barHeight: CGFloat = 11
+            let imageWidth: CGFloat = 25
             let minXPosition = imageWidth / 2
             let maxXPosition = geometry.size.width - minXPosition
             ZStack{

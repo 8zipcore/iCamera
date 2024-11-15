@@ -17,6 +17,8 @@ struct TextInputView: View {
     @StateObject private var keyboardObserver = KeyboardObserver()
     @FocusState private var isFocused: Bool
     
+    @State private var backgroundColorSizeArray: [CGSize] = []
+    
     var body: some View {
         GeometryReader { geometry in
             let viewWidth = geometry.size.width
@@ -33,6 +35,9 @@ struct TextInputView: View {
                     DispatchQueue.main.async{
                         // textViewSize = $0
                     }
+                }, updateData: {
+                    backgroundColorSizeArray = $0
+                    textViewSize = $1
                 })
                     .focused($isFocused)
                     .position(x: viewWidth * 0.9 / 2, y: textViewMaxHeight / 2)
@@ -61,6 +66,8 @@ struct TextInputView: View {
                         Spacer()
                         Button(action: {
                             textData.text = textInput
+                            textData.backgroundColorSizeArray = backgroundColorSizeArray
+                            textData.size = textViewSize
                             textManager.textInputConfirmButtonTapped.send(textData)
                         }) {
                             Image("xmark_button")

@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import UIKit
 
-struct TextData {
+struct TextData: Equatable{
     enum Alignment: Int{
         case center, leading, trailing
     }
@@ -21,12 +21,17 @@ struct TextData {
     var backgroundColor: Color
     var location: CGPoint
     var size: CGSize
+    var backgroundColorSizeArray: [CGSize]
     var scale: CGFloat
     var angle: Angle
     var isSelected: Bool
     
+    static func ==(lhs: TextData, rhs: TextData) -> Bool {
+        return lhs.text == rhs.text && lhs.backgroundColorSizeArray == rhs.backgroundColorSizeArray && lhs.size == rhs.size
+    }
+    
     static func emptyTextData() -> TextData{
-        return TextData(text: "", textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: ""), textAlignment: .left, textColor: .black, backgroundColor: .clear, location: .zero, size: .zero, scale: .zero, angle: .zero, isSelected: false)
+        return TextData(text: "", textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: ""), textAlignment: .left, textColor: .black, backgroundColor: .clear, location: .zero, size: .zero, backgroundColorSizeArray: [], scale: .zero, angle: .zero, isSelected: false)
     }
 }
 
@@ -50,8 +55,6 @@ class TextManager: ObservableObject{
     
     @Published var textArray: [TextData] = []
     @Published var currentTextMenu: TextMenu = .font
-    var textColor: [Color] = [ .black, .red, .blue, .white]
-    var backgroundColor: [Color] = [.clear, .black, .white, .red, .blue]
     
     var selectedText: TextData?
     
@@ -68,7 +71,7 @@ class TextManager: ObservableObject{
         return textFontArray
     }
     
-    private var textPlaceHolder = "텍스트를 입력해주세요."
+    let textPlaceHolder = "텍스트를 입력해주세요."
     
     var isFirstDrag = true
     
@@ -108,6 +111,7 @@ class TextManager: ObservableObject{
             backgroundColor: .clear,
             location: location,
             size: size,
+            backgroundColorSizeArray: [], 
             scale: 1,
             angle: Angle(degrees: 0),
             isSelected: true)
@@ -125,29 +129,12 @@ class TextManager: ObservableObject{
     }
     
     func selectText(index: Int) {
-        var textData = textArray[index]
-        if textData.isSelected{
+        if textArray[index].isSelected{
             return
         }
-        textData.isSelected = true
-        textArray.remove(at: index)
-        addText(textData: textData)
-        selectedText = textData
-    }
-    
-    func selectText(id: UUID) {
-        for index in textArray.indices{
-            if textArray[index].id == id {
-                var textData = textArray[index]
-                if textData.isSelected{
-                    return
-                }
-                textData.isSelected = true
-                textArray.remove(at: index)
-                addText(textData: textData)
-                selectedText = textData
-            }
-        }
+        textArray.indices.forEach{ textArray[$0].isSelected = false }
+        textArray[index].isSelected = true
+        selectedText = textArray[index]
     }
     
     func deleteText(index: Int){
@@ -217,8 +204,7 @@ class TextManager: ObservableObject{
         return textData
     }
     
-    func setTextLocation(_ translation: CGSize){
-        let index = textArray.count - 1
+    func setTextLocation(index: Int, translation: CGSize){
         textArray[index].location = CGPoint(x: translation.width, y: translation.height)
     }
     
@@ -235,6 +221,18 @@ class TextManager: ObservableObject{
         if let index = selectedTextIndex(){
             let font = textArray[index].textFont.font
             textArray[index].textFont.font = font.withSize(size)
+        }
+    }
+    
+    func setTextAlignment(){
+        if let selectedIndex = selectedTextIndex(){
+            let alignmentArray: [NSTextAlignment] = [.center, .left, .right]
+            for index in alignmentArray.indices{
+                if alignmentArray[index] == textArray[selectedIndex].textAlignment{
+                    textArray[selectedIndex].textAlignment = alignmentArray[(index + 1) % alignmentArray.count]
+                    break
+                }
+            }
         }
     }
 }

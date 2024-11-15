@@ -219,6 +219,7 @@ struct CommentsView: View {
                                             backgroundColor: .clear,
                                             location: .zero,
                                             size: .zero,
+                                            backgroundColorSizeArray: [],
                                             scale: 1.0,
                                             angle: .zero,
                                             isSelected: false)

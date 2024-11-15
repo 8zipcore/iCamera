@@ -12,6 +12,7 @@ struct AttributedTextView: View {
     @Binding var textData: TextData
     var onTextChange: (String) -> Void
     var onSizeChange: (CGSize) -> Void
+    var updateData: ([CGSize], CGSize) -> Void
     
     @State private var textViewSize: CGSize = .zero
     @State private var backgroundViewSizeArray: [CGSize] = []
@@ -25,17 +26,20 @@ struct AttributedTextView: View {
             ZStack{
                 ForEach(backgroundViewSizeArray.indices, id: \.self){ index in
                     let backgroundViewSize = backgroundViewSizeArray[index]
+                    let position = backgroundArrayPosition(index: index, viewSize: geometry.size)
                     Rectangle()
                         .fill(textData.backgroundColor)
                         .frame(width: backgroundViewSize.width, height: backgroundViewSize.height)
-                        .position(x: viewWidth / 2, y: (viewHeight / 2) + (backgroundViewSize.height * multiple(index: index)))
+                        .position(x: position.x, y: position.y)
                 }
                 
                 CustomTextView(textData: $textData, 
                                onTextChange: { onTextChange($0) },
-                               onSizeChange: { textViewSize = $0; onSizeChange($0) }, updateData: { newArray, newSize in
+                               onSizeChange: { textViewSize = $0; onSizeChange($0) }, 
+                               updateData: { newArray, newSize in
                     backgroundViewSizeArray = newArray
                     textViewSize = newSize
+                    updateData(newArray, newSize)
                 })
                 .frame(height: textViewSize.height)
                     .position(x: viewWidth / 2, y: viewHeight / 2)
@@ -76,6 +80,23 @@ struct AttributedTextView: View {
         CGFloat(arrayCount - 1) / 2 : CGFloat(arrayCount / 2)
         return CGFloat(index) - centerIndex
     }
+    
+    private func backgroundArrayPosition(index: Int, viewSize: CGSize) -> CGPoint{
+        let size = backgroundViewSizeArray[index]
+        var position: CGPoint = .zero
+        switch textData.textAlignment {
+        case .left:
+            position.x = size.width / 2
+        case .center:
+            position.x = viewSize.width / 2
+        case .right:
+            position.x = viewSize.width  - size.width / 2
+        default:
+            break
+        }
+        position.y = (viewSize.height / 2) + (size.height * multiple(index: index))
+        return position
+    }
 }
 
 struct CustomTextView: UIViewRepresentable {
@@ -99,14 +120,16 @@ struct CustomTextView: UIViewRepresentable {
         textView.textContainerInset = textContainerInset
         textView.textContainer.lineBreakMode = .byWordWrapping
         textView.textContainer.maximumNumberOfLines = 0
+        textView.tintColor = .black
         return textView
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.setAttributedString(from: textData)
+        uiView.font = textData.textFont.font
         uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal) // 가로로 커지지않게
         let lineHeight = textData.textFont.font.lineHeight
-        var textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
+        let textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
         let lineNumber = Int(textViewSize.height / lineHeight)
         
         var backgroundViewSizeArray: [CGSize] = []
@@ -147,12 +170,12 @@ struct CustomTextView: UIViewRepresentable {
 }
 
 struct NonEditableCustomTextView: UIViewRepresentable {
-    var textData: TextData
+    @Binding var textData: TextData
     var updateData: ([CGSize], CGSize) -> Void
 
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
-        textView.isEditable = false
+        textView.isEditable = true
         textView.isSelectable = false
         textView.isScrollEnabled = false
         textView.backgroundColor = .clear
@@ -165,16 +188,18 @@ struct NonEditableCustomTextView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.setAttributedString(from: textData)
+        uiView.font = textData.textFont.font
+        uiView.textAlignment = textData.textAlignment
+        
         let lineHeight = textData.textFont.font.lineHeight
-        let textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
+        let textViewSize = uiView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         let lineNumber = Int(textViewSize.height / lineHeight)
         var backgroundViewSizeArray: [CGSize] = []
         
         DispatchQueue.main.async{
-            for line in 0..<lineNumber{
-                let lineWidth = uiView.getWidthOfLine(line: line)
-                print(line, lineWidth)
-                backgroundViewSizeArray.append(CGSize(width: lineWidth, height: round(lineHeight)))
+            uiView.layoutIfNeeded()
+            uiView.getWidthOfLineArray(lineNumber: lineNumber).forEach{
+                backgroundViewSizeArray.append(CGSize(width: $0, height: round(lineHeight)))
             }
             updateData(backgroundViewSizeArray, textViewSize)
         }
@@ -185,21 +210,47 @@ extension UITextView{
     func getWidthOfLine(line: Int) -> CGFloat {
         let layoutManager = self.layoutManager
         let textStorage = self.textStorage
+        
+        self.layoutManager.ensureLayout(forCharacterRange: NSRange(location: 0, length: textStorage.length))
 
         // 해당 줄의 시작과 끝 범위를 찾기
         let glyphRange = layoutManager.glyphRange(forCharacterRange: NSRange(location: 0, length: textStorage.length), actualCharacterRange: nil)
 
-        var currenLine: Int = 0
+        var currentLine: Int = 0
         var width: CGFloat = 0
 
         layoutManager.enumerateLineFragments(forGlyphRange: glyphRange) { (_, usedRect, _, range, stop) in
-            if currenLine == line {
+            if currentLine == line {
                 width = usedRect.width
                 stop.pointee = true
             }
-            currenLine += 1
+            currentLine += 1
         }
+
         return width
+    }
+    
+    func getWidthOfLineArray(lineNumber: Int) -> [CGFloat] {
+        let layoutManager = self.layoutManager
+        let textStorage = self.textStorage
+        
+        self.layoutManager.ensureLayout(forCharacterRange: NSRange(location: 0, length: textStorage.length))
+
+        // 해당 줄의 시작과 끝 범위를 찾기
+        let glyphRange = layoutManager.glyphRange(forCharacterRange: NSRange(location: 0, length: textStorage.length), actualCharacterRange: nil)
+
+        var currentLine: Int = 0
+        var widthArray: [CGFloat] = []
+
+        layoutManager.enumerateLineFragments(forGlyphRange: glyphRange) { (_, usedRect, _, range, stop) in
+            if currentLine == lineNumber + 1 {
+                stop.pointee = true
+            }
+            widthArray.append(usedRect.width)
+            currentLine += 1
+        }
+        
+        return widthArray
     }
     
     func setAttributedString(from textData: TextData) {

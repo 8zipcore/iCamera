@@ -142,8 +142,8 @@ struct EditPhotoView: View {
                             let data = textManager.setTextPlaceHolder(index: index)
                             TextView(index: index, textData: data, textManager: textManager, cutImageManager: cutImageManager)
                                 .hidden(textManager.isHidden(index: index) && showTextInputView)
-                                // .frame(width: data.size.width, height: data.size.height)
-                                // .zIndex(data.isSelected ? 1 : 0)
+                                // .frame(width: data.size.width + 50, height: data.size.height)
+                                .zIndex(data.isSelected ? 1 : 0)
                                 .position(data.location)
                                 .onReceive(textManager.editTextButtonTapped){
                                     showTextInputView = true
@@ -257,7 +257,7 @@ struct EditPhotoView: View {
                                 showTextInputView = false
                             }
                             .onReceive(textManager.textInputConfirmButtonTapped){ data in
-                                print(data.text)
+                                print("tapped", data.size)
                                 textManager.setTextData(textData: data)
                                 showTextInputView = false
                             }
