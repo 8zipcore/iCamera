@@ -58,10 +58,10 @@ struct TextView: View {
                         }
                         
                     }
-                    .frame(height: textViewSize.height)
+                    .frame(width: textViewSize.width, height: textViewSize.height)
                     .position(x: viewWidth / 2, y: viewHeight / 2)
-                    .onChange(of: textViewSize){ _ in
-                        textManager.textArray[index].size = textViewSize
+                    .onChange(of: textViewSize){ newSize in
+                        textManager.textArray[index].size = newSize
                     }
                     //.opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
                     .animation(.easeInOut(duration: 0.1), value: isHidden)
@@ -86,7 +86,7 @@ struct TextView: View {
                             // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
                             .animation(.easeInOut(duration: 0.1), value: isHidden)
                         
-                        Image("xmark_button")
+                        Image("edit_button")
                             .resizable()
                             .frame(width: buttonWidth, height: buttonWidth)
                             .position(x: viewWidth / 2 + (rectangleWidth / 2), y: (viewHeight / 2) + (rectangleHeight / 2))

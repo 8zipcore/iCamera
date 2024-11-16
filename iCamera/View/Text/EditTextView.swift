@@ -1,5 +1,5 @@
 //
-//  TextEditView.swift
+//  EditTextView.swift
 //  iCamera
 //
 //  Created by 홍승아 on 11/14/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TextEditView: View {
+struct EditTextView: View {
     @StateObject var textManager: TextManager
     
     @StateObject private var customSliderManager = CustomSliderManager()
@@ -20,7 +20,7 @@ struct TextEditView: View {
                     let maxFontSize: CGFloat = 80
                     let percentage = fontSizeToPercentage(minFontSize: minFontSize, maxFontSize: maxFontSize)
                     
-                    CustomSlider(value: percentage,customSliderManager: customSliderManager)
+                    CustomSlider(value: percentage,customSliderManager: customSliderManager, isAvailableDrag: textManager.isExistSeletedText())
                         .padding([.top, .leading, .trailing], 10)
                         .frame(height: 30)
                         .onReceive(customSliderManager.onChange){ value in
@@ -70,6 +70,7 @@ struct TextEditView: View {
     
     private func fontSizeToPercentage(minFontSize: CGFloat, maxFontSize: CGFloat) -> CGFloat{
         if let selectedText = textManager.selectedText{
+            print("selectedText",selectedText.textFont.font.pointSize)
             return (selectedText.textFont.font.pointSize - minFontSize) / (maxFontSize - minFontSize)
         }
         return 0

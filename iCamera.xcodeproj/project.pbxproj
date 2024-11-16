@@ -26,7 +26,7 @@
 		36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36447A372CAC0DDA008E1268 /* LUTManager.swift */; };
 		364B4C482CD8F20400CE5627 /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364B4C472CD8F20400CE5627 /* DestinationView.swift */; };
 		3653CCFB2CE47730005459E4 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CCFA2CE47730005459E4 /* FontManager.swift */; };
-		365978F42CE5AB3E00D58159 /* TextEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365978F32CE5AB3E00D58159 /* TextEditView.swift */; };
+		365978F42CE5AB3E00D58159 /* EditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365978F32CE5AB3E00D58159 /* EditTextView.swift */; };
 		365FF5132CE232A300D6EE8B /* SelectedTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365FF5122CE232A300D6EE8B /* SelectedTextCell.swift */; };
 		366306782CDF2B0D008F16E9 /* CutMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366306772CDF2B0D008F16E9 /* CutMenuView.swift */; };
 		3663067D2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3663067C2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift */; };
@@ -114,7 +114,7 @@
 		36447A372CAC0DDA008E1268 /* LUTManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUTManager.swift; sourceTree = "<group>"; };
 		364B4C472CD8F20400CE5627 /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
 		3653CCFA2CE47730005459E4 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
-		365978F32CE5AB3E00D58159 /* TextEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditView.swift; sourceTree = "<group>"; };
+		365978F32CE5AB3E00D58159 /* EditTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextView.swift; sourceTree = "<group>"; };
 		365FF5122CE232A300D6EE8B /* SelectedTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTextCell.swift; sourceTree = "<group>"; };
 		366306772CDF2B0D008F16E9 /* CutMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutMenuView.swift; sourceTree = "<group>"; };
 		3663067C2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionFrameRectangle.swift; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 				3682EF1B2CC8ECC500D18FE1 /* TextView.swift */,
 				3692E40F2CC544E9003CBACB /* SelectColorView.swift */,
 				3692E40D2CC527E0003CBACB /* TextMenuView.swift */,
-				365978F32CE5AB3E00D58159 /* TextEditView.swift */,
+				365978F32CE5AB3E00D58159 /* EditTextView.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -664,7 +664,7 @@
 				36697BFF2CD1241B00070A55 /* CalendarManager.swift in Sources */,
 				36EC6DA22CE4EEA800A5D784 /* CustomSlider.swift in Sources */,
 				3688E9EF2CAE7036001DC9DC /* StickerManager.swift in Sources */,
-				365978F42CE5AB3E00D58159 /* TextEditView.swift in Sources */,
+				365978F42CE5AB3E00D58159 /* EditTextView.swift in Sources */,
 				36D221C12CDA5C760007A0D3 /* CalendarData.swift in Sources */,
 				36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */,
 				362BD6B52CAAE351000955D5 /* EditImageView.swift in Sources */,

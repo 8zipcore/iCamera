@@ -238,7 +238,7 @@ struct EditPhotoView: View {
                             }
                             /* 📌 Text */
                             if menuButtonManager.isSelected(.text){
-                                TextEditView(textManager: textManager)
+                                EditTextView(textManager: textManager)
                                     .onReceive(textManager.textAddButtonTapped){ _ in
                                         textManager.addNewText(location: CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2), size: .zero)
                                     }

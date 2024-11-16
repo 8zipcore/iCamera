@@ -155,6 +155,10 @@ class TextManager: ObservableObject{
     func isSelected(_ textData: TextData) -> Bool{
         return textData.id == selectedText?.id
     }
+    
+    func isExistSeletedText() -> Bool{
+        return selectedText != nil
+    }
 
     func selectedTextIndex() -> Int? {
         for index in textArray.indices {
@@ -221,6 +225,7 @@ class TextManager: ObservableObject{
         if let index = selectedTextIndex(){
             let font = textArray[index].textFont.font
             textArray[index].textFont.font = font.withSize(size)
+            selectedText = textArray[index]
         }
     }
     

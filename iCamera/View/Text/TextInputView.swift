@@ -70,7 +70,7 @@ struct TextInputView: View {
                             textData.size = textViewSize
                             textManager.textInputConfirmButtonTapped.send(textData)
                         }) {
-                            Image("xmark_button")
+                            Image("confirm_button")
                                 .resizable()
                                 .frame(width: buttonSize.width, height: buttonSize.height)
                         }
