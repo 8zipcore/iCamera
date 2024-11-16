@@ -15,6 +15,11 @@
 		3605F5682C917DBF00665348 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605F5672C917DBF00665348 /* CameraManager.swift */; };
 		3605F56E2C91957600665348 /* FlashButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605F56D2C91957600665348 /* FlashButtonView.swift */; };
 		36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */; };
+		361BAB942CE85F180091346B /* EditStickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB932CE85F180091346B /* EditStickerView.swift */; };
+		361BAB962CE87B970091346B /* StoredStickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB952CE87B970091346B /* StoredStickerManager.swift */; };
+		361BAB982CE882940091346B /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB972CE882940091346B /* Sticker.swift */; };
+		361BAB9A2CE882BD0091346B /* StickerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB992CE882BD0091346B /* StickerData.swift */; };
+		361BAB9C2CE88A520091346B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB9B2CE88A520091346B /* Array.swift */; };
 		361C09D42CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */; };
 		362222362CA0087600AA9EA5 /* EditPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362222352CA0087600AA9EA5 /* EditPhotoView.swift */; };
 		362222382CA00E1F00AA9EA5 /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362222372CA00E1F00AA9EA5 /* MenuButtonView.swift */; };
@@ -103,6 +108,11 @@
 		3605F5672C917DBF00665348 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		3605F56D2C91957600665348 /* FlashButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashButtonView.swift; sourceTree = "<group>"; };
 		36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewWithOnScrollChanged.swift; sourceTree = "<group>"; };
+		361BAB932CE85F180091346B /* EditStickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStickerView.swift; sourceTree = "<group>"; };
+		361BAB952CE87B970091346B /* StoredStickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredStickerManager.swift; sourceTree = "<group>"; };
+		361BAB972CE882940091346B /* Sticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sticker.swift; sourceTree = "<group>"; };
+		361BAB992CE882BD0091346B /* StickerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerData.swift; sourceTree = "<group>"; };
+		361BAB9B2CE88A520091346B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAwareModifier.swift; sourceTree = "<group>"; };
 		362222352CA0087600AA9EA5 /* EditPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoView.swift; sourceTree = "<group>"; };
 		362222372CA00E1F00AA9EA5 /* MenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonView.swift; sourceTree = "<group>"; };
@@ -212,9 +222,6 @@
 				36810C542C8F287A002C680A /* ListView.swift */,
 				3605F56D2C91957600665348 /* FlashButtonView.swift */,
 				362222372CA00E1F00AA9EA5 /* MenuButtonView.swift */,
-				36A12E082CA19D1F00228784 /* FilterImageView.swift */,
-				362BD6B42CAAE351000955D5 /* EditImageView.swift */,
-				3688E9EC2CAE6933001DC9DC /* StickerView.swift */,
 				3692E40B2CC4E540003CBACB /* CustomTextEditor.swift */,
 				3634CAC22CC91DD20061D5DE /* Extension+View.swift */,
 				36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */,
@@ -242,8 +249,28 @@
 				36F84FBC2CD24AE5008275F5 /* Font.swift */,
 				364B4C472CD8F20400CE5627 /* DestinationView.swift */,
 				3653CCFA2CE47730005459E4 /* FontManager.swift */,
+				361BAB952CE87B970091346B /* StoredStickerManager.swift */,
+				361BAB9B2CE88A520091346B /* Array.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		361BAB912CE85EBF0091346B /* Sticker */ = {
+			isa = PBXGroup;
+			children = (
+				3688E9EC2CAE6933001DC9DC /* StickerView.swift */,
+				361BAB932CE85F180091346B /* EditStickerView.swift */,
+			);
+			path = Sticker;
+			sourceTree = "<group>";
+		};
+		361BAB922CE85ED40091346B /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				36A12E082CA19D1F00228784 /* FilterImageView.swift */,
+				362BD6B42CAAE351000955D5 /* EditImageView.swift */,
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 		366306792CDF2D49008F16E9 /* Cut */ = {
@@ -275,6 +302,7 @@
 			children = (
 				3663067C2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift */,
 				36D782AF2CE0884F003F07B8 /* ImageInfo.swift */,
+				361BAB972CE882940091346B /* Sticker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,8 +320,10 @@
 				3696515F2CA9831E004E0134 /* TestPhotoView.swift */,
 				368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */,
 				36CFA3702CD345D100DF6E1E /* CommentsView.swift */,
-				3663067A2CDF2D80008F16E9 /* Text */,
+				361BAB922CE85ED40091346B /* Filter */,
 				366306792CDF2D49008F16E9 /* Cut */,
+				361BAB912CE85EBF0091346B /* Sticker */,
+				3663067A2CDF2D80008F16E9 /* Text */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -378,6 +408,7 @@
 				36D221BA2CDA4C000007A0D3 /* CoreDataManager.swift */,
 				36D221C02CDA5C760007A0D3 /* CalendarData.swift */,
 				36D221CE2CDA6F1E0007A0D3 /* iCamera.xcdatamodeld */,
+				361BAB992CE882BD0091346B /* StickerData.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -646,14 +677,17 @@
 				36D221BB2CDA4C000007A0D3 /* CoreDataManager.swift in Sources */,
 				36A954C42CB25BDE00E43960 /* CutImageManager.swift in Sources */,
 				3692E4102CC544E9003CBACB /* SelectColorView.swift in Sources */,
+				361BAB9C2CE88A520091346B /* Array.swift in Sources */,
 				366306782CDF2B0D008F16E9 /* CutMenuView.swift in Sources */,
 				36D782B02CE0884F003F07B8 /* ImageInfo.swift in Sources */,
 				362222362CA0087600AA9EA5 /* EditPhotoView.swift in Sources */,
 				36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */,
+				361BAB9A2CE882BD0091346B /* StickerData.swift in Sources */,
 				36F84FB62CD1EA7D008275F5 /* CalendarCell.swift in Sources */,
 				36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */,
 				36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */,
 				362222382CA00E1F00AA9EA5 /* MenuButtonView.swift in Sources */,
+				361BAB982CE882940091346B /* Sticker.swift in Sources */,
 				366AC8662CB1572B007A15D1 /* MaskRectangleView.swift in Sources */,
 				369651602CA9831E004E0134 /* TestPhotoView.swift in Sources */,
 				362BD6B72CAAE3ED000955D5 /* MenuButtonManager.swift in Sources */,
@@ -671,6 +705,7 @@
 				36F84FBD2CD24AE5008275F5 /* Font.swift in Sources */,
 				3663067D2CDF2FBB008F16E9 /* SelectionFrameRectangle.swift in Sources */,
 				368D426E2CCBCF9B00E3E0FB /* CalendarView.swift in Sources */,
+				361BAB942CE85F180091346B /* EditStickerView.swift in Sources */,
 				366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */,
 				364B4C482CD8F20400CE5627 /* DestinationView.swift in Sources */,
 				36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */,
@@ -680,6 +715,7 @@
 				3605F5682C917DBF00665348 /* CameraManager.swift in Sources */,
 				3692E40A2CC4D3AC003CBACB /* TextInputView.swift in Sources */,
 				3605F5662C917CDD00665348 /* CameraView.swift in Sources */,
+				361BAB962CE87B970091346B /* StoredStickerManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

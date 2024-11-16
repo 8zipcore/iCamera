@@ -13,7 +13,10 @@ class CoreDataManager{
     static let shared = CoreDataManager()
     
     private let containerName = "iCamera"
-    private let entityName = "ICalendar"
+    private let calendarEntity = "ICalendar"
+    private let stickerEntity = "ISticker"
+    
+    var cancellables = Set<AnyCancellable>()
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: containerName)
@@ -33,13 +36,16 @@ class CoreDataManager{
         if context.hasChanges{
             do{
                 try context.save()
+                print("✅ 저장")
             } catch {
                 let error = error as NSError
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
     }
-    
+}
+/* CalendarData */
+extension CoreDataManager{
     func fetchData() -> AnyPublisher<[CalendarData], Error> {
         Future { [context] promise in
             context.perform {
@@ -67,7 +73,7 @@ class CoreDataManager{
     }
     
     func saveData(_ data: CalendarData){
-        if let entity = NSEntityDescription.entity(forEntityName: entityName, in: context){
+        if let entity = NSEntityDescription.entity(forEntityName: calendarEntity, in: context){
             let calendar = NSManagedObject(entity: entity, insertInto: context)
             calendar.setValue(data.id, forKey: "id")
             calendar.setValue(data.date, forKey: "date")
@@ -77,8 +83,8 @@ class CoreDataManager{
             } else {
                 calendar.setValue(nil, forKey: "image")
             }
+            saveContext()
         }
-        saveContext()
     }
     
     func updateData(_ data: CalendarData){
@@ -90,20 +96,70 @@ class CoreDataManager{
                 if let image = data.image, let imageData = image.pngData(){
                     calendar.image = imageData
                 }
+                
+                saveContext()
             }
         } catch {
             print("🌀 불러오기 Error: \(error.localizedDescription)")
         }
-        saveContext()
     }
     
     func deleteAllData() {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entityName)
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: calendarEntity)
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         do {
             try context.execute(batchDeleteRequest)
         } catch {
             print("Failed to delete data: \(error)")
+        }
+    }
+}
+/* Sticker Data */
+extension CoreDataManager{
+    func fetchStickerData() -> AnyPublisher<[StickerData], Error> {
+        Future { [context] promise in
+            context.perform {
+                let request: NSFetchRequest<ISticker> = ISticker.fetchRequest()
+                do{
+                    let stickerArray = try context.fetch(request)
+                    var stickerDataArray: [StickerData] = []
+                    stickerArray.forEach{
+                        if let id = $0.id, let image = $0.image == nil ? nil : UIImage(data: $0.image!){
+                            let data = StickerData(id: id, image: image)
+                            stickerDataArray.append(data)
+                        }
+                    }
+                    promise(.success(stickerDataArray))
+                } catch{
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func saveData(_ data: StickerData){
+        if let entity = NSEntityDescription.entity(forEntityName: stickerEntity, in: context){
+            let sticker = NSManagedObject(entity: entity, insertInto: context)
+            sticker.setValue(data.id, forKey: "id")
+            let imageData = data.image.pngData()
+            sticker.setValue(imageData, forKey: "image")
+            
+            saveContext()
+        }
+    }
+    
+    func deleteData(_ data: StickerData){
+        let fetchRequest: NSFetchRequest<ISticker> = ISticker.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", data.id.uuidString)
+        do {
+            if let sticker = try context.fetch(fetchRequest).first{
+                context.delete(sticker)
+                
+                saveContext()
+            }
+        } catch {
+            print("🌀 불러오기 Error: \(error.localizedDescription)")
         }
     }
 }
