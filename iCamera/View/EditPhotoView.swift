@@ -2,7 +2,7 @@
 //  EditPhotoView.swift
 //  iCamera
 //
-//  Created by 홍승아 on 9/22/24.
+//  Created by 홍승아 on 9/22/24
 //
 
 import SwiftUI
@@ -22,6 +22,7 @@ struct EditPhotoView: View {
     @StateObject var cutImageManager = CutImageManager()
     @StateObject var textManager = TextManager()
     @StateObject var customSliderManager = CustomSliderManager()
+    @StateObject var editManager = EditManager()
     
     @State private var filterValue: CGFloat = 0.0
     @State private var filterType: FilterType = .none
@@ -40,6 +41,9 @@ struct EditPhotoView: View {
                 
                 let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
                 
+                let editImageViewHeight = viewHeight * 0.6
+                let editImageViewPositionArray = editImageViewPositionArray(editImageViewHeight: editImageViewHeight, viewSize: geometry.size)
+                
                 VStack(spacing: 0){
                     TopBarView(title: "iCamera",
                                imageSize: topBarSize,
@@ -55,7 +59,6 @@ struct EditPhotoView: View {
                         }
                     }
                     
-                    let editImageViewHeight = viewHeight * 0.6
                     /* ⭐️ imageView 시작 */
                     ZStack{
                         Color.white
@@ -66,33 +69,41 @@ struct EditPhotoView: View {
                             let sticker = stickerManager.stickerArray[index]
                             let resizeButtonWidth: CGFloat = 10
                             
-                            StickerView(index: index, sticker: sticker, stickerManager: stickerManager)
+                            StickerView(index: index, sticker: sticker, stickerManager: stickerManager, editManager: editManager, editImageViewPositionArray: editImageViewPositionArray)
                                 .frame(width: sticker.size.width + resizeButtonWidth, height: sticker.size.height + resizeButtonWidth)
                                 .zIndex(sticker.isSelected ? 1 : 0)
                                 .onTapGesture {
                                     stickerManager.selectSticker(index: index)
+                                    editManager.selectSticker.send()
                                 }
                                 .position(sticker.location)
+                                .onReceive(editManager.selectText){ _ in
+                                    stickerManager.deselectAll()
+                                }
                         }
                         /* ⭐️ StickerView 끝 (ForEach) */
                         /* ⭐️ TextView 시작 */
                         ForEach(textManager.textArray.indices, id: \.self){ index in
                             let data = textManager.setTextPlaceHolder(index: index)
-                            TextView(index: index, textData: data, textManager: textManager, cutImageManager: cutImageManager)
+                            TextView(index: index, textData: data, textManager: textManager, cutImageManager: cutImageManager, editManager: editManager, editImageViewPositionArray: editImageViewPositionArray)
                                 .hidden(textManager.isHidden(index: index) && showTextInputView)
                                 // .frame(width: data.size.width + 50, height: data.size.height)
                                 .zIndex(data.isSelected ? 1 : 0)
                                 .position(data.location)
+                                .onTapGesture {
+                                    textManager.selectText(index: index)
+                                    editManager.selectText.send()
+                                }
                                 .onReceive(textManager.editTextButtonTapped){
                                     showTextInputView = true
                                 }
-                                .onTapGesture {
-                                    textManager.selectText(index: index)
+                                .onReceive(editManager.selectSticker){ _ in
+                                    textManager.deselectAll()
                                 }
                         }
                         /* ⭐️ TextView 끝 */
                     }
-                    .frame(height: editImageViewHeight)
+                    .frame(width: viewWidth, height: editImageViewHeight)
                     /* ⭐️ imageView 끝 */
                     /* ⭐️ menuView 시작 */
                     ZStack{
@@ -149,6 +160,7 @@ struct EditPhotoView: View {
                                         var sticker = sticker
                                         sticker.location = CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2)
                                         stickerManager.addSticker(sticker)
+                                        editManager.selectSticker.send()
                                     }
                             }
                             /* 📌 Cut */
@@ -178,6 +190,7 @@ struct EditPhotoView: View {
                                 EditTextView(textManager: textManager)
                                     .onReceive(textManager.textAddButtonTapped){ _ in
                                         textManager.addNewText(location: CGPoint(x: viewWidth / 2, y: editImageViewHeight / 2), size: .zero)
+                                        editManager.selectText.send()
                                     }
                             }
                         }
@@ -219,5 +232,10 @@ struct EditPhotoView: View {
             }
             
         }
+    }
+    
+    private func editImageViewPositionArray(editImageViewHeight: CGFloat, viewSize: CGSize) -> [CGPoint]{
+        let padding: CGFloat = 7
+        return [CGPoint(x: padding, y: padding), CGPoint(x: viewSize.width - padding, y: editImageViewHeight - padding)]
     }
 }

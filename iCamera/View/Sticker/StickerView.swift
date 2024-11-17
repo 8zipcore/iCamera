@@ -12,11 +12,18 @@ struct StickerView: View {
     var sticker: Sticker
     
     @StateObject var stickerManager: StickerManager
+    @StateObject var editManager: EditManager
+    
+    var editImageViewPositionArray: [CGPoint]
     
     @State private var lastAngle: Angle = .zero
+    @State private var buttonWidth: CGFloat = 20
     
     var body: some View {
         GeometryReader { geometry in
+            let viewWidth = geometry.size.width
+            let viewHeight = geometry.size.height
+            
             let imageWidth = sticker.size.width
             let imageHeight = sticker.size.height
             
@@ -24,17 +31,17 @@ struct StickerView: View {
                 Image(uiImage: sticker.image)
                     .resizable()
                     .frame(width: imageWidth, height: imageHeight)
-                    .position(x: imageWidth / 2, y: imageHeight / 2)
+                    .position(x: viewWidth / 2, y: viewHeight / 2)
                 
                 if sticker.isSelected{
                     Rectangle()
                         .stroke(.white, lineWidth: 2.0)
                         .frame(width: imageWidth, height: imageHeight)
-                        .position(x: imageWidth / 2, y: imageHeight / 2)
+                        .position(x: viewWidth / 2, y: viewHeight / 2)
                     
                     ForEach(stickerManager.editStickerButtonArray, id: \.self){ editStickerButton in
-                        let x = (imageWidth / 2) + (imageWidth / 2) * editStickerButton.position.x
-                        let y = (imageHeight / 2) + (imageHeight / 2) * editStickerButton.position.y
+                        let x = (viewWidth / 2) + (imageWidth / 2) * editStickerButton.position.x
+                        let y = (viewHeight / 2) + (imageHeight / 2) * editStickerButton.position.y
                         
                         let type = editStickerButton.type
                         
@@ -42,19 +49,19 @@ struct StickerView: View {
                             ZStack{
                                 Image("xmark_button")
                                     .resizable()
-                                    .frame(width: 20, height: 20)
+                                    .frame(width: buttonWidth, height: buttonWidth)
                             }
                             .frame(width: 30, height: 30)
                             .contentShape(Rectangle())
                             .position(x: x, y: y)
                             .onTapGesture{
-                                stickerButtonTapped(EditStickerButtonData(type: type, location: .zero))
+                                stickerButtonTapped(data: EditStickerButtonData(type: type, location: .zero))
                             }
                         } else if type == .resize {
                             ZStack{
                                 Image("resize_button")
                                     .resizable()
-                                    .frame(width: 20, height: 20)
+                                    .frame(width: buttonWidth, height: buttonWidth)
                             }
                             .frame(width: 30, height: 30)
                             .contentShape(Rectangle())
@@ -62,7 +69,7 @@ struct StickerView: View {
                             .gesture(
                                 DragGesture()
                                     .onChanged{ value in
-                                        stickerButtonTapped(EditStickerButtonData(type: type, location: value.location))
+                                        stickerButtonTapped(data: EditStickerButtonData(type: type, location: value.location))
                                     }
                             )
                         } else {
@@ -77,7 +84,7 @@ struct StickerView: View {
                             .gesture(
                                 DragGesture()
                                     .onChanged{ value in
-                                        stickerButtonTapped(EditStickerButtonData(type: type, location: value.location))
+                                        stickerButtonTapped(data: EditStickerButtonData(type: type, location: value.location))
                                     }
                             )
                         }
@@ -96,11 +103,16 @@ struct StickerView: View {
                         },
                     DragGesture()
                         .onChanged{ value in
+                            var newLocation = CGPoint(x: sticker.location.x + value.translation.width, y: sticker.location.y + value.translation.height)
+                            // StickerView 드래그 범위 제한
+                            newLocation = updateStickerViewPosition(stickerSize: sticker.size, location: newLocation)
+                
                             if stickerManager.isFirstDrag{
                                 stickerManager.selectSticker(index: index)
+                                editManager.selectSticker.send()
                                 stickerManager.isFirstDrag = false
                             }
-                            let newLocation = CGPoint(x: sticker.location.x + value.translation.width, y: sticker.location.y + value.translation.height)
+
                             stickerManager.updateStickerLocation(id: sticker.id, location: newLocation)
                         }
                         .onEnded{ _ in
@@ -111,13 +123,13 @@ struct StickerView: View {
         }
     }
     
-    private func stickerButtonTapped(_ data: EditStickerButtonData){
+    private func stickerButtonTapped(data: EditStickerButtonData){
         // let initialSize = sticker.image.size
         let currentSize = sticker.size
         var newSize = CGSize(width: data.location.x, height: data.location.y)
         
         let location = sticker.location
-        var newLocation: CGPoint = .zero
+        var newLocation: CGPoint = sticker.location
         
         let scale = EditStickerButton(type: data.type).position
         
@@ -142,20 +154,65 @@ struct StickerView: View {
             newSize = CGSize(width: currentSize.width + widthDifferenceValue, height: currentSize.height + heightDifferenceValue)
             newLocation = CGPoint(x: location.x - widthDifferenceValue / 2, y: location.y - heightDifferenceValue / 2)
         }
-        
+         
         if data.type == .remove { return }
         
-        let minSize = CGSize(width: 50, height: 50)
+        /* 사이즈 조정할때 부모 뷰 크기 넘어가지 않게 */
+        let updateLocation = updateStickerViewPosition(stickerSize: currentSize, location: newLocation)
+        var updateSize = newSize
         
+        if updateLocation.x != newLocation.x {
+            updateSize.width = min(currentSize.width, newSize.width)
+            if updateSize.width == currentSize.width {
+                newLocation.x = sticker.location.x
+            }
+        }
+        
+        if updateLocation.y != newLocation.y  {
+            updateSize.height = min(currentSize.height, newSize.height)
+            if updateSize.height == currentSize.height {
+                newLocation.y = sticker.location.y
+            }
+        }
+        
+        if data.type == .resize{
+            let widthDifference = updateSize.width / currentSize.width
+            let heightDifference = updateSize.height / currentSize.height
+            let multiple = min(widthDifference, heightDifference)
+            newSize = CGSize(width: currentSize.width * multiple, height: currentSize.height * multiple)
+        } else{
+            newSize = updateSize
+        }
+        
+        let minSize = CGSize(width: 50, height: 50)
         var sticker = sticker
-        let width = max(newSize.width, minSize.width)
-        let height = max(newSize.height, minSize.height)
-        sticker.size = CGSize(width: width, height: height)
+        sticker.size = CGSize(width: max(newSize.width, minSize.width), height: max(newSize.height, minSize.height))
         
         if data.type != .resize && newSize.width > minSize.width && newSize.height > minSize.height {
-            print(newSize)
             sticker.location = newLocation
         }
+        
         stickerManager.updateSticker(sticker)
+    }
+    
+    private func updateStickerViewPosition(stickerSize: CGSize, location: CGPoint) -> CGPoint{
+        var newLocation = location
+        let viewWidth = stickerSize.width + buttonWidth
+        let viewHeight = stickerSize.height + buttonWidth
+        
+        let stickerViewPositionArray = [CGPoint(x: newLocation.x - viewWidth / 2, y: newLocation.y - viewHeight / 2), CGPoint(x: newLocation.x + viewWidth / 2, y: newLocation.y + viewHeight / 2)]
+       
+        if stickerViewPositionArray[0].x < editImageViewPositionArray[0].x {
+            newLocation.x = editImageViewPositionArray[0].x + viewWidth / 2
+        } else if stickerViewPositionArray[1].x > editImageViewPositionArray[1].x {
+            newLocation.x = editImageViewPositionArray[1].x - viewWidth / 2
+        }
+        
+        if stickerViewPositionArray[0].y < editImageViewPositionArray[0].y {
+            newLocation.y = editImageViewPositionArray[0].y + viewHeight / 2
+        } else if stickerViewPositionArray[1].y > editImageViewPositionArray[1].y {
+            newLocation.y = editImageViewPositionArray[1].y - viewHeight / 2
+        }
+        return newLocation
     }
 }

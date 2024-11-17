@@ -12,6 +12,8 @@ struct TextView: View {
     var textData: TextData
     @StateObject var textManager: TextManager
     @StateObject var cutImageManager: CutImageManager
+    @StateObject var editManager: EditManager
+    var editImageViewPositionArray: [CGPoint]
     
     @State private var textViewSize: CGSize = .zero
     @State private var backgroundViewSizeArray: [CGSize] = []
@@ -76,26 +78,33 @@ struct TextView: View {
                             // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
                             .animation(.easeInOut(duration: 0.1), value: isHidden)
                         
-                        Image("xmark_button")
-                            .resizable()
-                            .frame(width: buttonWidth, height: buttonWidth)
-                            .position(x: viewWidth / 2 - (rectangleWidth / 2), y: (viewHeight / 2) - (rectangleHeight / 2))
-                            .onTapGesture{
-                                textManager.deleteText(index: index)
-                            }
-                            // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
-                            .animation(.easeInOut(duration: 0.1), value: isHidden)
-                        
-                        Image("edit_button")
-                            .resizable()
-                            .frame(width: buttonWidth, height: buttonWidth)
-                            .position(x: viewWidth / 2 + (rectangleWidth / 2), y: (viewHeight / 2) + (rectangleHeight / 2))
-                            .onTapGesture{
-                                print("Tap")
-                                textManager.editTextButtonTapped.send()
-                            }
-                            // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
-                            .animation(.easeInOut(duration: 0.1), value: isHidden)
+                        ZStack{
+                            Image("xmark_button")
+                                .resizable()
+                                .frame(width: buttonWidth, height: buttonWidth)
+                        }
+                        .frame(width: buttonWidth + 10, height: buttonWidth + 10)
+                        .contentShape(Rectangle())
+                        .position(x: viewWidth / 2 - (rectangleWidth / 2), y: (viewHeight / 2) - (rectangleHeight / 2))
+                        .onTapGesture{
+                            textManager.deleteText(index: index)
+                        }
+                        // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
+                        .animation(.easeInOut(duration: 0.1), value: isHidden)
+                        ZStack{
+                            Image("edit_button")
+                                .resizable()
+                                .frame(width: buttonWidth, height: buttonWidth)
+                        }
+                        .frame(width: buttonWidth + 10, height: buttonWidth + 10)
+                        .contentShape(Rectangle())
+                        .position(x: viewWidth / 2 + (rectangleWidth / 2), y: (viewHeight / 2) + (rectangleHeight / 2))
+                        .onTapGesture{
+                            print("Tap")
+                            textManager.editTextButtonTapped.send()
+                        }
+                        // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
+                        .animation(.easeInOut(duration: 0.1), value: isHidden)
                     }
             }
             .onAppear{
@@ -139,32 +148,29 @@ struct TextView: View {
                         ),
                         DragGesture()
                             .onChanged{ value in
-                                let translation = CGSize(width: textData.location.x + value.translation.width, height: textData.location.y + value.translation.height)
-                                /*
+                                var translation = CGSize(width: textData.location.x + value.translation.width, height: textData.location.y + value.translation.height)
                                 // textView 드래그 범위 제한
-                                let viewWidth = textViewSize.width + buttonWidth
-                                let viewHeight = textViewSize.height + buttonWidth
-                                let verticalPadding: CGFloat = 20
+                                let viewWidth = textViewSize.width + padding + buttonWidth
+                                let viewHeight = textViewSize.height + (padding * 2) + buttonWidth
+                                
                                 let textViewPositionArray = [CGPoint(x: translation.width - viewWidth / 2, y: translation.height - viewHeight / 2), CGPoint(x: translation.width + viewWidth / 2, y: translation.height + viewHeight / 2)]
-                                
-                                let imagePositionArray = cutImageManager.editImagePositionArray()
                                
-                                if textViewPositionArray[0].x < imagePositionArray[0].x {
-                                    translation.width = viewWidth / 2
-                                } else if textViewPositionArray[1].x > imagePositionArray[1].x{
-                                    translation.width = imagePositionArray[1].x - viewWidth / 2
+                                if textViewPositionArray[0].x < editImageViewPositionArray[0].x {
+                                    translation.width = editImageViewPositionArray[0].x + viewWidth / 2
+                                } else if textViewPositionArray[1].x > editImageViewPositionArray[1].x{
+                                    translation.width = editImageViewPositionArray[1].x - viewWidth / 2
                                 }
                                 
-                                if textViewPositionArray[0].y < imagePositionArray[0].y{
-                                    translation.height = imagePositionArray[0].y + viewHeight / 2
-                                } else if textViewPositionArray[1].y > imagePositionArray[1].y{
-                                    translation.height = imagePositionArray[1].y - viewHeight / 2
+                                if textViewPositionArray[0].y < editImageViewPositionArray[0].y{
+                                    translation.height = editImageViewPositionArray[0].y + viewHeight / 2
+                                } else if textViewPositionArray[1].y > editImageViewPositionArray[1].y{
+                                    translation.height = editImageViewPositionArray[1].y - viewHeight / 2
                                 }
-                                */
                                 
                                 if textManager.isFirstDrag{
                                     textManager.selectText(index: index)
                                     textManager.isFirstDrag = false
+                                    editManager.selectText.send()
                                 }
                                 
                                 textManager.setTextLocation(index: index, translation: translation)

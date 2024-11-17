@@ -61,8 +61,7 @@ class TextManager: ObservableObject{
     private var fontManager = FontManager()
     
     var fontArray: [TextFont] {
-        // 첫번째는 + 버튼임
-        var textFontArray: [TextFont] = [TextFont(font: UIFont.systemFont(ofSize: 20), fontName: "title")]
+        var textFontArray: [TextFont] = []
         FontManager.Font.allCases.forEach{ font in
             let fontName = fontManager.fontNameToString(font)
             let uiFont = fontManager.fontToUIFont(font, size: 18)
@@ -159,14 +158,13 @@ class TextManager: ObservableObject{
     func isExistSeletedText() -> Bool{
         return selectedText != nil
     }
+    
+    func deselectAll(){
+        textArray.indices.forEach{ textArray[$0].isSelected = false }
+    }
 
     func selectedTextIndex() -> Int? {
-        for index in textArray.indices {
-            if textArray[index].isSelected{
-                return index
-            }
-        }
-        return nil
+        return textArray.firstIndex(where: {$0.isSelected})
     }
     
     func isSameFont(_ font: TextFont) -> Bool{

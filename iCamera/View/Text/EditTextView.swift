@@ -14,47 +14,47 @@ struct EditTextView: View {
     
     var body: some View {
         GeometryReader{ geometry in
-            VStack{
+            let viewWidth = geometry.size.width
+            
+            VStack(spacing: 0){
                 if textManager.isSelected(.font){
+                    HStack{
+                        Spacer()
+                        let buttonWidth: CGFloat = 25
+                        Image("plus_pink_button")
+                            .resizable()
+                            .frame(width: buttonWidth, height: buttonWidth)
+                            .padding(.trailing, 15)
+                            .onTapGesture {
+                                textManager.textAddButtonTapped.send()
+                            }
+                    }
+                    Spacer()
+                    ScrollView(.horizontal, showsIndicators: false){
+                        HStack(spacing: 10){
+                            ForEach(textManager.fontArray.indices, id: \.self){ index in
+                                let textFont = textManager.fontArray[index]
+                                SelectedTextCell(title: textFont.fontName, font: Font(textFont.font), isSelected: textManager.isSameFont(textFont))
+                                    .onTapGesture{
+                                        textManager.updateFont(textFont)
+                                    }
+                            }
+                        }
+                        .padding([.leading, .trailing], 20)
+                    }
+                    .frame(height: 40)
+                    
                     let minFontSize: CGFloat = 15
                     let maxFontSize: CGFloat = 80
                     let percentage = fontSizeToPercentage(minFontSize: minFontSize, maxFontSize: maxFontSize)
                     
                     CustomSlider(value: percentage,customSliderManager: customSliderManager, isAvailableDrag: textManager.isExistSeletedText())
-                        .padding([.top, .leading, .trailing], 10)
-                        .frame(height: 30)
+                        .frame(width: viewWidth * 0.9, height: 30)
+                        .padding(.top, 15)
                         .onReceive(customSliderManager.onChange){ value in
                             textManager.setFontSize((maxFontSize - minFontSize) * value + minFontSize)
                         }
-                    
-                    ScrollView(.horizontal, showsIndicators: false){
-                        
-                        HStack(spacing: 10){
-                            ForEach(textManager.fontArray.indices, id: \.self){ index in
-                                if index == 0 {
-                                    VStack{
-                                        Spacer()
-                                        Image("text_plus")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .onTapGesture{
-                                                textManager.textAddButtonTapped.send()
-                                            }
-                                        Spacer()
-                                    }
-                                } else {
-                                    let textFont = textManager.fontArray[index]
-                                    SelectedTextCell(title: textFont.fontName, font: Font(textFont.font), isSelected: textManager.isSameFont(textFont))
-                                        .frame(height: 30)
-                                        .onTapGesture{
-                                            textManager.updateFont(textFont)
-                                        }
-                                }
-                                
-                            }
-                        }
-                        .padding([.leading, .trailing], 20)
-                    }
+                    Spacer()
                 }
                 
                 if textManager.isSelected(.color){
@@ -70,7 +70,6 @@ struct EditTextView: View {
     
     private func fontSizeToPercentage(minFontSize: CGFloat, maxFontSize: CGFloat) -> CGFloat{
         if let selectedText = textManager.selectedText{
-            print("selectedText",selectedText.textFont.font.pointSize)
             return (selectedText.textFont.font.pointSize - minFontSize) / (maxFontSize - minFontSize)
         }
         return 0

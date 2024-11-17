@@ -9,12 +9,12 @@
       "idiom" : "universal",
       "resizing" : {
         "cap-insets" : {
-          "left" : 219,
-          "right" : 226
+          "left" : 118,
+          "right" : 118
         },
         "center" : {
           "mode" : "stretch",
-          "width" : 17
+          "width" : 226
         },
         "mode" : "3-part-horizontal"
       },

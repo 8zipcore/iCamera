@@ -58,4 +58,8 @@ class StickerManager: ObservableObject{
         stickerArray[index].isSelected = true
         selectedSticker = stickerArray[index]
     }
+    
+    func deselectAll(){
+        stickerArray.indices.forEach{ stickerArray[$0].isSelected = false }
+    }
 }

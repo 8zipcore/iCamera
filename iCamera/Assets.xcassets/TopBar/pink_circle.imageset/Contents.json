@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "Rectangle 77.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "pink_circle@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

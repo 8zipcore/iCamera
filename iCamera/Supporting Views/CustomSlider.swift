@@ -27,8 +27,7 @@ struct CustomSlider: View {
             let maxXPosition = geometry.size.width - minXPosition
             ZStack{
                 RoundedRectangle(cornerRadius: 25)
-                    .fill(.white
-                        /*
+                    .fill(
                         LinearGradient(
                             gradient: Gradient(stops: [
                                 .init(color: .white, location: 0.05),
@@ -36,7 +35,7 @@ struct CustomSlider: View {
                             ]),
                             startPoint: .top, // 시작점
                             endPoint: .bottom // 끝점
-                        )*/
+                        )
                     )
                     .frame(height: barHeight)
                     .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
