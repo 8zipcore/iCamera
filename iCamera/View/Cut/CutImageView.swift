@@ -28,7 +28,7 @@ struct CutImageView: View {
     var body: some View {
         GeometryReader { geometry in
             let padding = cutImageManager.padding
-            
+            let selectionFrameLineWidth: CGFloat = cutImageManager.frameRectangleLineWidth
             let viewWidth = geometry.size.width - padding
             let viewHeight = geometry.size.height - padding
             
@@ -91,12 +91,14 @@ struct CutImageView: View {
                         var newFrameHeight = frameWidth
                         // FrameWIdth 뷰사이즈에 맞게 조정
                         if newFrameWidth > newFrameHeight{
-                            newFrameWidth = viewWidth
-                            newFrameHeight = newFrameWidth * frameWidth / frameHeight
-                        } else {
-                            newFrameHeight = viewHeight
+                            newFrameHeight = min(viewWidth * frameWidth / frameHeight, viewHeight)
                             newFrameWidth = newFrameHeight * frameHeight / frameWidth
+                        } else {
+                            newFrameWidth = min(viewHeight * frameHeight / frameWidth, viewWidth)
+                            newFrameHeight = newFrameWidth * frameWidth / frameHeight
                         }
+                        
+                        // applyMinimumZoomScale(frameWidth: newFrameWidth, frameHeight: newFrameHeight)
                         
                         frameWidth = newFrameWidth
                         frameHeight = newFrameHeight
@@ -105,6 +107,7 @@ struct CutImageView: View {
 
                         // image는 원래 세로로 고정되어있고 rotation 값만 수정하는 경우라
                         // -90 , -270도에선 이미지 비율을 가로 세로 바꿔야됨
+                        let previousImageSize = imageSize
                         if cutImageManager.isHorizontalDegree(){
                             var newImageWidth = imageSize.height
                             var newImageHeight = imageSize.width
@@ -118,9 +121,8 @@ struct CutImageView: View {
                             imageSize.width = newImageHeight
                             imageSize.height = newImageWidth
                         } else {
-                            var newImageWidth = imageSize.width
-                            var newImageHeight = imageSize.height
-                            
+                            var newImageWidth: CGFloat = imageSize.width
+                            var newImageHeight: CGFloat = imageSize.height
                             if newImageWidth > newImageHeight {
                                 newImageWidth = viewWidth
                                 newImageHeight = newImageWidth * imageSize.height / imageSize.width
@@ -135,7 +137,21 @@ struct CutImageView: View {
                         originalImageSize.width = cutImageManager.isHorizontalDegree() ? imageSize.height : imageSize.width
                         originalImageSize.height = cutImageManager.isHorizontalDegree() ? imageSize.width : imageSize.height
                         
-                        updateImagePosition()
+                        // 회전할때 이미지 위치 재설정
+                        if imagePosition != viewCenter{
+                            // 1. 이미지 크기가 변하고 난 후의 frameLocation 좌표를 구함
+                            let originalXPoint: CGFloat = imagePosition.x + (frameLocation.x - imagePosition.x) * (imageSize.width / previousImageSize.width)
+                            let originalYPoint: CGFloat = imagePosition.y +  (frameLocation.y - imagePosition.y) * (imageSize.height / previousImageSize.height)
+                            let originalPoint = CGPoint(x: originalXPoint,y: originalYPoint)
+                            let centerPoint = imagePosition
+                            // 2. 1번좌표를 imagePosition을 중심으로 -90도로 회전했을때의 좌표를 구함
+                            let rotatedPoint = rotateUsingCGAffineTransform(point: originalPoint, center: centerPoint, angle: -90)
+                            // 3. frameLocation과 2번좌표의 변화값을 구해서 imagePosition을 이동시킨다
+                            imagePosition.x += frameLocation.x - rotatedPoint.x
+                            imagePosition.y += frameLocation.y - rotatedPoint.y
+                            
+                            lastImagePosition = imagePosition
+                        }
                     }
                     .frame(width: imageSize.width, height: imageSize.height)
                     .position(imagePosition)
@@ -145,8 +161,7 @@ struct CutImageView: View {
                                   rectangleSize: geometry.size,
                                   maskRectangleSize: CGSize(width: frameWidth, height: frameHeight),
                                   maskPosition: CGPoint(x: maskRectangleViewLocation.x, y: maskRectangleViewLocation.y))
-                
-                SelectionFrameView(imageWidth: frameWidth, imageHeight: frameHeight, lineSize: lineSize, cutImageManager: cutImageManager)
+                SelectionFrameView(imageWidth: frameWidth, imageHeight: frameHeight , rectangleLineWidth: selectionFrameLineWidth, lineSize: lineSize, cutImageManager: cutImageManager)
                     .frame(width: frameWidth + padding, height: frameHeight + padding)
                     .onReceive(cutImageManager.selectionFrameDrag){ data in
                         let currentSize = CGSize(width: frameWidth, height: frameHeight)
@@ -266,7 +281,7 @@ struct CutImageView: View {
                                 // 좌상단 좌표
                                 let currentPosition = CGPoint(x: (frameLocation.x - previousFrameSize.width / 2) * imageScale, y: (frameLocation.y - previousFrameSize.height / 2) * imageScale)
                                 let newPosition = CGPoint(x: frameLocation.x - newFrameWidth / 2, y: frameLocation.y - newFrameHeight / 2)
-                                imagePosition.x = newImageCenter.x + (newPosition.x - currentPosition.x)
+                                ; imagePosition.x = newImageCenter.x + (newPosition.x - currentPosition.x)
                                 imagePosition.y = newImageCenter.y + (newPosition.y - currentPosition.y)
                             }
                             
@@ -355,5 +370,20 @@ struct CutImageView: View {
         if zoomScale * originalImageSize.height < frameHeight {
             zoomScale *= frameHeight / (zoomScale * originalImageSize.height)
         }
+    }
+    
+    func rotateUsingCGAffineTransform(point: CGPoint, center: CGPoint, angle: CGFloat) -> CGPoint {
+        // 기준점 이동
+        let translatedPoint = CGPoint(x: point.x - center.x, y: point.y - center.y)
+        
+        // 회전 변환 생성 (각도는 라디안으로 제공)
+        let radians = angle * .pi / 180
+        let rotation = CGAffineTransform(rotationAngle: radians)
+        
+        // 회전 적용
+        let rotatedPoint = translatedPoint.applying(rotation)
+        
+        // 기준점 복원
+        return CGPoint(x: rotatedPoint.x + center.x, y: rotatedPoint.y + center.y)
     }
 }

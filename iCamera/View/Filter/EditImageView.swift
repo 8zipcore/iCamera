@@ -34,15 +34,13 @@ struct EditImageView: View {
                                      cutImageManager: cutImageManager)
                         .frame(width: viewWidth , height: viewHeight)
                     } else {
-                        let imageSize = cutImageManager.imageSize(imageSize: image.size, viewSize: geometry.size)
-                        
+                        let imageSize = imageSize(imageSize: cutImageManager.imageSize, viewSize: geometry.size)
                         ZStack{
-                            var imagePosition = cutImageManager.imagePosition
-                            if cutImageManager.frameWidth > cutImageManager.frameHeight{
-                                //imagePosition.x -= 15
-                            } else {
-                                // imagePosition.y -= 15
-                            }
+                            let frameSize = cutImageManager.paddingImageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), multiple: 1)
+                            let maskRectangleSize = updateImageSizeWithoutLineSize(imageSize: frameSize, viewSize: geometry.size)
+                            let maskRectangleViewLocation = CGPoint(x: (viewWidth - maskRectangleSize.width) / 2, y: (viewHeight - maskRectangleSize.height) / 2)
+                            let imagePosition = imagePosition(imageSize: imageSize, maskRectangleSize: maskRectangleSize, viewSize: geometry.size)
+  
                             Image(uiImage: filteredImage)
                                 .resizable()
                                 .scaledToFill()
@@ -50,11 +48,9 @@ struct EditImageView: View {
                                 .scaleEffect(x: cutImageManager.currentFlipHorizontal.x, y: cutImageManager.currentFlipHorizontal.y)
                                 .rotationEffect(.degrees(cutImageManager.currentDegree))
                                 .frame(width: imageSize.width, height: imageSize.height)
-                                .position(x: cutImageManager.imagePosition.x, y: imagePosition.y)
+                                .position(x: imagePosition.x, y: imagePosition.y)
+
                             
-                            // ⚠️ imagePosition 약간 어긋나는 오류 해결할 것 !!
-                            let maskRectangleSize = cutImageManager.paddingImageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), multiple: 1)
-                            let maskRectangleViewLocation = CGPoint(x: (viewWidth - maskRectangleSize.width) / 2, y: (viewHeight - maskRectangleSize.height) / 2)
                             MaskRectangleView(overlayColor: .white,
                                               rectangleSize: geometry.size,
                                               maskRectangleSize: maskRectangleSize,
@@ -99,5 +95,46 @@ struct EditImageView: View {
             return UIImage(cgImage: cgImage)
         }
         return nil
+    }
+    
+    private func imagePosition(imageSize: CGSize, maskRectangleSize: CGSize, viewSize: CGSize) -> CGPoint{
+        let imagePosition = cutImageManager.imagePosition
+        let frameLocation = CGPoint(x: viewSize.width / 2, y: viewSize.height / 2)
+        let previousImageSize = cutImageManager.imageSize
+        let newFrameXPoint: CGFloat = imagePosition.x + (frameLocation.x - imagePosition.x) * (imageSize.width / previousImageSize.width)
+        let newFrameYPoint: CGFloat = imagePosition.y +  (frameLocation.y - imagePosition.y) * (imageSize.height / previousImageSize.height)
+        
+        let resultXPoint: CGFloat = imagePosition.x + frameLocation.x - newFrameXPoint
+        let resultYPoint: CGFloat = imagePosition.y + frameLocation.y - newFrameYPoint
+        
+        return CGPoint(x: resultXPoint, y: resultYPoint)
+    }
+    
+    private func updateImageSizeWithoutLineSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
+        let difference = cutImageManager.frameRectangleLineWidth * 2
+        if imageSize.width == viewSize.width{
+            return CGSize(width: imageSize.width, height: imageSize.height - difference)
+        } else if imageSize.height == viewSize.height{
+            return CGSize(width: imageSize.width - difference, height: imageSize.height)
+        } else {
+            return CGSize(width: imageSize.width - difference, height: imageSize.height - difference)
+        }
+    }
+    
+    private func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
+        if cutImageManager.isHorizontalDegree(){
+            if imageSize.width > imageSize.height{
+                return CGSize(width: viewSize.height, height: imageSize.width * viewSize.height / imageSize.height)
+            } else {
+                print(CGSize(width: viewSize.width * imageSize.width / imageSize.height, height: viewSize.width))
+                return CGSize(width: viewSize.width * imageSize.width / imageSize.height, height: viewSize.width)
+            }
+        } else {
+            if imageSize.width > imageSize.height{
+                return CGSize(width: viewSize.width, height: imageSize.height * viewSize.width / imageSize.width)
+            } else {
+                return CGSize(width: imageSize.width * viewSize.height / imageSize.height, height: viewSize.height)
+            }
+        }
     }
 }

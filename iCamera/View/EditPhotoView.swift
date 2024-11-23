@@ -51,6 +51,7 @@ struct EditPhotoView: View {
                                isTrailingButtonHidden: false,
                                buttonManager: topBarViewButtonManager)
                     .frame(width: topBarSize.width, height: topBarSize.height)
+                    .zIndex(1)
                     .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
                         if buttonType == .cancel {
                             dismiss()

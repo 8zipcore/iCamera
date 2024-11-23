@@ -10,6 +10,7 @@ import SwiftUI
 struct SelectionFrameView: View{
     var imageWidth: CGFloat
     var imageHeight: CGFloat
+    var rectangleLineWidth: CGFloat
     var lineSize: CGSize
     
     @State var cutImageManager: CutImageManager
@@ -23,9 +24,9 @@ struct SelectionFrameView: View{
             
             ZStack{
                 Rectangle()
-                    .stroke(Color.black, lineWidth: 1)
+                    .stroke(.black, lineWidth: rectangleLineWidth)
                     .background(.clear)
-                    .frame(width: imageWidth, height: imageHeight)
+                    .frame(width: imageWidth + rectangleLineWidth, height: imageHeight + rectangleLineWidth)
                     .position(x: viewWidth / 2, y: viewHeight / 2)
                 
                 let selectionFrameRectangleArray = SelectionFrameRectangle.Location.allCases.map{ location in

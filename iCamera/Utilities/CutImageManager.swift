@@ -63,6 +63,7 @@ class CutImageManager: ObservableObject{
     var ratioArray: [FrameRatio] = []
     
     let padding: CGFloat = 15
+    let frameRectangleLineWidth: CGFloat = 1
     
     var editImageViewSize: CGSize = .zero
     
