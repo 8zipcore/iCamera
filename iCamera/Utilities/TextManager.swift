@@ -58,6 +58,8 @@ class TextManager: ObservableObject{
     
     var selectedText: TextData?
     
+    var showTextInputView: Bool = false
+    
     private var fontManager = FontManager()
     
     var fontArray: [TextFont] {
@@ -237,5 +239,16 @@ class TextManager: ObservableObject{
                 }
             }
         }
+    }
+    
+    func updateText(text: TextData, size: CGSize, location: CGPoint) -> TextData{
+        var text = text
+        let font = text.textFont.font
+        let fontSize = font.pointSize
+        let newFontSize = fontSize * size.height / text.size.height
+        text.textFont.font = font.withSize(newFontSize)
+        text.size = size
+        text.location = location
+        return text
     }
 }

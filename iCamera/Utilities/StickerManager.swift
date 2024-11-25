@@ -62,4 +62,11 @@ class StickerManager: ObservableObject{
     func deselectAll(){
         stickerArray.indices.forEach{ stickerArray[$0].isSelected = false }
     }
+    
+    func updateSticker(sticker: Sticker, size: CGSize, location: CGPoint) -> Sticker{
+        var sticker = sticker
+        sticker.size = size
+        sticker.location = location
+        return sticker
+    }
 }

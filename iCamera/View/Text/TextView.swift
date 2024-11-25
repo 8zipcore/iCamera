@@ -11,7 +11,6 @@ struct TextView: View {
     var index: Int
     var textData: TextData
     @StateObject var textManager: TextManager
-    @StateObject var cutImageManager: CutImageManager
     @StateObject var editManager: EditManager
     var editImageViewPositionArray: [CGPoint]
     

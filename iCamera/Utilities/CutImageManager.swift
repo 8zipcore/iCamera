@@ -28,6 +28,8 @@ enum RatioDirection{
 class CutImageManager: ObservableObject{
     var selectionFrameDrag = PassthroughSubject<SelectionFrameRectangleData, Never>()
     var selectionFrameDragEnded = PassthroughSubject<SelectionFrameRectangleData, Never>()
+    var completeSaveImageInfo = PassthroughSubject<Void, Never>()
+    
     var imageZoom = PassthroughSubject<CGFloat, Never>()
     var imageZoomEnded = PassthroughSubject<Void, Never>()
     var imageDrag = PassthroughSubject<CGPoint, Never>()
@@ -59,6 +61,7 @@ class CutImageManager: ObservableObject{
     @Published var zoomScale: CGFloat = 1.0
     @Published var originalImageSize: CGSize = .zero
     @Published var imageSize: CGSize = .zero
+    @Published var centerLocation: CGPoint = .zero
     
     var ratioArray: [FrameRatio] = []
     
@@ -294,11 +297,14 @@ class CutImageManager: ObservableObject{
     }
     
     func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
-        if imageSize.width > imageSize.height{
-            return CGSize(width: viewSize.width, height: imageSize.height * viewSize.width / imageSize.width)
-        } else {
-            return CGSize(width: imageSize.width * viewSize.height / imageSize.height, height: viewSize.height)
-        }
+        let widthRatio = viewSize.width / imageSize.width
+        let heightRatio = viewSize.height / imageSize.height
+        let scale = min(widthRatio, heightRatio)
+        
+        return CGSize(
+            width: imageSize.width * scale,
+            height: imageSize.height * scale
+        )
     }
     
     func paddingImageSize(imageSize: CGSize, multiple: CGFloat) -> CGSize{
@@ -318,5 +324,21 @@ class CutImageManager: ObservableObject{
         let leadingTopPosition = CGPoint(x: (editImageViewSize.width / 2) - (imageSize.width / 2), y: (editImageViewSize.height / 2) - (imageSize.height / 2))
         let trailingBottomPosition = CGPoint(x: (editImageViewSize.width / 2) + (imageSize.width / 2), y: (editImageViewSize.height / 2) + (imageSize.height / 2))
         return [leadingTopPosition, trailingBottomPosition]
+    }
+    
+    func imageSizeWithDegree(imageSize: CGSize, viewSize: CGSize) -> CGSize{
+        if isHorizontalDegree(){
+            if imageSize.width > imageSize.height{
+                return CGSize(width: viewSize.height, height: imageSize.width * viewSize.height / imageSize.height)
+            } else {
+                return CGSize(width: viewSize.width * imageSize.width / imageSize.height, height: viewSize.width)
+            }
+        } else {
+            if imageSize.width > imageSize.height{
+                return CGSize(width: viewSize.width, height: imageSize.height * viewSize.width / imageSize.width)
+            } else {
+                return CGSize(width: imageSize.width * viewSize.height / imageSize.height, height: viewSize.height)
+            }
+        }
     }
 }

@@ -57,6 +57,8 @@ struct GalleryView: View {
                             navigationPath.removeLast(navigationPath.count)
                         case .album:
                             isShowingAlbumView = true
+                        default:
+                            break
                         }
                     }
                     
@@ -129,6 +131,9 @@ struct GalleryView: View {
                     }
                 }, receiveValue: {})
                 .store(in: &albumManager.cancellables)
+        }
+        .onDisappear{
+            albumManager.resetPage()
         }
     }
     

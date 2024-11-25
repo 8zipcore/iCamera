@@ -121,6 +121,8 @@ class AlbumManager: ObservableObject {
                 }
             }
             
+            print(self.page)
+            
             let limit = 30
             
             let fetchOptions = PHFetchOptions()
@@ -144,6 +146,7 @@ class AlbumManager: ObservableObject {
                     let requestOptions = PHImageRequestOptions()
                     requestOptions.isSynchronous = false
                     requestOptions.deliveryMode = .highQualityFormat
+                    requestOptions.version = .current // 최신 버전 이미지 요청
                     requestOptions.isNetworkAccessAllowed = true
                     
                     DispatchQueue.main.async {
@@ -165,6 +168,7 @@ class AlbumManager: ObservableObject {
                 
                 if index > limit * self.page{
                     stop.pointee = true // 열거 중단
+                    promise(.success(()))
                     return
                 }
             }
@@ -247,5 +251,41 @@ class AlbumManager: ObservableObject {
         self.currentAlbum = album
         self.page = 0
         self.isLoading = false
+    }
+    
+    func saveImageToPhotos(image: UIImage, completion: @escaping () -> Void) {
+        // 사진 라이브러리 접근 권한 요청
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                // 권한이 허용되었을 때 이미지 저장
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAsset(from: image)
+                }, completionHandler: { success, error in
+                    if success {
+                        print("Image saved to Photos.")
+                        completion()
+                    } else {
+                        print("Error saving image: \(String(describing: error))")
+                    }
+                })
+                
+            case .denied, .restricted:
+                print("Permission denied or restricted.")
+                
+            case .notDetermined:
+                // 권한이 결정되지 않았으면 다시 요청
+                PHPhotoLibrary.requestAuthorization { newStatus in
+                    // 권한 요청 후 결과 처리
+                }
+                
+            default:
+                break
+            }
+        }
+    }
+    
+    func resetPage(){
+        page = 0
     }
 }

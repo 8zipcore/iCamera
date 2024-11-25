@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 enum TopBarViewButtonType{
-    case cancel, home, album
+    case cancel, home, album, confirm
 }
 
 class TopBarViewButtonManager: ObservableObject {
@@ -23,8 +23,8 @@ struct TopBarView: View {
     @State var imageSize: CGSize
     @State var isLeadingButtonHidden: Bool = true
     @State var isTrailingButtonHidden: Bool = true
+    @State var trailingButtonType: TopBarViewButtonType = .home
     @State var isAlbumButtonHidden: Bool = true
-    @State var trailingButtonImage = "home_button"
     
     @ObservedObject var buttonManager: TopBarViewButtonManager
 
@@ -55,9 +55,9 @@ struct TopBarView: View {
                 if !isTrailingButtonHidden{
                     Button(action: {
                         print("⭐️ homeButton Tapped!")
-                        buttonManager.buttonClicked.send(.home)
+                        buttonManager.buttonClicked.send(trailingButtonType)
                     }) {
-                        Image(trailingButtonImage)
+                        Image(trailingButtonImageName())
                             .resizable()
                             .frame(width: buttonWidth, height: buttonWidth)
                     }
@@ -87,6 +87,17 @@ struct TopBarView: View {
 
         }
         .frame(width: imageSize.width)
+    }
+    
+    private func trailingButtonImageName() -> String{
+        switch trailingButtonType {
+        case .home:
+            return "home_button"
+        case .confirm:
+            return "confirm_button"
+        default:
+            return ""
+        }
     }
 }
 

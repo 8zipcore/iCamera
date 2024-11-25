@@ -9,8 +9,8 @@ import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
+@available(iOS 16.0, *)
 struct EditImageView: View {
-    
     @Binding var inputImage: UIImage?
     var value: CGFloat = 0
     var filterType: FilterType
@@ -19,6 +19,8 @@ struct EditImageView: View {
     @StateObject var cutImageManager: CutImageManager
     
     @State private var image: UIImage = UIImage()
+    
+    let onImageRendered: (UIImage) -> Void // 이미지 전달 콜백
     
     var body: some View {
         GeometryReader { geometry in
@@ -63,11 +65,14 @@ struct EditImageView: View {
             .onChange(of: inputImage) { _ in
                 if let inputImage = inputImage{
                     image = inputImage
-                    let imageSize = cutImageManager.imageSize(imageSize: image.size, viewSize: geometry.size)
-                    let paddingImageSize = cutImageManager.paddingImageSize(imageSize: imageSize, multiple: -1)
-                    cutImageManager.initFrameSize(paddingImageSize)
-                    cutImageManager.imagePosition = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
-                    cutImageManager.editImageViewSize = geometry.size
+                    if cutImageManager.centerLocation == .zero{
+                        let imageSize = cutImageManager.imageSize(imageSize: image.size, viewSize: geometry.size)
+                        let paddingImageSize = cutImageManager.paddingImageSize(imageSize: imageSize, multiple: -1)
+                        cutImageManager.initFrameSize(paddingImageSize)
+                        cutImageManager.imagePosition = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
+                        cutImageManager.editImageViewSize = geometry.size
+                        cutImageManager.centerLocation = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
+                    }
                 }
             }
         }
@@ -123,10 +128,32 @@ struct EditImageView: View {
     
     private func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
         if cutImageManager.isHorizontalDegree(){
+            let widthRatio = viewSize.width / imageSize.height
+            let heightRatio = viewSize.height / imageSize.width
+            let scale = min(widthRatio, heightRatio)
+            
+            return CGSize(
+                width: imageSize.width * scale,
+                height: imageSize.height  * scale
+            )
+        } else {
+            let widthRatio = viewSize.width / imageSize.width
+            let heightRatio = viewSize.height / imageSize.height
+            let scale = min(widthRatio, heightRatio)
+            
+            return CGSize(
+                width: imageSize.width * scale,
+                height: imageSize.height * scale
+            )
+        }
+    }
+    
+    /*
+    private func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
+        if cutImageManager.isHorizontalDegree(){
             if imageSize.width > imageSize.height{
                 return CGSize(width: viewSize.height, height: imageSize.width * viewSize.height / imageSize.height)
             } else {
-                print(CGSize(width: viewSize.width * imageSize.width / imageSize.height, height: viewSize.width))
                 return CGSize(width: viewSize.width * imageSize.width / imageSize.height, height: viewSize.width)
             }
         } else {
@@ -137,4 +164,5 @@ struct EditImageView: View {
             }
         }
     }
+     */
 }

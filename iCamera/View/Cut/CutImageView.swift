@@ -343,14 +343,22 @@ struct CutImageView: View {
                 }
             })
             .onDisappear{
-                cutImageManager.frameWidth = frameWidth
-                cutImageManager.frameHeight = frameHeight
-                cutImageManager.imagePosition = imagePosition
-                cutImageManager.zoomScale = zoomScale
-                cutImageManager.originalImageSize = originalImageSize
-                cutImageManager.imageSize = imageSize
+                initImageInfo()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .saveImageInfo)) { notification in
+                initImageInfo()
+                cutImageManager.completeSaveImageInfo.send()
             }
         }
+    }
+    
+    private func initImageInfo(){
+        cutImageManager.frameWidth = frameWidth
+        cutImageManager.frameHeight = frameHeight
+        cutImageManager.imagePosition = imagePosition
+        cutImageManager.zoomScale = zoomScale
+        cutImageManager.originalImageSize = originalImageSize
+        cutImageManager.imageSize = imageSize
     }
     
     private func updateImagePosition(){
