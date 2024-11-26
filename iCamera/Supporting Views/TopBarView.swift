@@ -15,6 +15,10 @@ enum TopBarViewButtonType{
 class TopBarViewButtonManager: ObservableObject {
     var buttonClicked = PassthroughSubject<TopBarViewButtonType, Never>()
     var cancellables = Set<AnyCancellable>()
+    
+    func topBarViewSize(viewWidth: CGFloat) -> CGSize{
+        return CGSize(width: viewWidth, height: viewWidth * 51 / 375)
+    }
 }
 
 struct TopBarView: View {

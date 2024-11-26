@@ -49,7 +49,7 @@ struct CameraView: View {
                 
                 VStack(spacing: 0){
                     
-                    let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
+                    let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
                     
                     TopBarView(title: "Camera",
                                imageSize: topBarSize,

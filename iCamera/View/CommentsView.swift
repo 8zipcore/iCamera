@@ -35,7 +35,7 @@ struct CommentsView: View {
                 let viewWidth = geometry.size.width
                 let viewHeight = geometry.size.height
                 let imageWidth = viewWidth
-                let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
+                let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
                 let barSize = CGSize(width: viewWidth, height: viewHeight * 0.05)
                 let buttonSize = CGSize(width: barSize.height * 0.75, height: barSize.height * 0.75)
                 ZStack{

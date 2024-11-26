@@ -23,7 +23,7 @@ struct CalendarView: View {
                 let viewHeight = geometry.size.height
                 
                 VStack(spacing: 0){
-                    let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
+                    let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
                     
                     ZStack{
                         TopBarView(title: "Calendar",
@@ -55,6 +55,7 @@ struct CalendarView: View {
                         }
                         .padding(.leading, 12)
                     }
+                    Spacer()
                     let titleViewWidth = viewWidth * 0.95
                     let titleViewHeight = viewWidth * 172 / 1123
                     ZStack{
@@ -96,7 +97,7 @@ struct CalendarView: View {
                         }
                         .frame(width: titleViewWidth)
                     }
-                    .frame(height: titleViewHeight)
+                    .frame(width: viewWidth, height: titleViewHeight)
                     
                     let weekViewHeight = viewWidth * 88 / 1125
                     HStack(spacing: 0){
@@ -182,6 +183,9 @@ struct CalendarView: View {
                 }
                 .background(.white)
                 .ignoresSafeArea(edges: .bottom)
+                .onAppear{
+                    print("Calendar", viewHeight)
+                }
             }
         }
         .navigationBarHidden(true)

@@ -27,7 +27,7 @@ struct TestPhotoView: View {
                 let viewWidth = geometry.size.width
                 let viewHeight = geometry.size.height
                 
-                let topBarSize = CGSize(width: viewWidth, height: viewHeight * 0.07)
+                let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
                 
                 VStack(spacing: 0){
                     TopBarView(title: "iCamera",
