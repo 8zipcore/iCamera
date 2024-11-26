@@ -46,6 +46,9 @@ struct SelectColorView: View {
                                     .stroke(.black, lineWidth: 1.0)
                                     .frame(width: 23.5, height: 23.5)
                                     .padding(.leading, 5)
+                                    .onTapGesture {
+                                        textManager.setBackgroundColor(color: color)
+                                    }
                             } else {
                                 Circle()
                                     .fill(color)

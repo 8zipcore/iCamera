@@ -192,7 +192,7 @@ struct NonEditableCustomTextView: UIViewRepresentable {
         uiView.textAlignment = textData.textAlignment
         
         let lineHeight = textData.textFont.font.lineHeight
-        let textViewSize = uiView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        let textViewSize = uiView.sizeThatFits(CGSize(width: .infinity, height: CGFloat.greatestFiniteMagnitude))
         let lineNumber = Int(textViewSize.height / lineHeight)
         var backgroundViewSizeArray: [CGSize] = []
         

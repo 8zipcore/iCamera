@@ -30,6 +30,7 @@ struct EditPhotoView: View {
     @State private var isFirstDrag: Bool = true
     
     @State private var showTextInputView = false
+    @State private var isFontSizeChanged = false
     
     @State private var isNavigationActive = false
     @State private var renderedImage: UIImage? // Rendered image 저장

@@ -64,14 +64,12 @@ struct CustomSlider: View {
                             }
                     )
                     .onChange(of: value){ newValue in
-                        print(newValue)
                         pointerXPosition = newValue == .zero ? minXPosition : (maxXPosition - minXPosition) * newValue
                     }
             }
             .background(.clear)
             .ignoresSafeArea()
             .onAppear{
-                print(value)
                 pointerXPosition = value == .zero ? minXPosition : (maxXPosition - minXPosition) * value
             }
         }

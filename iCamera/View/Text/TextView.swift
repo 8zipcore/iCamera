@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct TextView: View {
+    enum TextUpdateType{
+        case font, input, initial
+    }
     var index: Int
     var textData: TextData
     @StateObject var textManager: TextManager
     @StateObject var editManager: EditManager
     var editImageViewPositionArray: [CGPoint]
+    
+    @State private var updateType: TextUpdateType = .initial
     
     @State private var textViewSize: CGSize = .zero
     @State private var backgroundViewSizeArray: [CGSize] = []
@@ -24,6 +29,8 @@ struct TextView: View {
     @State private var showRectangle = false
     
     @State private var isHidden = true
+    
+    @State private var previousTextData: TextData?
     
     var body: some View {
         GeometryReader { geometry in
@@ -41,14 +48,18 @@ struct TextView: View {
                             .frame(width: backgroundViewSizeArray[index].width, height: backgroundViewSizeArray[index].height)
                             .position(x: position.x, y: position.y) // 애니메이션 적용
                     }
-                    
+                let textViewWidthPadding: CGFloat = 100
+                let textViewPositionPadding: CGFloat = updateTextViewWidthPosition(textAlignmnet: textData.textAlignment, padding: textViewWidthPadding)
+                let textViewHeightPadding: CGFloat = 50
+                
                     NonEditableCustomTextView(textData: .constant(textData)){ newArray, newSize in
                         // 🌀 textView textContainer(?) 업데이트 바로 안되서 width값 제대로 못받아오는 경우가 있어
                         // textInputView에서 width받아온거 저장해서 적용해줌
                         // 맨처음 추가했을때 || font크기 변경할 때
-                        if textData.text == textManager.textPlaceHolder || isHidden == false {
+                        if updateType == .initial || updateType == .font {
                             backgroundViewSizeArray = newArray
                             textViewSize = newSize
+                            // updateTextViewSize(textViewSize: textViewSize, newTextViewSize: newSize)
                         } else {
                             backgroundViewSizeArray = textData.backgroundColorSizeArray
                             textViewSize = textData.size
@@ -59,12 +70,12 @@ struct TextView: View {
                         }
                         
                     }
-                    .frame(width: textViewSize.width, height: textViewSize.height)
-                    .position(x: viewWidth / 2, y: viewHeight / 2)
+                    .frame(width: textViewSize.width + textViewWidthPadding, height: textViewSize.height + textViewHeightPadding, alignment: .center)
+                    .position(x: viewWidth / 2 + textViewPositionPadding, y: viewHeight / 2 + textViewHeightPadding / 2)
                     .onChange(of: textViewSize){ newSize in
                         textManager.textArray[index].size = newSize
                     }
-                    //.opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
+                    //                    .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
                     .animation(.easeInOut(duration: 0.1), value: isHidden)
                     
                     if textData.isSelected && showRectangle {
@@ -113,9 +124,14 @@ struct TextView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
                     showRectangle = true
                 }
+                
+                previousTextData = textData
             }
-            .onChange(of: textData){ _ in
-                isHidden = true
+            .onChange(of: textData.text){ _ in
+                updateType = .input
+            }
+            .onChange(of: textData.textFont.font){ _ in
+                updateType = .font
             }
             // .scaleEffect(textData.scale)
             .rotationEffect(textData.angle) // 회전 효과 적용
@@ -203,5 +219,29 @@ struct TextView: View {
         }
         position.y = (viewSize.height / 2) + (size.height * multiple(index: index))
         return position
+    }
+    
+    private func updateTextViewSize(textViewSize: CGSize, newTextViewSize: CGSize) -> CGSize{
+        if textViewSize == .zero {
+            return newTextViewSize
+        }
+        let widthRatio = newTextViewSize.width / textViewSize.width
+        let heightRatio = newTextViewSize.height / textViewSize.height
+        let scale = min(widthRatio, heightRatio)
+
+        return CGSize(
+            width: textViewSize.width * scale,
+            height: textViewSize.height * scale
+        )
+    }
+    
+    private func updateTextViewWidthPosition(textAlignmnet: NSTextAlignment, padding: CGFloat) -> CGFloat{
+        if textAlignmnet == .left {
+            return padding / 2
+        } else if textAlignmnet == .right{
+            return -(padding / 2)
+        }
+        
+        return 0
     }
 }
