@@ -52,6 +52,7 @@ class TextManager: ObservableObject{
     var deleteTextButtonTapped = PassthroughSubject<Void, Never>()
     var editTextButtonTapped = PassthroughSubject<Void, Never>()
     var textAddButtonTapped = PassthroughSubject<Void, Never>()
+    var completeSaveTextInfo = PassthroughSubject<Void, Never>()
     
     @Published var textArray: [TextData] = []
     @Published var currentTextMenu: TextMenu = .font
@@ -243,10 +244,21 @@ class TextManager: ObservableObject{
     
     func updateText(text: TextData, size: CGSize, location: CGPoint) -> TextData{
         var text = text
+        
         let font = text.textFont.font
         let fontSize = font.pointSize
         let newFontSize = fontSize * size.height / text.size.height
         text.textFont.font = font.withSize(newFontSize)
+        
+        let previousLineHeight = font.lineHeight
+        let newFontLineHeight = text.textFont.font.lineHeight
+        
+        for index in text.backgroundColorSizeArray.indices{
+            let width = text.backgroundColorSizeArray[index].width
+            text.backgroundColorSizeArray[index].width = width * newFontLineHeight / previousLineHeight
+            text.backgroundColorSizeArray[index].height = newFontLineHeight
+        }
+        
         text.size = size
         text.location = location
         return text

@@ -18,17 +18,17 @@ struct CaptureImageView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let viewWidth = geometry.size.width
-            let viewHeight = geometry.size.height
-            
             ZStack{
                 let imageSize = imageSize(imageSize: cutImageManager.imageSize, viewSize: geometry.size)
-                let originImageSize = cutImageManager.isHorizontalDegree() ? CGSize(width: imageSize.height, height: imageSize.width) : imageSize
                 let newZoomScale = calculateNewZoomScale(newSize: imageSize, viewSize: geometry.size)
                 let imagePosition = imagePosition(imageSize: imageSize, viewSize: geometry.size, newZoomScale: newZoomScale)
                 let zoomDifference = newZoomScale / cutImageManager.zoomScale
                 let previousFrameSize = cutImageManager.paddingImageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), multiple: 1)
                 let newFrameSize = cutImageManager.imageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), viewSize: geometry.size)
+                
+                Rectangle()
+                    .stroke(.white, lineWidth: 1.0)
+                    .frame(width: imageSize.width, height: imageSize.height)
                 
                 Image(uiImage: image)
                     .resizable()
@@ -58,12 +58,13 @@ struct CaptureImageView: View {
                     let newTextSize = updateStickerSize(initialSize: text.size, frameSize: previousFrameSize, newFrameSize: newFrameSize, newZoomScale: newZoomScale)
                     let newTextLocation = updatePosition(initialLocation: text.location, initialSize: previousFrameSize, newSize: newFrameSize, viewSize: geometry.size, zoomDifference: zoomDifference)
                     let newText = textManager.updateText(text: text, size: newTextSize, location: newTextLocation)
-                    TextView(index: index, textData: newText, textManager: textManager, editManager: EditManager(), editImageViewPositionArray: [])
+                    TextView(index: index, textData: newText, textViewSize: newText.size, textManager: textManager, editManager: EditManager(), editImageViewPositionArray: [], backgroundViewSizeArray: newText.backgroundColorSizeArray)
 //                        .frame(width: text.size.width, height: text.size.height)
                         .position(newTextLocation)
                 }
             }
             .navigationBarHidden(true)
+            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
     
@@ -124,8 +125,6 @@ struct CaptureImageView: View {
             let heightRatio = viewSize.height / imageSize.height
             let scale = min(widthRatio, heightRatio)
             
-            print("-----")
-            print("viewSize", viewSize)
             print("imageSize", CGSize(
                 width: imageSize.width * scale,
                 height: imageSize.height * scale

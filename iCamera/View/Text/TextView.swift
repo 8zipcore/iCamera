@@ -13,14 +13,13 @@ struct TextView: View {
     }
     var index: Int
     var textData: TextData
+    @State var textViewSize: CGSize = .zero
     @StateObject var textManager: TextManager
     @StateObject var editManager: EditManager
     var editImageViewPositionArray: [CGPoint]
+    @State var backgroundViewSizeArray: [CGSize] = []
+    @State var updateType: TextUpdateType = .initial
     
-    @State private var updateType: TextUpdateType = .initial
-    
-    @State private var textViewSize: CGSize = .zero
-    @State private var backgroundViewSizeArray: [CGSize] = []
     @State private var lastTextViewHeight: CGFloat = .zero
     
     @State private var lastScale: CGFloat = 1.0
@@ -110,7 +109,6 @@ struct TextView: View {
                         .contentShape(Rectangle())
                         .position(x: viewWidth / 2 + (rectangleWidth / 2), y: (viewHeight / 2) + (rectangleHeight / 2))
                         .onTapGesture{
-                            print("Tap")
                             textManager.editTextButtonTapped.send()
                         }
                         // .opacity(isHidden ? 0 : 1) // 투명도 0 = 숨김, 1 = 보임
@@ -119,6 +117,7 @@ struct TextView: View {
             }
             .onAppear{
                 textViewSize = textData.size
+                backgroundViewSizeArray = textData.backgroundColorSizeArray
                 isHidden = false
                 // 딜레이줘서 뷰 튀는거 방지
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
@@ -126,6 +125,12 @@ struct TextView: View {
                 }
                 
                 previousTextData = textData
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .saveTextInfo)) { notification in
+                textManager.textArray[index].backgroundColorSizeArray = backgroundViewSizeArray
+                textManager.textArray[index].size = textViewSize
+                
+                textManager.completeSaveTextInfo.send()
             }
             .onChange(of: textData.text){ _ in
                 updateType = .input

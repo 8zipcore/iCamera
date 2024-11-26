@@ -67,18 +67,15 @@ struct EditPhotoView: View {
                             if menuButtonManager.isSelected(.cut){
                                 NotificationCenter.default.post(name: .saveImageInfo, object: nil)
                             } else {
-                                if let image = renderAsImage(viewSize: geometry.size){
-                                    self.renderedImage = image
-                                    self.isNavigationActive = true
-                                }
+                                saveData(viewSize: geometry.size)
                             }
                         }
                     }
                     .onReceive(cutImageManager.completeSaveImageInfo){ _ in
-                        if let image = renderAsImage(viewSize: geometry.size){
-                            self.renderedImage = image
-                            self.isNavigationActive = true
-                        }
+                        saveData(viewSize: geometry.size)
+                    }
+                    .onReceive(textManager.completeSaveTextInfo){ _ in
+                        createImage(viewSize: geometry.size)
                     }
                     
                     NavigationLink(
@@ -88,7 +85,7 @@ struct EditPhotoView: View {
                                  SavePhotoView(navigationPath: $navigationPath, image: image)
                              }
 //                             if let image = albumManager.selectedImage {
-//                                 CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager)
+//                                 CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager).frame(width: viewWidth, height: 700)
 //                             }
                          },
                          label: {
@@ -288,6 +285,21 @@ struct EditPhotoView: View {
         let padding: CGFloat = 7
         return [CGPoint(x: padding, y: padding), CGPoint(x: viewSize.width - padding, y: editImageViewHeight - padding)]
     }
+    
+    private func saveData(viewSize: CGSize){
+        if textManager.textArray.count > 0 {
+            NotificationCenter.default.post(name: .saveTextInfo, object: nil)
+        } else {
+            createImage(viewSize: viewSize)
+        }
+    }
+    
+    private func createImage(viewSize: CGSize){
+        if let image = renderAsImage(viewSize: viewSize){
+            self.renderedImage = image
+            self.isNavigationActive = true
+        }
+    }
         
     private func renderAsImage(viewSize: CGSize) -> UIImage?{
         guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene,
@@ -298,19 +310,19 @@ struct EditPhotoView: View {
         
         guard let image = albumManager.selectedImage else { print("Image not loading"); return nil }
         
-        let captureView = CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager)
+        let captureView = CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager).frame(width: viewSize.width, height: viewSize.height)
         let controller = UIHostingController(rootView: captureView)
         guard let view = controller.view else { return nil }
 
         // 캡처할 이미지 크기 설정 (이 크기와 뷰의 크기가 일치해야 합니다)
         // 뷰 크기를 imageSize에 맞게 설정
-        let safeAreaInsets = window.safeAreaInsets
-        view.bounds = CGRect(origin: .zero, size: CGSize(width: viewSize.width, height: window.bounds.size.height - safeAreaInsets.top - safeAreaInsets.bottom))
         
-        let targetSize = cutImageManager.imageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), viewSize: view.bounds.size)
-        print("targetSize", targetSize)
-        print("viewSize1", view.bounds.size)
-        print("framewkw", cutImageManager.frameWidth, cutImageManager.frameHeight)
+        view.bounds = CGRect(origin: .zero, size: window.bounds.size)
+        view.backgroundColor = .green
+        
+        let targetSize = cutImageManager.imageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), viewSize: viewSize)
+        
+        let safeAreaInsets = window.safeAreaInsets
         
         // UIGraphicsImageRenderer로 정확히 캡처할 이미지 크기 설정
         let renderer = UIGraphicsImageRenderer(size: targetSize)
