@@ -15,6 +15,7 @@ struct CubeData{
 class LUTManager{
     static let shared = LUTManager()
     var cubeDataSet: [String : CubeData] = [:]
+    let context = CIContext()
     
     func parseCUBEFile(data: Data) -> (Int?, [Float]?) {
         guard let content = String(data: data, encoding: .utf8) else {
@@ -66,7 +67,7 @@ class LUTManager{
         return (cubeDimension, lutValues)
     }
     
-    func applyLUTFilter(to inputImage: UIImage, lutFileName: String, intensity: CGFloat) -> UIImage? {
+    func applyLUTFilter(to inputImage: UIImage, lutFileName: String, intensity: CGFloat) -> CIImage? {
         guard let ciImage = CIImage(image: inputImage) else { return nil }
         
         guard let filePath = Bundle.main.path(forResource: lutFileName, ofType: "cube") else {
@@ -109,7 +110,10 @@ class LUTManager{
             print("outputImage nil")
             return nil
         }
+        
+        return filteredImage
 
+        /*
         // 강도 조정: 원본 이미지와 LUT 적용 이미지를 혼합
         
         let mixFilter = CIFilter(name: "CIMix") ?? CIFilter(name: "CIBlendWithAlphaMask")!
@@ -121,13 +125,13 @@ class LUTManager{
             print("outputImage nil after blending")
             return nil
         }
-        
-        let context = CIContext()
-        
-        if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
+        */
+        /*
+        if let cgImage = context.createCGImage(outputImage, from: filterImage.extent) {
             return UIImage(cgImage: cgImage)
         }
         
         return nil
+         */
     }
 }

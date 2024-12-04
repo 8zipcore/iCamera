@@ -83,6 +83,10 @@ class FilterManager: NSObject, ObservableObject {
     @Published var filterValue: CGFloat = .zero
     @Published var selectedFilter: Filter = Filter(type: .none)
     
+    var filterImageSet: [Filter : UIImage] = [:]
+    
+    let context = CIContext()
+    
     var cancellables = Set<AnyCancellable>()
     
     func allFilters() -> [Filter] {
@@ -117,6 +121,19 @@ class FilterManager: NSObject, ObservableObject {
         return UIImage(named: "filter_\(filter.title)")
     }
     
+    func filterImage(image: UIImage) -> UIImage?{
+        if let filterImage = filterImageSet[selectedFilter]{
+            return filterImage
+        }
+        
+        if let image = applyFilters(to: image){
+            filterImageSet[selectedFilter] = image
+            return image
+        }
+        
+        return nil
+    }
+    
     func applyFilters(filter: Filter, image: UIImage) -> UIImage?{
         selectedFilter = filter
         return applyFilters(to: image)
@@ -125,37 +142,27 @@ class FilterManager: NSObject, ObservableObject {
     func applyFilters(to image: UIImage) -> UIImage? {
         guard let ciImage = CIImage(image: image) else { return nil }
         
-        let scaleFactor: CGFloat = 0.5 // 절반 크기로 다운스케일
-        let scaledSize = CGSize(width: ciImage.extent.width * scaleFactor, height: ciImage.extent.height * scaleFactor)
-
-        let resizedImage = ciImage.transformed(by: CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
-        
         let filterValue = filterValue
         let filter = selectedFilter
         
-        let context = CIContext()
         var outputImage: CIImage?
         
         switch filter.type {
         case .none:
-            outputImage = resizedImage
+            outputImage = ciImage
         case .bloom:
             let bloomFilter = CIFilter.bloom()
-            bloomFilter.inputImage = resizedImage
-            bloomFilter.intensity = Float(filterValue)
+            bloomFilter.inputImage = ciImage
+            //bloomFilter.intensity = Float(filterValue)
             outputImage = bloomFilter.outputImage
         default:
             guard let filteredImage = LUTManager.shared.applyLUTFilter(to: image, lutFileName: filter.fileName, intensity: filterValue) else { return nil }
-            
-            return filteredImage
+            outputImage = filteredImage
         }
         
         guard let outputImage = outputImage else { return nil}
-        
-        let finalImage = outputImage.transformed(by: CGAffineTransform(scaleX: 1/scaleFactor, y: 1/scaleFactor))
-        
         // CIContext를 통해 최종 이미지 생성
-        if let cgImage = context.createCGImage(finalImage, from: ciImage.extent) {
+        if let cgImage = context.createCGImage(outputImage, from: ciImage.extent) {
             return UIImage(cgImage: cgImage)
         }
         return nil

@@ -26,36 +26,47 @@ struct EditImageView: View {
             let viewHeight = geometry.size.height
             
             VStack{
-                if let filteredImage = filterManager.applyFilters(to: image) {
-                    if menuButtonManager.isSelected(.cut){
-                        CutImageView(image: filteredImage,
-                                     frameWidth: cutImageManager.frameWidth,
-                                     frameHeight: cutImageManager.frameHeight,
-                                     cutImageManager: cutImageManager)
-                        .frame(width: viewWidth , height: viewHeight)
-                    } else {
-                        let imageSize = imageSize(imageSize: cutImageManager.imageSize, viewSize: geometry.size)
-                        ZStack{
-                            let frameSize = cutImageManager.paddingImageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), multiple: 1)
-                            let maskRectangleSize = updateImageSizeWithoutLineSize(imageSize: frameSize, viewSize: geometry.size)
-                            let maskRectangleViewLocation = CGPoint(x: (viewWidth - maskRectangleSize.width) / 2, y: (viewHeight - maskRectangleSize.height) / 2)
-                            let imagePosition = imagePosition(imageSize: imageSize, maskRectangleSize: maskRectangleSize, viewSize: geometry.size)
-  
-                            Image(uiImage: filteredImage)
-                                .resizable()
-                                .scaledToFill()
-                                .scaleEffect(cutImageManager.zoomScale)
-                                .scaleEffect(x: cutImageManager.currentFlipHorizontal.x, y: cutImageManager.currentFlipHorizontal.y)
-                                .rotationEffect(.degrees(cutImageManager.currentDegree))
-                                .frame(width: imageSize.width, height: imageSize.height)
-                                .position(x: imagePosition.x, y: imagePosition.y)
-
-                            
-                            MaskRectangleView(overlayColor: .white,
-                                              rectangleSize: geometry.size,
-                                              maskRectangleSize: maskRectangleSize,
-                                              maskPosition: CGPoint(x: maskRectangleViewLocation.x, y: maskRectangleViewLocation.y))
+                if menuButtonManager.isSelected(.cut){
+                    CutImageView(image: image,
+                                 frameWidth: cutImageManager.frameWidth,
+                                 frameHeight: cutImageManager.frameHeight,
+                                 cutImageManager: cutImageManager)
+                    .frame(width: viewWidth , height: viewHeight)
+                } else if cutImageManager.imageSize != .zero {
+                    let imageSize = imageSize(imageSize: cutImageManager.imageSize, viewSize: geometry.size)
+                    ZStack{
+                        let frameSize = cutImageManager.paddingImageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), multiple: 1)
+                        let maskRectangleSize = updateImageSizeWithoutLineSize(imageSize: frameSize, viewSize: geometry.size)
+                        let maskRectangleViewLocation = CGPoint(x: (viewWidth - maskRectangleSize.width) / 2, y: (viewHeight - maskRectangleSize.height) / 2)
+                        let imagePosition = imagePosition(imageSize: imageSize, maskRectangleSize: maskRectangleSize, viewSize: geometry.size)
+                        
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .scaleEffect(cutImageManager.zoomScale)
+                            .scaleEffect(x: cutImageManager.currentFlipHorizontal.x, y: cutImageManager.currentFlipHorizontal.y)
+                            .rotationEffect(.degrees(cutImageManager.currentDegree))
+                            .frame(width: imageSize.width, height: imageSize.height)
+                            .position(x: imagePosition.x, y: imagePosition.y)
+                        
+                        if filterManager.selectedFilter.type != .none{
+                            if let filteredImage = filterManager.filterImage(image: image){
+                                Image(uiImage: filteredImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .scaleEffect(cutImageManager.zoomScale)
+                                    .scaleEffect(x: cutImageManager.currentFlipHorizontal.x, y: cutImageManager.currentFlipHorizontal.y)
+                                    .rotationEffect(.degrees(cutImageManager.currentDegree))
+                                    .frame(width: imageSize.width, height: imageSize.height)
+                                    .position(x: imagePosition.x, y: imagePosition.y)
+                                    .opacity(filterManager.filterValue)
+                            }
                         }
+                        
+                        MaskRectangleView(overlayColor: .white,
+                                          rectangleSize: geometry.size,
+                                          maskRectangleSize: maskRectangleSize,
+                                          maskPosition: CGPoint(x: maskRectangleViewLocation.x, y: maskRectangleViewLocation.y))
                     }
                 }
             }
@@ -108,7 +119,7 @@ struct EditImageView: View {
             
             return CGSize(
                 width: imageSize.width * scale,
-                height: imageSize.height  * scale
+                height: imageSize.height * scale
             )
         } else {
             let widthRatio = viewSize.width / imageSize.width
