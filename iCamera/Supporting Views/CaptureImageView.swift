@@ -13,6 +13,7 @@ struct CaptureImageView: View {
     var cutImageManager: CutImageManager
     var textManager: TextManager
     var stickerManager: StickerManager
+    var filterManager: FilterManager
     
     @Environment(\.dismiss) var dismiss
     
@@ -30,14 +31,16 @@ struct CaptureImageView: View {
                     .stroke(.white, lineWidth: 1.0)
                     .frame(width: imageSize.width, height: imageSize.height)
                 
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .scaleEffect(newZoomScale)
-                    .scaleEffect(x: cutImageManager.currentFlipHorizontal.x, y: cutImageManager.currentFlipHorizontal.y)
-                    .rotationEffect(.degrees(cutImageManager.currentDegree))
-                    .frame(width: imageSize.width, height: imageSize.height)
-                    .position(x: imagePosition.x, y: imagePosition.y)
+                if let filteredImage = filterManager.applyFilters(to: image) {
+                    Image(uiImage: filteredImage)
+                        .resizable()
+                        .scaledToFill()
+                        .scaleEffect(newZoomScale)
+                        .scaleEffect(x: cutImageManager.currentFlipHorizontal.x, y: cutImageManager.currentFlipHorizontal.y)
+                        .rotationEffect(.degrees(cutImageManager.currentDegree))
+                        .frame(width: imageSize.width, height: imageSize.height)
+                        .position(x: imagePosition.x, y: imagePosition.y)
+                }
                 
                 /* ⭐️ StickerView 시작 */
                 ForEach(stickerManager.stickerArray.indices, id:\.self){ index in

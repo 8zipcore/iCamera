@@ -24,9 +24,6 @@ struct EditPhotoView: View {
     @StateObject var customSliderManager = CustomSliderManager()
     @StateObject var editManager = EditManager()
     
-    @State private var filterValue: CGFloat = 0.0
-    @State private var filterType: FilterType = .none
-    
     @State private var isFirstDrag: Bool = true
     
     @State private var showTextInputView = false
@@ -98,8 +95,7 @@ struct EditPhotoView: View {
                         Color.white
                         
                         EditImageView(inputImage: $albumManager.selectedImage,
-                                      value: filterValue,
-                                      filterType: filterType,
+                                      filterManager: filterManager,
                                       menuButtonManager: menuButtonManager,
                                       cutImageManager: cutImageManager){ image in
                             self.renderedImage = image
@@ -174,31 +170,7 @@ struct EditPhotoView: View {
                             }
                             /* 📌 filter */
                             if menuButtonManager.isSelected(.filter){
-                                VStack{
-                                    HStack(spacing: 0){
-                                        ForEach(filterManager.allFilters(), id:\.self){ filter in
-                                            ZStack{
-                                                Image("test")
-                                                    .resizable()
-                                                    .frame(width: 50, height: 50)
-                                                
-                                                Text(filter.title)
-                                                    .foregroundStyle(Color.white)
-                                            }
-                                            .onTapGesture {
-                                                if filterType != filter.type {
-                                                    filterType = filter.type
-                                                    filterValue = 0
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if filterType != .none{
-                                        Slider(value: $filterValue, in: 0.0...1.0)
-                                    }
-                                }
-                                .padding(.top, 10)
-                                Spacer()
+                                EditFilterView(navigationPath: $navigationPath, filterManager: filterManager)
                             }
                             /* 📌 Sticker */
                             if menuButtonManager.isSelected(.sticker){
@@ -310,7 +282,7 @@ struct EditPhotoView: View {
         
         guard let image = albumManager.selectedImage else { print("Image not loading"); return nil }
         
-        let captureView = CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager).frame(width: viewSize.width, height: viewSize.height)
+        let captureView = CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager, filterManager: filterManager).frame(width: viewSize.width, height: viewSize.height)
         let controller = UIHostingController(rootView: captureView)
         guard let view = controller.view else { return nil }
 

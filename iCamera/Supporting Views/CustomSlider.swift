@@ -15,7 +15,7 @@ class CustomSliderManager: ObservableObject{
 struct CustomSlider: View {
     var value: CGFloat = .zero
     @StateObject var customSliderManager: CustomSliderManager
-    var isAvailableDrag: Bool
+    var isAvailableDrag: Bool = true
     
     @State var pointerXPosition: CGFloat = .zero
     

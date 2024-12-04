@@ -121,8 +121,6 @@ class AlbumManager: ObservableObject {
                 }
             }
             
-            print(self.page)
-            
             let limit = 30
             
             let fetchOptions = PHFetchOptions()
