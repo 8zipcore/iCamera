@@ -17,7 +17,7 @@ class TopBarViewButtonManager: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     
     func topBarViewSize(viewWidth: CGFloat) -> CGSize{
-        return CGSize(width: viewWidth, height: viewWidth * 51 / 375)
+        return CGSize(width: viewWidth, height: viewWidth * 3 / 25)
     }
 }
 
