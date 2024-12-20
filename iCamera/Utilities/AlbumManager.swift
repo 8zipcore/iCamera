@@ -25,10 +25,12 @@ class AlbumManager: ObservableObject {
     @Published var albums: [Album] = []
     @Published var images: [UIImage] = []
     @Published var selectedImage: UIImage?
+    @Published var assets: [PHAsset?] = []
+    
+    var fetchResultCount: Int = .zero
     
     var currentAlbum: Album?
     
-    var page: Int = 0
     var isLoading: Bool = false
     
     var cancellables = Set<AnyCancellable>()
@@ -107,6 +109,24 @@ class AlbumManager: ObservableObject {
         .eraseToAnyPublisher()
     }
     
+    func fetchResult() -> PHFetchResult<PHAsset>{
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+        
+        var fetchResult = PHFetchResult<PHAsset>()
+        
+        if let album = self.currentAlbum {
+            fetchResult = PHAsset.fetchAssets(in: album.asset, options: fetchOptions)
+        } else {
+            fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        }
+        
+        fetchResultCount = fetchResult.count
+        
+        return fetchResult
+    }
+    
     func fetchPhotos() -> AnyPublisher<Void, Error>{
         Future { promise in
             if self.isLoading{
@@ -115,83 +135,27 @@ class AlbumManager: ObservableObject {
             
             self.isLoading = true
             
-            if self.page < 2 {
-                DispatchQueue.main.async {
-                    self.images = []
-                }
+            defer {
+                print("⭐️ Loading end")
+                promise(.success(()))
+                self.isLoading = false
             }
             
-            let limit = 30
+            let fetchResult = self.fetchResult()
+            let assets = fetchResult.objects(at: IndexSet(0..<self.fetchResultCount))
             
-            let fetchOptions = PHFetchOptions()
-            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-            fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
-            
-            var fetchResult = PHFetchResult<PHAsset>()
-            
-            if let album = self.currentAlbum {
-                fetchResult = PHAsset.fetchAssets(in: album.asset, options: fetchOptions)
-            } else {
-                fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-            }
-            
-            let photosCount = fetchResult.count
-            
-            let imageManager = PHImageManager.default()
-            
-            fetchResult.enumerateObjects { (asset, index, stop) in
-                if index >= limit * (self.page - 1) && index < limit * self.page{
-                    let requestOptions = PHImageRequestOptions()
-                    requestOptions.isSynchronous = false
-                    requestOptions.deliveryMode = .highQualityFormat
-                    requestOptions.version = .current // 최신 버전 이미지 요청
-                    requestOptions.isNetworkAccessAllowed = true
-                    
-                    DispatchQueue.main.async {
-                        self.images.append(UIImage())
-                    }
-                    
-                    imageManager.requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { image, _ in
-                        if let image = image {
-                            DispatchQueue.main.async {
-                                self.images[index] = image
-                                if index == (limit * self.page) - 1 || index == photosCount - 1{
-                                    print("⭐️ Loading end")
-                                    self.isLoading = false
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                if index > limit * self.page{
-                    stop.pointee = true // 열거 중단
-                    promise(.success(()))
-                    return
-                }
+            DispatchQueue.main.async{
+                self.assets = assets
             }
         }
         .eraseToAnyPublisher()
     }
     
-    func fetchSelectedPhoto(for index: Int) -> AnyPublisher<UIImage, Error>{
+    func fetchSelectedPhoto(for asset: PHAsset) -> AnyPublisher<UIImage, Error>{
         Future { promise in
             DispatchQueue.main.async {
                 self.selectedImage = nil
             }
-            
-            let fetchOptions = PHFetchOptions()
-            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-            fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
-            
-            var fetchResult = PHFetchResult<PHAsset>()
-            
-            if let album = self.currentAlbum {
-                fetchResult = PHAsset.fetchAssets(in: album.asset, options: fetchOptions)
-            } else {
-                fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-            }
-            let asset = fetchResult.object(at: index)
             
             let requestOptions = PHImageRequestOptions()
             requestOptions.isSynchronous = false
@@ -245,10 +209,12 @@ class AlbumManager: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    func resetAlbum(_ album: Album?){
+    func resetAlbum(_ album: Album?) async {
         self.currentAlbum = album
-        self.page = 0
         self.isLoading = false
+        await MainActor.run{
+            self.assets = []
+        }
     }
     
     func saveImageToPhotos(image: UIImage, completion: @escaping () -> Void) {
@@ -281,9 +247,5 @@ class AlbumManager: ObservableObject {
                 break
             }
         }
-    }
-    
-    func resetPage(){
-        page = 0
     }
 }

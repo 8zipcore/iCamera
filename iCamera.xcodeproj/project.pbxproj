@@ -78,6 +78,7 @@
 		36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A12E082CA19D1F00228784 /* FilterImageView.swift */; };
 		36A954C42CB25BDE00E43960 /* CutImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A954C32CB25BDE00E43960 /* CutImageManager.swift */; };
 		36BCF7242C94AA8500FF2529 /* AlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BCF7232C94AA8500FF2529 /* AlbumManager.swift */; };
+		36CB5ECD2D1437FE00B4B3AB /* GalleryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */; };
 		36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CF3DF22CB139C5004D58BF /* CutImageView.swift */; };
 		36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CFA3702CD345D100DF6E1E /* CommentsView.swift */; };
 		36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D096202C943DCA00F37AE0 /* GalleryView.swift */; };
@@ -188,6 +189,7 @@
 		36A12E082CA19D1F00228784 /* FilterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterImageView.swift; sourceTree = "<group>"; };
 		36A954C32CB25BDE00E43960 /* CutImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutImageManager.swift; sourceTree = "<group>"; };
 		36BCF7232C94AA8500FF2529 /* AlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumManager.swift; sourceTree = "<group>"; };
+		36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionView.swift; sourceTree = "<group>"; };
 		36CF3DF22CB139C5004D58BF /* CutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutImageView.swift; sourceTree = "<group>"; };
 		36CFA3702CD345D100DF6E1E /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
 		36D096202C943DCA00F37AE0 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
@@ -360,8 +362,6 @@
 			children = (
 				36810C502C8F0F09002C680A /* MainView.swift */,
 				36810C562C8F3199002C680A /* TestView.swift */,
-				3605F5652C917CDD00665348 /* CameraView.swift */,
-				36D096202C943DCA00F37AE0 /* GalleryView.swift */,
 				3601C59C2C954E6800E71978 /* AlbumView.swift */,
 				36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */,
 				362222352CA0087600AA9EA5 /* EditPhotoView.swift */,
@@ -369,6 +369,7 @@
 				368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */,
 				36CFA3702CD345D100DF6E1E /* CommentsView.swift */,
 				362BD6B42CAAE351000955D5 /* EditImageView.swift */,
+				36EA099C2D12D56F007C82CA /* Gallery */,
 				361BAB922CE85ED40091346B /* Filter */,
 				366306792CDF2D49008F16E9 /* Cut */,
 				361BAB912CE85EBF0091346B /* Sticker */,
@@ -453,6 +454,16 @@
 				361BAB992CE882BD0091346B /* StickerData.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		36EA099C2D12D56F007C82CA /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				3605F5652C917CDD00665348 /* CameraView.swift */,
+				36D096202C943DCA00F37AE0 /* GalleryView.swift */,
+				36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */,
+			);
+			path = Gallery;
 			sourceTree = "<group>";
 		};
 		36F84FB92CD24A32008275F5 /* Font */ = {
@@ -766,6 +777,7 @@
 				364B4C482CD8F20400CE5627 /* DestinationView.swift in Sources */,
 				36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */,
 				3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */,
+				36CB5ECD2D1437FE00B4B3AB /* GalleryCollectionView.swift in Sources */,
 				36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */,
 				365FF5132CE232A300D6EE8B /* SelectedTextCell.swift in Sources */,
 				3605F5682C917DBF00665348 /* CameraManager.swift in Sources */,

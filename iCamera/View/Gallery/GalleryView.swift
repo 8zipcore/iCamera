@@ -23,6 +23,9 @@ struct GalleryView: View {
     
     @State private var isShowingAlbumView = false
     
+    @State private var isNavigating: Bool = false
+    @State private var selectedAsset: PHAsset = PHAsset()
+    
     @Environment(\.dismiss) var dismiss
     
     private let columns = [
@@ -65,54 +68,41 @@ struct GalleryView: View {
                     if isShowingAlbumView {
                         AlbumView(navigationPath: $navigationPath, albumManager: albumManager){ album in
                             isShowingAlbumView = false
-                            albumManager.resetAlbum(album)
-                            loadPhotos()
-                        }
-                    } else {
-                        let imageViewWidth = viewWidth / 3
-                        
-                        ScrollViewWithOnScrollChanged(content: {
-                            LazyVGrid(columns: columns, spacing: 3) {
-                                ForEach(albumManager.images.indices, id: \.self) { index in
-                                    let image = albumManager.images[index]
-                                    if viewType == .comments{
-                                        Image(uiImage: image)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: imageViewWidth, height: imageViewWidth)
-                                            .background(.clear)
-                                            .clipped()
-                                            .onTapGesture {
-                                                calendarManager.selectedImage.send((albumManager, index))
-                                                dismiss()
-                                            }
-                                    } else {
-                                        NavigationLink(destination: EditPhotoView(navigationPath:$navigationPath, index: index, albumManager: albumManager)) {
-                                            Image(uiImage: image)
-                                                .resizable()
-                                                .scaledToFill()
-                                                .frame(width: imageViewWidth, height: imageViewWidth)
-                                                .background(.clear)
-                                                .clipped()
-                                        }
-                                    }
-                                }
-                            }
-                            .background(.white)
-                        }, scrollViewDidScroll: { scrollView in
-                            // 💡 추측 : SwiftUI로 변환할때 scorllview가 그냥 viewWidth, viewHeight 사이즈로 인식 됨 ??
-                            // ㄴ contentOffSet을 scorllView의 진짜크기(viewHeight - scrollView.height)으로 제대로 안받아옴
-                            // ㄴ 그래서 scrollView의 height을 viewHeight 기준으로 할 때
-                            // ㄴ 전체는 topBarHeight + scorllViewHeight이니까 scrollViewHeight 대신 viewHeight을 넣어줬음
-                            // ㄴ 바닥 찍고 불러오니까 약간 부자연스러워서 밑에서 두번째 줄 일때 불러오는걸로 바꿈
-                            let scrollViewHeight = viewHeight + topBarSize.height + (imageViewWidth * 2)
-                            let minY = scrollView.contentSize.height - scrollView.contentOffset.y
-                            
-                            if scrollViewHeight >= minY && !albumManager.isLoading{
+                            Task{
+                                await albumManager.resetAlbum(album)
                                 loadPhotos()
                             }
-                        })
-                        .frame(height: viewHeight - topBarSize.height) // 이 코드 안먹힘
+                        }
+                    } else {
+                        let cellSpcacing: CGFloat = 3
+                        let columnNumber: CGFloat = 3
+                        let cellWidth = (viewWidth - (columnNumber - 1) * cellSpcacing) / columnNumber
+                        
+                        NavigationLink(
+                            destination: EditPhotoView(
+                                navigationPath:$navigationPath,
+                                asset: selectedAsset,
+                                albumManager: albumManager),
+                            isActive: $isNavigating
+                        ) {
+                            EmptyView()
+                        }
+                        .hidden()
+                        
+                        GalleryCollectionView(
+                            albumManager: albumManager,
+                            itemSize: CGSize(width: cellWidth, height: cellWidth),
+                            spacing: 3,
+                            onTap: { asset in
+                                selectedAsset = asset
+                                if viewType == .comments {
+                                    calendarManager.selectedImage.send((albumManager, asset))
+                                    dismiss()
+                                } else {
+                                    isNavigating = true
+                                }
+                            }
+                        )
                     }
                 }
                 .background(.white)
@@ -132,15 +122,12 @@ struct GalleryView: View {
                 }, receiveValue: {})
                 .store(in: &albumManager.cancellables)
         }
-        .onDisappear{
-            albumManager.resetPage()
-        }
     }
     
     func loadPhotos(){
+        print("✅ 사진 불러오기 시작")
         PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
-                albumManager.page += 1
                 albumManager.fetchPhotos()
                     .sink(receiveCompletion: { completion in
                         switch completion{
@@ -156,13 +143,19 @@ struct GalleryView: View {
             }
         }
     }
-}
     
-// PreferenceKey를 사용해 스크롤 오프셋을 추적
-struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
+    /*
+    private func visibleAssets() -> [PHAsset?] {
+        return Array(albumManager.assets.prefix(visibleRange.upperBound))
     }
+
+    private func updateVisibleRange(using proxy: GeometryProxy, imageWidth: CGFloat, topBarViewHeight: CGFloat) {
+        let scrollPosition = topBarViewHeight - proxy.frame(in: .global).minY
+        let startIndex = max(Int(scrollPosition / imageWidth) * 3, 0)
+        let endIndex = min(startIndex + 30, 11532)
+        visibleRange = startIndex..<endIndex
+        print(visibleRange)
+    }
+     */
 }
+

@@ -22,7 +22,7 @@ struct LaunchView: View {
                     startPoint: .top, // 시작점
                     endPoint: .bottom // 끝점
                 )
-                let imageWidth = viewWidth * 0.4
+                let imageWidth = viewWidth * 0.35
                 
                 Image("logo")
                     .resizable()

@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Photos
 
 enum Week: String, CaseIterable{
     case sun = "Sun"
@@ -37,7 +38,7 @@ class CalendarManager: ObservableObject{
         return monthArray[selectedMonth - 1]
     }
     
-    var selectedImage = PassthroughSubject<(AlbumManager, Int), Never>()
+    var selectedImage = PassthroughSubject<(AlbumManager, PHAsset), Never>()
     @Published var calendarDataArray: [CalendarData] = []
     private var cancellables = Set<AnyCancellable>()
     

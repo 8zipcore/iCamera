@@ -171,8 +171,8 @@ struct CommentsView: View {
                                         }
                                     }
                                 )
-                                .onReceive(calendarManager.selectedImage){ (albumManager, index) in
-                                    self.albumManager.fetchSelectedPhoto(for: index)
+                                .onReceive(calendarManager.selectedImage){ (albumManager, asset) in
+                                    self.albumManager.fetchSelectedPhoto(for: asset)
                                         .sink(receiveCompletion: { completion in
                                             switch completion{
                                             case .finished:

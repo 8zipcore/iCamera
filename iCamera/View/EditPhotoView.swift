@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Photos
 
 @available(iOS 16.0, *)
 struct EditPhotoView: View {
     @Binding var navigationPath: NavigationPath
     @State var image: UIImage = UIImage()
-    @State var index: Int = -1
+    @State var asset: PHAsset
     
     @StateObject var albumManager: AlbumManager
     
@@ -237,19 +238,16 @@ struct EditPhotoView: View {
         }
         .navigationBarHidden(true)
         .onAppear{
-            print("onAppear", cutImageManager.zoomScale)
-            if index > -1 && albumManager.selectedImage == nil{
-                albumManager.fetchSelectedPhoto(for: index)
-                    .sink(receiveCompletion: { completion in
-                        switch completion{
-                        case .finished:
-                            print("finish")
-                        case .failure(_):
-                            print("fail")
-                        }
-                    }, receiveValue: { _ in })
-                    .store(in: &albumManager.cancellables)
-            }
+            albumManager.fetchSelectedPhoto(for: asset)
+                .sink(receiveCompletion: { completion in
+                    switch completion{
+                    case .finished:
+                        print("finish")
+                    case .failure(_):
+                        print("fail")
+                    }
+                }, receiveValue: { _ in })
+                .store(in: &albumManager.cancellables)
         }
     }
     
