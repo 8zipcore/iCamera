@@ -12,9 +12,9 @@ import Photos
 struct EditPhotoView: View {
     @Binding var navigationPath: NavigationPath
     @State var image: UIImage = UIImage()
-    @State var asset: PHAsset
+    @State var asset: PHAsset?
     
-    @StateObject var albumManager: AlbumManager
+    @ObservedObject var albumManager: AlbumManager
     
     @StateObject var topBarViewButtonManager = TopBarViewButtonManager()
     @StateObject var menuButtonManager = MenuButtonManager()
@@ -238,16 +238,18 @@ struct EditPhotoView: View {
         }
         .navigationBarHidden(true)
         .onAppear{
-            albumManager.fetchSelectedPhoto(for: asset)
-                .sink(receiveCompletion: { completion in
-                    switch completion{
-                    case .finished:
-                        print("finish")
-                    case .failure(_):
-                        print("fail")
-                    }
-                }, receiveValue: { _ in })
-                .store(in: &albumManager.cancellables)
+            if let asset = asset{
+                albumManager.fetchSelectedPhoto(for: asset)
+                    .sink(receiveCompletion: { completion in
+                        switch completion{
+                        case .finished:
+                            print("finish")
+                        case .failure(_):
+                            print("fail")
+                        }
+                    }, receiveValue: { _ in })
+                    .store(in: &albumManager.cancellables)
+            }
         }
     }
     

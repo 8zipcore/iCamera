@@ -187,16 +187,14 @@ class AlbumManager: ObservableObject {
 
             let fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
 
-            let imageManager = PHImageManager.default()
+            let imageManager = PHCachingImageManager()
             
             if let asset = fetchResult.firstObject{
-                let imageSize = CGSize(width: 200, height: 200)
-
                 let requestOptions = PHImageRequestOptions()
                 requestOptions.isSynchronous = false
                 requestOptions.deliveryMode = .fastFormat
 
-                imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: requestOptions) { image, _ in
+                imageManager.requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFill, options: requestOptions) { image, _ in
                     if let image = image {
                         DispatchQueue.main.async {
                             self.images.append(image)

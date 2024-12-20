@@ -71,18 +71,26 @@ struct EditImageView: View {
                 }
             }
             .clipped()
+            .onAppear{
+                confgiureImage(viewWidth: viewWidth, viewHeight: viewHeight)
+            }
             .onChange(of: inputImage) { _ in
-                if let inputImage = inputImage{
-                    image = inputImage
-                    if cutImageManager.centerLocation == .zero{
-                        let imageSize = cutImageManager.imageSize(imageSize: image.size, viewSize: geometry.size)
-                        let paddingImageSize = cutImageManager.paddingImageSize(imageSize: imageSize, multiple: -1)
-                        cutImageManager.initFrameSize(paddingImageSize)
-                        cutImageManager.imagePosition = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
-                        cutImageManager.editImageViewSize = geometry.size
-                        cutImageManager.centerLocation = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
-                    }
-                }
+                confgiureImage(viewWidth: viewWidth, viewHeight: viewHeight)
+            }
+        }
+    }
+    
+    private func confgiureImage(viewWidth: CGFloat, viewHeight: CGFloat){
+        let viewSize = CGSize(width: viewWidth, height: viewHeight)
+        if let inputImage = inputImage{
+            image = inputImage
+            if cutImageManager.centerLocation == .zero{
+                let imageSize = cutImageManager.imageSize(imageSize: image.size, viewSize: viewSize)
+                let paddingImageSize = cutImageManager.paddingImageSize(imageSize: imageSize, multiple: -1)
+                cutImageManager.initFrameSize(paddingImageSize)
+                cutImageManager.imagePosition = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
+                cutImageManager.editImageViewSize = viewSize
+                cutImageManager.centerLocation = CGPoint(x: viewWidth / 2, y: viewHeight / 2)
             }
         }
     }

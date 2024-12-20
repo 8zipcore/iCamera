@@ -36,7 +36,9 @@ struct CameraView: View {
     
     @State private var backZoomScale: CGFloat = 1.0
     
-    @State private var navigateToTestView = false  // 상태 변수로 네비게이션 제어
+    @State private var isNavigating = false
+    
+    @State private var cameraButtonControlFlag = false
     
     @Environment(\.dismiss) var dismiss
     
@@ -100,13 +102,17 @@ struct CameraView: View {
                     VStack{
                         ZStack{
                             HStack(spacing: 0){
-                                NavigationLink(value: "GalleryView") {
+                                NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .camera)) {
                                     if let image = albumManager.images.first{
+                                        let imageWidth = viewWidth * 0.17
                                         Image(uiImage: image)
                                             .resizable()
                                             .cornerRadius(5)
-                                            .frame(width: viewWidth * 0.2, height: viewWidth * 0.2)
-                                            .padding(.leading, 15)
+                                            .frame(width: imageWidth, height: imageWidth)
+                                            .padding(.leading, 20)
+                                            .onAppear{
+                                                print(viewWidth * 0.17)
+                                            }
                                     }
                                 }
                                 Spacer()
@@ -116,22 +122,25 @@ struct CameraView: View {
                                     Image("camera_switch_button")
                                         .resizable()
                                         .frame(width: viewWidth * 0.16, height: viewWidth * 0.16)
-                                        .padding(.trailing, 15)
-                                }
-                            }
-                            .navigationDestination(for: String.self){ value in
-                                if value == "GalleryView"{
-                                    GalleryView(navigationPath: $navigationPath, viewType: .camera)
+                                        .padding(.trailing, 20)
                                 }
                             }
                             
                             Button(action: {
-                                cameraManager.takePhoto()
+                                if !cameraButtonControlFlag{
+                                    cameraManager.takePhoto()
+                                    cameraButtonControlFlag = true
+                                }
                             }) {
                                 Image("camera_button")
                                     .resizable()
                                     .frame(width: viewWidth * 0.23, height: viewWidth * 0.23)
                             }
+                            
+                            NavigationLink(destination:EditPhotoView(navigationPath: $navigationPath, albumManager: albumManager), isActive: $isNavigating){
+                                EmptyView()
+                            }
+                            .hidden()
            
                         }
                         .padding(.top, bottomViewHeight / 5)
@@ -154,6 +163,8 @@ struct CameraView: View {
         }
         .navigationBarHidden(true)
         .onAppear{
+            cameraButtonControlFlag = false
+
             albumManager.fetchRecentlyPhoto()
                 .sink(receiveCompletion: { completion in
                     switch completion{
@@ -167,14 +178,8 @@ struct CameraView: View {
         }
         .onChange(of: cameraManager.capturedImage) { newImage in
              if newImage != nil {
-                 navigateToTestView = true  // 이미지가 설정되면 네비게이션 상태 변경
-             }
-         }
-         .navigationDestination(isPresented: $navigateToTestView) {
-             if let capturedImage = cameraManager.capturedImage {
-                 TestView(navigationPath: $navigationPath, image: capturedImage)
-             } else {
-                 Text("No image captured")  // 예외 처리
+                 albumManager.selectedImage = newImage
+                 isNavigating = true 
              }
          }
     }
