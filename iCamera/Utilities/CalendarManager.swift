@@ -20,6 +20,8 @@ enum Week: String, CaseIterable{
 }
 
 class CalendarManager: ObservableObject{
+    static let shared = CalendarManager()
+    
     var week: [Week] = []
     var days: [String] = []
     
@@ -215,6 +217,7 @@ extension CalendarManager{
             CoreDataManager.shared.saveData(calendarData)
             calendarDataArray.append(calendarData)
         } else {
+            print(calendarData)
             CoreDataManager.shared.updateData(calendarData)
             if let index = calendarDataArrayIndex(){
                 calendarDataArray[index] = calendarData
@@ -235,5 +238,19 @@ extension CalendarManager{
                   self.calendarDataArray = value
               })
               .store(in: &cancellables)
+    }
+    
+    func getWeekdays() -> String {
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: Date())
+        
+        let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        
+        return daysOfWeek[weekday - 1]
+    }
+    
+    func getMonthAndYear() -> String {
+        let monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        return "\(monthArray[currentMonth - 1]) \(currentYear)"
     }
 }

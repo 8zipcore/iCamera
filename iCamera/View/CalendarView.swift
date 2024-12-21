@@ -160,7 +160,7 @@ struct CalendarView: View {
                                     Spacer()
                                     HStack{
                                         Spacer()
-                                        NavigationLink(destination: CommentsView(navigationPath: $navigationPath, calendarManager: calendarManager)){
+                                        NavigationLink(destination: CommentsView(navigationPath: $navigationPath, calendarManager: calendarManager, viewType: .calendar)){
                                             let imageWidth: CGFloat = viewWidth * 0.2
                                             let imageHeight: CGFloat = imageWidth * 101 / 238
                                             ZStack{
@@ -189,13 +189,5 @@ struct CalendarView: View {
             }
         }
         .navigationBarHidden(true)
-        .onAppear{
-            calendarManager.dateComment = calendarManager.dateCommentToString()
-        }
     }
-}
-
-@available(iOS 16.0, *)
-#Preview {
-    CalendarView(navigationPath: .constant(NavigationPath()), calendarManager: CalendarManager())
 }

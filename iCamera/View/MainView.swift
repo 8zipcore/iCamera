@@ -11,13 +11,12 @@ import SwiftUI
 struct MainView: View {
     
     @State private var navigationPath = NavigationPath()
-    @State private var calendarManager = CalendarManager()
+    @StateObject private var calendarManager = CalendarManager.shared
 
     var body: some View {
         GeometryReader { geometry in
             NavigationStack(path: $navigationPath) {
                 let viewWidth = geometry.size.width
-                let viewHeight = geometry.size.height
                 
                 VStack(spacing: 0){
                     
@@ -38,41 +37,39 @@ struct MainView: View {
                         )
                         
                         let rectangleWidth =  viewWidth * 0.95
-                        let rectangleHeight = rectangleWidth * 477 / 1032
+                        let rectangleHeight = rectangleWidth * 350 / 1032
                         let cornerRadius = rectangleHeight / 10
                         let topMargin: CGFloat = 15
                         
+                        let listViewWidth =  rectangleWidth * 0.9
+                        let listViewHeight = (rectangleHeight * 0.9) / 3
+                        let listViewImageWidth = listViewHeight * 0.4
+                        
+                        let xPosition = geometry.size.width / 2
+                        let menuRectangleYPosition = rectangleHeight / 2 + topMargin
+                        
                         VStack(spacing: 0){
-                            let listViewWidth =  rectangleWidth * 0.9
-                            let listViewHeight = rectangleHeight * 0.87 / 4
-                            let listViewImageWidth = listViewHeight * 0.4
-                            
                             NavigationLink(value: "CameraView") {
                                 ListView(title: "Camera", imageWidth: listViewImageWidth)
-                                .frame(width: listViewWidth, height: listViewHeight)
                             }
-                            
+                            Spacer()
                             NavigationLink(value: "GalleryView") {
                                 ListView(title: "Photos", imageWidth: listViewImageWidth)
-                                .frame(width: listViewWidth, height: listViewHeight)
                             }
-                            
+                            Spacer()
                             NavigationLink(value: "CalendarView") {
                                 ListView(title: "Calendar", imageWidth: listViewImageWidth)
-                                .frame(width: listViewWidth, height: listViewHeight)
                             }
-                            
-                            ListView(title: "Setting", imageWidth: listViewImageWidth)
-                            .frame(width: listViewWidth, height: listViewHeight)
                         }
-                        .position(x: geometry.size.width / 2, y: rectangleHeight / 2 + topMargin)
+                        .frame(width: listViewWidth, height: rectangleHeight * 0.7)
+                        .position(x: xPosition, y: menuRectangleYPosition)
                         .background(
                             RoundedRectangle(cornerRadius: cornerRadius)
                                 .stroke(Color.black, lineWidth: 1)
                                 .background(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
                                 .frame(width: rectangleWidth, height: rectangleHeight)
-                                .position(x: geometry.size.width / 2, y: rectangleHeight / 2 + topMargin)
+                                .position(x: xPosition, y: menuRectangleYPosition)
                         )
                         .navigationDestination(for: String.self) { value in
                             switch value {
@@ -82,12 +79,45 @@ struct MainView: View {
                                 GalleryView(navigationPath: $navigationPath, viewType: .main)
                             case "CalendarView":
                                 CalendarView(navigationPath: $navigationPath, calendarManager: calendarManager)
-                                /*
-                                TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())*/
                             default:
                                 TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())
                             }
                         }
+                        
+                        let calendarRectangleHeight = rectangleWidth *  244 / 1032
+                        let calendarRectangleTopPadding: CGFloat = 10
+                        let calendarRectangleYPosition = topMargin + rectangleHeight + calendarRectangleTopPadding + calendarRectangleHeight / 2
+                        
+                        HStack(spacing: 8){
+                            NavigationLink(destination: CommentsView(navigationPath: $navigationPath, calendarManager: calendarManager, viewType: .main)){
+                                Text("\(calendarManager.selectedDay)")
+                                    .font(.system(size: 60, weight: .medium))
+                                    .foregroundStyle(Colors.titleGray)
+                                VStack(spacing: 3){
+                                    Text(calendarManager.getWeekdays())
+                                        .font(.system(size: 17, weight: .medium))
+                                        .foregroundStyle(.black)
+                                    Text(calendarManager.getMonthAndYear())
+                                        .font(.system(size: 17, weight: .medium))
+                                        .foregroundStyle(.black)
+                                }
+                                Spacer()
+                                Image("arrow")
+                                    .resizable()
+                                    .frame(width: listViewImageWidth, height: listViewImageWidth)
+                            }
+                        }
+                        .frame(width: listViewWidth, height: calendarRectangleHeight)
+                        .position(x: xPosition, y: calendarRectangleYPosition)
+                        .background(
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .stroke(Color.black, lineWidth: 1)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+                                .frame(width: rectangleWidth, height: calendarRectangleHeight)
+                                .position(x: xPosition, y: calendarRectangleYPosition)
+                        )
+
                     }
                     
                 }
@@ -97,6 +127,7 @@ struct MainView: View {
                     // CoreDataManager.shared.deleteAllData()
                     calendarManager.fetchData()
                     calendarManager.todayDate()
+                    calendarManager.dateComment = calendarManager.dateCommentToString()
                 }
             }
             .navigationBarHidden(true)

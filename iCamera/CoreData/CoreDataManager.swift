@@ -93,9 +93,9 @@ extension CoreDataManager{
         do {
             if let calendar = try context.fetch(fetchRequest).first{
                 calendar.comments = data.comments
-                if let image = data.image, let imageData = image.pngData(){
-                    calendar.image = imageData
-                }
+                let image = data.image
+                let imageData = image?.pngData()
+                calendar.image = imageData
                 
                 saveContext()
             }

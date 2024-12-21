@@ -9,8 +9,13 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 struct CommentsView: View {
+    enum PreviousViewType{
+        case calendar, main
+    }
+    
     @Binding var navigationPath: NavigationPath
     @StateObject var calendarManager: CalendarManager
+    var viewType: PreviousViewType
     
     @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
     @StateObject private var albumManager = AlbumManager()
@@ -45,7 +50,7 @@ struct CommentsView: View {
                     VStack(spacing: 0){
                         TopBarView(title: "Comments",
                                    imageSize: topBarSize,
-                                   isLeadingButtonHidden: false,
+                                   isLeadingButtonHidden: viewType == .main,
                                    isTrailingButtonHidden: false,
                                    buttonManager: topBarViewButtonManager)
                         .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
@@ -53,7 +58,11 @@ struct CommentsView: View {
                             case .cancel:
                                 dismiss()
                             case .home:
-                                navigationPath.removeLast(navigationPath.count)
+                                if viewType == .calendar{
+                                    navigationPath.removeLast(navigationPath.count)
+                                } else {
+                                    dismiss()
+                                }
                             default:
                                 break
                             }
@@ -97,7 +106,7 @@ struct CommentsView: View {
                                             }
                                             
                                         } else {
-                                            /*NavigationLink(value: DestinationView.galleryView){
+                                            NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager), isActive: $isNavigationLinkActive){
                                                 ZStack{
                                                     let buttonWidth = viewWidth * 0.08
                                                     Rectangle()
@@ -106,7 +115,7 @@ struct CommentsView: View {
                                                         .resizable()
                                                         .frame(width: buttonWidth, height: buttonWidth)
                                                 }
-                                            }*/
+                                            }
                                         }
                                     }
                                     .frame(height: imageViewHeight)
@@ -126,17 +135,17 @@ struct CommentsView: View {
                                         Spacer()
                                     }
                                     .id("commentsTitle")
-                                    .frame(minHeight: 50)
+                                    .frame(minHeight: viewWidth * 110 / 1134)
                                     .padding([.leading, .trailing], 15)
                                     
                                     let textEditorCornerRadius: CGFloat = 10
                                     let textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-                                    CustomTextView(textData: $textData,
-                                                   textContainerInset: textContainerInset,
-                                                   textViewWidth: viewWidth * 0.88,
-                                                   onTextChange: { calendarData.comments = $0 },
-                                                   onSizeChange: { if isFocused || textViewSize == .zero {textViewSize = $0} }, 
-                                                   updateData: { _, _ in })
+
+                                    CommentsTextView(textData: $textData,
+                                                     textContainerInset: textContainerInset,
+                                                     textViewWidth: viewWidth * 0.88,
+                                                     onTextChange: { calendarData.comments = $0 },
+                                                     onSizeChange: { if $0 != textViewSize { textViewSize = $0 } })
                                     .focused($isFocused)
                                     .background(Color.white)
                                     .cornerRadius(textEditorCornerRadius)
@@ -148,6 +157,7 @@ struct CommentsView: View {
                                     .padding(.bottom, 20)
                                     .id("textView")
                                     .onChange(of: textViewSize) { _ in
+                                        print("textviewSize : \(textViewSize)")
                                         if isFocused{
                                             if spacerHeight != .zero{
                                                 spacerHeight = scrollViewHeight - (contentHeight - (textData.textFont.font.lineHeight) + textViewSize.height)
@@ -256,8 +266,4 @@ struct CommentsView: View {
     private func setImageViewHeight(viewWidth: CGFloat){
         imageViewHeight = viewWidth * 667 / 1125
     }
-}
-@available(iOS 16.0, *)
-#Preview {
-    CommentsView(navigationPath: .constant(NavigationPath()), calendarManager: CalendarManager())
 }

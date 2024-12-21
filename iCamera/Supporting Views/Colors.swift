@@ -13,6 +13,7 @@ struct Colors{
     static let silver = RGB(red: 201, green: 201, blue: 194)
     static let titleGray = RGB(red: 51, green: 51, blue: 51)
     static let sliderSliver = RGB(red: 235, green: 235, blue: 235)
+    static let calendarRed = RGB(red: 220, green: 67, blue: 67)
 }
 
 func RGB(red: Double, green: Double, blue: Double) -> Color{
