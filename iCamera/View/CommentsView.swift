@@ -13,6 +13,9 @@ struct CommentsView: View {
         case calendar, main
     }
     
+    @State var text: String = ""
+    @State private var height: CGFloat = 40 // 초기 높이 설정
+    
     @Binding var navigationPath: NavigationPath
     @StateObject var calendarManager: CalendarManager
     var viewType: PreviousViewType
@@ -125,6 +128,7 @@ struct CommentsView: View {
                                      2. textView 밑에 spacer 추가해서 글자수 적을때 스크롤 시점 commentsTitle로 고정시킴
                                      3. 글자수 많으면 스크롤 시점 바닥으로 변경해서 타이핑 시점 따라가게 함
                                      */
+                                    let titleViewHeight = viewWidth * 110 / 1134
                                     HStack{
                                         Image("pink_circle")
                                             .resizable()
@@ -135,12 +139,22 @@ struct CommentsView: View {
                                         Spacer()
                                     }
                                     .id("commentsTitle")
-                                    .frame(minHeight: viewWidth * 110 / 1134)
+                                    .frame(minHeight: titleViewHeight)
                                     .padding([.leading, .trailing], 15)
                                     
                                     let textEditorCornerRadius: CGFloat = 10
                                     let textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+                                    /*
+                                    TextEditor(text: $text)
+                                         .frame(height: max(height, 40)) // 최소 높이 설정
+                                         .onChange(of: text) { _ in
+                                             calculateHeight() // 텍스트 변경 시 높이 재계산
+                                         }
+                                         .background(Color.gray.opacity(0.2))
+                                         .cornerRadius(8)
+                                         .padding()
+*/
+                                    
                                     CommentsTextView(textData: $textData,
                                                      textContainerInset: textContainerInset,
                                                      textViewWidth: viewWidth * 0.88,
@@ -154,6 +168,7 @@ struct CommentsView: View {
                                             .stroke(Color.black, lineWidth: 1)
                                     )
                                     .frame(width: viewWidth * 0.88, height: textViewSize.height)
+                                    .position(x: viewWidth / 2, y: (textViewSize.height / 2))
                                     .padding(.bottom, 20)
                                     .id("textView")
                                     .onChange(of: textViewSize) { _ in
@@ -162,9 +177,7 @@ struct CommentsView: View {
                                             if spacerHeight != .zero{
                                                 spacerHeight = scrollViewHeight - (contentHeight - (textData.textFont.font.lineHeight) + textViewSize.height)
                                             }
-                                            if spacerHeight < 0 {
-                                                scrollProxy.scrollTo("textView", anchor: .bottom)
-                                            } else {
+                                            if spacerHeight > 0 {
                                                 scrollProxy.scrollTo("commentsTitle", anchor: .top)
                                             }
                                         }
@@ -173,6 +186,7 @@ struct CommentsView: View {
                                         Spacer(minLength: spacerHeight > 0 ? spacerHeight : 0)
                                     }
                                 }
+                                .animation(nil, value: scrollViewHeight)
                                 .background(
                                     GeometryReader { geometry in
                                         Color.clear
@@ -196,6 +210,7 @@ struct CommentsView: View {
                                         })
                                         .store(in: &albumManager.cancellables)
                                 }
+                                
                             }
                             .frame(maxHeight: scrollViewHeight == .zero || !isFocused ? viewHeight - topBarSize.height : scrollViewHeight)
                             .onChange(of: keyboardObserver.keyboardHeight) { focused in
@@ -265,5 +280,17 @@ struct CommentsView: View {
     
     private func setImageViewHeight(viewWidth: CGFloat){
         imageViewHeight = viewWidth * 667 / 1125
+    }
+    
+    private func calculateHeight() {
+        let font = UIFont.systemFont(ofSize: 16)
+        let width = UIScreen.main.bounds.width - 32 // 패딩 고려
+        let textHeight = text.boundingRect(
+            with: CGSize(width: width, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font],
+            context: nil
+        ).height
+        self.height = textHeight + 16 // 여백 추가
     }
 }

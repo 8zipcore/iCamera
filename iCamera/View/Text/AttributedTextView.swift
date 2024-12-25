@@ -254,8 +254,10 @@ extension UITextView{
     }
     
     func setAttributedString(from textData: TextData) {
+        let selectedRange = self.selectedRange
+        
         let attributedString = NSMutableAttributedString(string: textData.text)
-        let range = NSRange(location: 0, length: textData.text.count)
+        let range = NSRange(location: 0, length: textData.text.utf16.count)
 
         attributedString.addAttribute(.foregroundColor, value: UIColor(textData.textColor), range: range)
         attributedString.addAttribute(.font, value: textData.textFont.font, range: range)
@@ -265,6 +267,8 @@ extension UITextView{
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
         
         self.attributedText = attributedString
+        
+        self.selectedRange = selectedRange
     }
 }
 
@@ -315,10 +319,8 @@ struct CommentsTextView: UIViewRepresentable {
 
         // 텍스트 변경 시 바인딩된 값 업데이트
         func textViewDidChange(_ textView: UITextView) {
-            DispatchQueue.main.async{
-                self.parent.textData.text = textView.text
-                self.parent.onTextChange(textView.text)
-            }
+            self.parent.textData.text = textView.text
+            self.parent.onTextChange(textView.text)
         }
     }
 }
