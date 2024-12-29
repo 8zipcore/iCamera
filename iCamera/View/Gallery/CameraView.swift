@@ -8,24 +8,6 @@
 import SwiftUI
 import Combine
 
-struct CameraPreview: UIViewRepresentable {
-    @ObservedObject var cameraManager: CameraManager
-    @State var frame: CGRect
-
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView(frame: frame)
-        if let previewLayer = cameraManager.previewLayer {
-            previewLayer.frame = view.bounds
-            view.layer.addSublayer(previewLayer)
-        }
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIView, context: Context) {
-        
-    }
-}
-
 @available(iOS 16.0, *)
 struct CameraView: View {
     @Binding var navigationPath: NavigationPath
@@ -107,8 +89,9 @@ struct CameraView: View {
                                         let imageWidth = viewWidth * 0.17
                                         Image(uiImage: image)
                                             .resizable()
-                                            .cornerRadius(5)
+                                            .scaledToFill()
                                             .frame(width: imageWidth, height: imageWidth)
+                                            .clipShape(RoundedRectangle(cornerRadius: 5))
                                             .padding(.leading, 20)
                                             .onAppear{
                                                 print(viewWidth * 0.17)
@@ -177,10 +160,43 @@ struct CameraView: View {
                 .store(in: &albumManager.cancellables)
         }
         .onChange(of: cameraManager.capturedImage) { newImage in
-             if newImage != nil {
-                 albumManager.selectedImage = newImage
-                 isNavigating = true 
+            if let newImage = newImage, let fixedImage = newImage.fixOrientation() {
+                 albumManager.selectedImage = fixedImage
+                 isNavigating = true
              }
          }
+    }
+    
+
+}
+
+struct CameraPreview: UIViewRepresentable {
+    @ObservedObject var cameraManager: CameraManager
+    var frame: CGRect
+
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView(frame: frame)
+        if let previewLayer = cameraManager.previewLayer {
+            previewLayer.frame = view.bounds
+            view.layer.addSublayer(previewLayer)
+        }
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
+        uiView.frame = frame
+    }
+}
+
+extension UIImage {
+    func fixOrientation() -> UIImage? {
+        guard imageOrientation != .up else {
+            return self
+        }
+        UIGraphicsBeginImageContext(size)
+        draw(in: CGRect(origin: .zero, size: size))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return normalizedImage
     }
 }

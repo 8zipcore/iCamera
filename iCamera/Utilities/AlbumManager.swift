@@ -192,7 +192,7 @@ class AlbumManager: ObservableObject {
             if let asset = fetchResult.firstObject{
                 let requestOptions = PHImageRequestOptions()
                 requestOptions.isSynchronous = false
-                requestOptions.deliveryMode = .fastFormat
+                requestOptions.deliveryMode = .highQualityFormat
 
                 imageManager.requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFill, options: requestOptions) { image, _ in
                     if let image = image {

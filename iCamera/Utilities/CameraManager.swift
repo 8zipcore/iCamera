@@ -57,7 +57,7 @@ class CameraManager: NSObject, ObservableObject {
         
         // 미리보기 레이어 설정
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
-        // previewLayer?.videoGravity = .resizeAspectFill
+        previewLayer?.videoGravity = .resizeAspectFill
         
         // 세션 시작
         videoQueue.async {
@@ -79,8 +79,19 @@ class CameraManager: NSObject, ObservableObject {
     
     // 사진 찍기
     func takePhoto() {
-        let settings = AVCapturePhotoSettings()
+        var settings = AVCapturePhotoSettings()
+        
+        // photoOutput 의 codec의 hevc 가능시 photoSettings의 codec을 hevc로 설정하는 코드입니다.
+          // hevc 불가능한 경우에는 jpeg codec을 사용하도록 합니다.
+          if output.availablePhotoCodecTypes.contains(.hevc) {
+              settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
+          } else {
+              settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+          }
+        
+        
         settings.flashMode = currentFlashMode
+        
         output.capturePhoto(with: settings, delegate: self)
     }
     
@@ -106,7 +117,12 @@ extension CameraManager: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let data = photo.fileDataRepresentation(),
               let image = UIImage(data: data) else { return print("🌀 error: photoOutPut is nil"); }
-        // saveImageToPhotoLibrary(image: image)
+        
+        // 이미지 크기와 비율 확인
+        print("Image size: \(image.size.width) x \(image.size.height)") // 가로 x 세로 크기 출력
+        print("Aspect ratio: \(image.size.width / image.size.height)") // 비율 확인 (4:3 -> 1.33)
+        
+        
         DispatchQueue.main.async {
             self.capturedImage = image
         }
