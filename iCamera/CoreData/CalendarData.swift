@@ -11,6 +11,6 @@ import Foundation
 struct CalendarData{
     var id = UUID()
     var date: Date
-    var image: UIImage?
+    var image: Data?
     var comments: String
 }

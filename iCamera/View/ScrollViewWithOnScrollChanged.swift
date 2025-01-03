@@ -9,6 +9,8 @@ import SwiftUI
 import UIKit
 
 struct ScrollViewWithOnScrollChanged<Content: View>: UIViewRepresentable {
+    var scrollViewHeight: CGFloat
+    @Binding var contentOffset: CGPoint?
     @ViewBuilder let content: () -> Content
     @State var scrollViewDidScroll: (_ scrollView: UIScrollView) -> Void
     
@@ -18,6 +20,10 @@ struct ScrollViewWithOnScrollChanged<Content: View>: UIViewRepresentable {
         let hostingController = context.coordinator.hostingController
         hostingController.rootView = content()
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.backgroundColor = .clear
+        
+        scrollView.backgroundColor = .clear
+        scrollView.layer.backgroundColor = UIColor.clear.cgColor 
         
         scrollView.addSubview(hostingController.view)
         
@@ -30,8 +36,7 @@ struct ScrollViewWithOnScrollChanged<Content: View>: UIViewRepresentable {
         ])
         
         scrollView.delegate = context.coordinator
-        scrollView.backgroundColor = .white
-        
+        scrollView.clipsToBounds = true
         
         return scrollView
     }
@@ -44,6 +49,20 @@ struct ScrollViewWithOnScrollChanged<Content: View>: UIViewRepresentable {
         // 내부 콘텐츠의 height > scorllView.height 이 되기 때문에 스크롤이 된다
         // ㄴ width도 작게 설정해야 되는 듯 ?!
         uiView.frame = .zero
+
+        if let contentOffset = contentOffset {
+            DispatchQueue.main.async{
+                if contentOffset.x == -1 && contentOffset.y == -1 {
+                    uiView.setContentOffset(CGPoint(x: 0, y: uiView.contentSize.height - scrollViewHeight + 20), animated: true)
+                } else if contentOffset.x == -1 {
+                    uiView.setContentOffset(CGPoint(x: 0, y: uiView.contentOffset.y + contentOffset.y), animated: true)
+                } else {
+                    uiView.setContentOffset(contentOffset, animated: true)
+                }
+            }
+        }
+        
+        self.contentOffset = nil
     }
     
     func makeCoordinator() -> Coordinator {

@@ -90,7 +90,6 @@ struct TopBarView: View {
             }
 
         }
-        .frame(width: imageSize.width)
     }
     
     private func trailingButtonImageName() -> String{

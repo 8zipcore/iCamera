@@ -127,7 +127,6 @@ struct MainView: View {
                     // CoreDataManager.shared.deleteAllData()
                     calendarManager.fetchData()
                     calendarManager.todayDate()
-                    calendarManager.dateComment = calendarManager.dateCommentToString()
                 }
             }
             .navigationBarHidden(true)

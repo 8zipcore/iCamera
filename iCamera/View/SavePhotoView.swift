@@ -34,7 +34,11 @@ struct SavePhotoView: View {
                                isTrailingButtonHidden: false,
                                buttonManager: topBarViewButtonManager)
                     .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-                        dismiss()
+                        if buttonType == .cancel {
+                            dismiss()
+                        } else if buttonType == .home {
+                            navigationPath.removeLast(navigationPath.count)
+                        }
                     }
                     ZStack{
                         GradientRectangleView()

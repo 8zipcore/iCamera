@@ -71,11 +71,11 @@ struct EditImageView: View {
                 }
             }
             .clipped()
-            .onAppear{
-                confgiureImage(viewWidth: viewWidth, viewHeight: viewHeight)
+            .onChange(of: geometry.size){ _ in
+                confgiureImage(viewWidth: geometry.size.width, viewHeight: geometry.size.height)
             }
             .onChange(of: inputImage) { _ in
-                confgiureImage(viewWidth: viewWidth, viewHeight: viewHeight)
+                confgiureImage(viewWidth: geometry.size.width, viewHeight: geometry.size.height)
             }
         }
     }

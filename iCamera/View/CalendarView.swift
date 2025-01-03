@@ -183,9 +183,6 @@ struct CalendarView: View {
                 }
                 .background(.white)
                 .ignoresSafeArea(edges: .bottom)
-                .onAppear{
-                    print("Calendar", viewHeight)
-                }
             }
         }
         .navigationBarHidden(true)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalendarCell: View {
     var day: String
-    var image: UIImage?
+    var image: Data?
     var hiddenBottomLine: Bool = false
     
     var body: some View {
@@ -19,7 +19,7 @@ struct CalendarCell: View {
             let viewWidth = geometry.size.width
             let viewHeight = geometry.size.height
             ZStack{
-                if let image = image {
+                if let imageData = image, let image = UIImage(data: imageData) {
                     let imageSize = imageSize(image: image, viewWidth: viewWidth, viewHeight: viewHeight)
                     Image(uiImage: image)
                         .resizable()

@@ -33,7 +33,6 @@
 		3630F8A02CF3003200C59F62 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3630F89F2CF3003200C59F62 /* CaptureImageView.swift */; };
 		3634CAC32CC91DD20061D5DE /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3634CAC22CC91DD20061D5DE /* Extension+View.swift */; };
 		36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36447A372CAC0DDA008E1268 /* LUTManager.swift */; };
-		364B4C482CD8F20400CE5627 /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364B4C472CD8F20400CE5627 /* DestinationView.swift */; };
 		3653CCFB2CE47730005459E4 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CCFA2CE47730005459E4 /* FontManager.swift */; };
 		365978F42CE5AB3E00D58159 /* EditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365978F32CE5AB3E00D58159 /* EditTextView.swift */; };
 		365FF5132CE232A300D6EE8B /* SelectedTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365FF5122CE232A300D6EE8B /* SelectedTextCell.swift */; };
@@ -77,6 +76,7 @@
 		369E7C122C8DAB980044EAF1 /* iCameraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7C112C8DAB980044EAF1 /* iCameraUITestsLaunchTests.swift */; };
 		36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A12E082CA19D1F00228784 /* FilterImageView.swift */; };
 		36A954C42CB25BDE00E43960 /* CutImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A954C32CB25BDE00E43960 /* CutImageManager.swift */; };
+		36AFA2D42D1DADCA00215534 /* CommentsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */; };
 		36BCF7242C94AA8500FF2529 /* AlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BCF7232C94AA8500FF2529 /* AlbumManager.swift */; };
 		36CB5ECD2D1437FE00B4B3AB /* GalleryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */; };
 		36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CF3DF22CB139C5004D58BF /* CutImageView.swift */; };
@@ -141,7 +141,6 @@
 		3630F89F2CF3003200C59F62 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		3634CAC22CC91DD20061D5DE /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
 		36447A372CAC0DDA008E1268 /* LUTManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUTManager.swift; sourceTree = "<group>"; };
-		364B4C472CD8F20400CE5627 /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
 		3653CCFA2CE47730005459E4 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		365978F32CE5AB3E00D58159 /* EditTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextView.swift; sourceTree = "<group>"; };
 		365FF5122CE232A300D6EE8B /* SelectedTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTextCell.swift; sourceTree = "<group>"; };
@@ -188,6 +187,7 @@
 		369E7C112C8DAB980044EAF1 /* iCameraUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCameraUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		36A12E082CA19D1F00228784 /* FilterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterImageView.swift; sourceTree = "<group>"; };
 		36A954C32CB25BDE00E43960 /* CutImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutImageManager.swift; sourceTree = "<group>"; };
+		36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTextView.swift; sourceTree = "<group>"; };
 		36BCF7232C94AA8500FF2529 /* AlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumManager.swift; sourceTree = "<group>"; };
 		36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionView.swift; sourceTree = "<group>"; };
 		36CF3DF22CB139C5004D58BF /* CutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutImageView.swift; sourceTree = "<group>"; };
@@ -260,6 +260,7 @@
 				36EC6DA12CE4EEA800A5D784 /* CustomSlider.swift */,
 				36039EEE2CF1EB6F0002EE48 /* ShareSheet.swift */,
 				3630F89F2CF3003200C59F62 /* CaptureImageView.swift */,
+				36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -279,7 +280,6 @@
 				361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */,
 				36697BFE2CD1241B00070A55 /* CalendarManager.swift */,
 				36F84FBC2CD24AE5008275F5 /* Font.swift */,
-				364B4C472CD8F20400CE5627 /* DestinationView.swift */,
 				3653CCFA2CE47730005459E4 /* FontManager.swift */,
 				361BAB952CE87B970091346B /* StoredStickerManager.swift */,
 				361BAB9B2CE88A520091346B /* Array.swift */,
@@ -774,12 +774,12 @@
 				361BAB942CE85F180091346B /* EditStickerView.swift in Sources */,
 				3682653C2CF6F1000065E945 /* FilterTypeCell.swift in Sources */,
 				366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */,
-				364B4C482CD8F20400CE5627 /* DestinationView.swift in Sources */,
 				36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */,
 				3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */,
 				36CB5ECD2D1437FE00B4B3AB /* GalleryCollectionView.swift in Sources */,
 				36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */,
 				365FF5132CE232A300D6EE8B /* SelectedTextCell.swift in Sources */,
+				36AFA2D42D1DADCA00215534 /* CommentsTextView.swift in Sources */,
 				3605F5682C917DBF00665348 /* CameraManager.swift in Sources */,
 				3692E40A2CC4D3AC003CBACB /* TextInputView.swift in Sources */,
 				3605F5662C917CDD00665348 /* CameraView.swift in Sources */,

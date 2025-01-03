@@ -256,8 +256,12 @@ extension UITextView{
     func setAttributedString(from textData: TextData) {
         let selectedRange = self.selectedRange
         
-        let attributedString = NSMutableAttributedString(string: textData.text)
-        let range = NSRange(location: 0, length: textData.text.utf16.count)
+        // NSString으로 변환하여 UTF-16 기반으로 NSRange 생성
+        let nsString = textData.text as NSString
+        let range = NSRange(location: 0, length: nsString.length)
+
+        // Attributed String 생성
+        let attributedString = NSMutableAttributedString(string: nsString as String)
 
         attributedString.addAttribute(.foregroundColor, value: UIColor(textData.textColor), range: range)
         attributedString.addAttribute(.font, value: textData.textFont.font, range: range)
@@ -269,58 +273,5 @@ extension UITextView{
         self.attributedText = attributedString
         
         self.selectedRange = selectedRange
-    }
-}
-
-
-struct CommentsTextView: UIViewRepresentable {
-    @Binding var textData: TextData
-    var textContainerInset: UIEdgeInsets = .zero
-    var textViewWidth: CGFloat = .zero
-    var onTextChange: (String) -> Void
-    var onSizeChange: (CGSize) -> Void
-    var lineHeight: CGFloat = .zero
-
-    func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
-        textView.isEditable = true
-        textView.isScrollEnabled = false
-        textView.backgroundColor = .clear
-        textView.setAttributedString(from: textData)
-        textView.font = textData.textFont.font
-        textView.textAlignment = textData.textAlignment
-        textView.delegate = context.coordinator
-        textView.textContainerInset = textContainerInset
-        textView.textContainer.lineBreakMode = .byWordWrapping
-        textView.textContainer.maximumNumberOfLines = 0
-        return textView
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        uiView.setAttributedString(from: textData)
-        uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal) // 가로로 커지지않게
-        var textViewSize = uiView.sizeThatFits(CGSize(width: min(uiView.bounds.width, textViewWidth), height: .infinity))
-        if let lineHeight = uiView.font?.lineHeight {
-            textViewSize.width = uiView.getWidthOfLine(line: Int(textViewSize.height / lineHeight) - 1)
-        }
-        onSizeChange(textViewSize)
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-        var parent: CommentsTextView
-
-        init(_ parent: CommentsTextView) {
-            self.parent = parent
-        }
-
-        // 텍스트 변경 시 바인딩된 값 업데이트
-        func textViewDidChange(_ textView: UITextView) {
-            self.parent.textData.text = textView.text
-            self.parent.onTextChange(textView.text)
-        }
     }
 }

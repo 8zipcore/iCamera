@@ -26,16 +26,17 @@ struct CommentsView: View {
     @State private var imageViewHeight: CGFloat = .zero
     @State private var textViewSize: CGSize = .zero
     @State private var scrollViewHeight: CGFloat = .zero
-    @State private var contentHeight: CGFloat = .zero
     @State private var spacerHeight: CGFloat = .zero
+    @State private var originKeyboardHeight: CGFloat = .zero
+    @State private var contentOffset: CGPoint?
+    @State private var previousCursorPosition: CGPoint = .zero
     
     @State private var calendarData: CalendarData = CalendarData(date: Date(), comments: "")
     @State private var textData: TextData = .emptyTextData()
     @State private var isNavigationLinkActive = false
     
+    @State private var isFocused: Bool = false
     @Environment(\.dismiss) var dismiss
-    
-    @FocusState private var isFocused: Bool
     
     var body: some View {
         NavigationView{
@@ -46,16 +47,23 @@ struct CommentsView: View {
                 let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
                 let barSize = CGSize(width: viewWidth, height: viewHeight * 0.05)
                 let buttonSize = CGSize(width: barSize.height * 0.75, height: barSize.height * 0.75)
+                let titleViewHeight = viewWidth * 110 / 1134
+                
                 ZStack{
                     GradientRectangleView()
                 }
+
                 VStack{
                     VStack(spacing: 0){
+                        let topBarSize = TopBarViewButtonManager().topBarViewSize(viewWidth: viewWidth)
+                        
                         TopBarView(title: "Comments",
                                    imageSize: topBarSize,
                                    isLeadingButtonHidden: viewType == .main,
                                    isTrailingButtonHidden: false,
                                    buttonManager: topBarViewButtonManager)
+                        .frame(width: topBarSize.width, height: topBarSize.height)
+                        .padding(.bottom, 3)
                         .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
                             switch buttonType{
                             case .cancel:
@@ -70,12 +78,14 @@ struct CommentsView: View {
                                 break
                             }
                         }
-                        ScrollViewReader { scrollProxy in
-                            ScrollView{
+                        
+                        ScrollViewWithOnScrollChanged(
+                            scrollViewHeight: viewHeight - topBarSize.height,
+                            contentOffset: $contentOffset,
+                            content: {
                                 VStack(spacing: 0){
                                     ZStack{
-                                        if let image = calendarData.image {
-                                        // if let image = UIImage(named: "test") {
+                                        if let imageData = calendarData.image, let image = UIImage(data: imageData) {
                                             ZStack{
                                                 NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager), isActive: $isNavigationLinkActive){
                                                     Image(uiImage: image)
@@ -104,7 +114,7 @@ struct CommentsView: View {
                                                 .padding([.bottom, .trailing], 15)
                                                 .onTapGesture{
                                                     calendarData.image = nil
-                                                    setImageViewHeight(viewWidth: viewWidth)
+                                                    imageViewHeight = .zero
                                                 }
                                             }
                                             
@@ -120,15 +130,15 @@ struct CommentsView: View {
                                                 }
                                             }
                                         }
-                                    }
-                                    .frame(height: imageViewHeight)
+                                    } // Zstack 끝
+                                    .frame(height: imageViewHeight == .zero ? viewWidth * 667 / 1125 : imageViewHeight)
                                     
                                     /*
                                      1. 키보드 올라가면 topbarview + 키보드view + 키보드 위에 bar View 제외한 값 구해서 스크롤뷰 높이로 설정해줌
                                      2. textView 밑에 spacer 추가해서 글자수 적을때 스크롤 시점 commentsTitle로 고정시킴
                                      3. 글자수 많으면 스크롤 시점 바닥으로 변경해서 타이핑 시점 따라가게 함
                                      */
-                                    let titleViewHeight = viewWidth * 110 / 1134
+                                    
                                     HStack{
                                         Image("pink_circle")
                                             .resizable()
@@ -144,23 +154,33 @@ struct CommentsView: View {
                                     
                                     let textEditorCornerRadius: CGFloat = 10
                                     let textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-                                    /*
-                                    TextEditor(text: $text)
-                                         .frame(height: max(height, 40)) // 최소 높이 설정
-                                         .onChange(of: text) { _ in
-                                             calculateHeight() // 텍스트 변경 시 높이 재계산
-                                         }
-                                         .background(Color.gray.opacity(0.2))
-                                         .cornerRadius(8)
-                                         .padding()
-*/
                                     
                                     CommentsTextView(textData: $textData,
                                                      textContainerInset: textContainerInset,
                                                      textViewWidth: viewWidth * 0.88,
                                                      onTextChange: { calendarData.comments = $0 },
-                                                     onSizeChange: { if $0 != textViewSize { textViewSize = $0 } })
-                                    .focused($isFocused)
+                                                     onSizeChange: { newSize in
+                                        if textViewSize == .zero{
+                                            DispatchQueue.main.async{
+                                                textViewSize = newSize
+                                            }
+                                        } else {
+                                            if newSize != textViewSize { textViewSize = newSize }
+                                        }
+                                    },
+                                                     onCursorChange: { caretRect, globalCaretRect in
+                                        let keyboardBarYPosition = viewHeight - keyboardObserver.keyboardHeight - barSize.height
+                                        let minimumBottomPadding: CGFloat = 20
+                                        
+                                        if textViewSize.height > scrollViewHeight && (textViewSize.height - scrollViewHeight) / 2 < caretRect.y {
+                                            scrollToBottom(-1)
+                                        } else if (globalCaretRect.y > keyboardBarYPosition - minimumBottomPadding) && previousCursorPosition.y != globalCaretRect.y && spacerHeight < 0{
+                                            scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.font.pointSize)
+                                        }
+                                        
+                                        previousCursorPosition = globalCaretRect
+                                    })
+                                    .animation(nil, value: scrollViewHeight)
                                     .background(Color.white)
                                     .cornerRadius(textEditorCornerRadius)
                                     .overlay(
@@ -168,33 +188,23 @@ struct CommentsView: View {
                                             .stroke(Color.black, lineWidth: 1)
                                     )
                                     .frame(width: viewWidth * 0.88, height: textViewSize.height)
+                                    .frame(minHeight: 50)
                                     .position(x: viewWidth / 2, y: (textViewSize.height / 2))
-                                    .padding(.bottom, 20)
                                     .id("textView")
                                     .onChange(of: textViewSize) { _ in
-                                        print("textviewSize : \(textViewSize)")
-                                        if isFocused{
-                                            if spacerHeight != .zero{
-                                                spacerHeight = scrollViewHeight - (contentHeight - (textData.textFont.font.lineHeight) + textViewSize.height)
-                                            }
+                                        if isFocused {
+                                            spacerHeight = scrollViewHeight - titleViewHeight - textViewSize.height
+                                            
                                             if spacerHeight > 0 {
-                                                scrollProxy.scrollTo("commentsTitle", anchor: .top)
+                                                scrollToTop()
                                             }
                                         }
                                     }
+                                    
                                     if isFocused{
-                                        Spacer(minLength: spacerHeight > 0 ? spacerHeight : 0)
+                                        Spacer(minLength: keyboardObserver.keyboardHeight + barSize.height + max(spacerHeight, 0))
                                     }
                                 }
-                                .animation(nil, value: scrollViewHeight)
-                                .background(
-                                    GeometryReader { geometry in
-                                        Color.clear
-                                            .onAppear {
-                                                contentHeight = geometry.size.height - imageViewHeight
-                                        }
-                                    }
-                                )
                                 .onReceive(calendarManager.selectedImage){ (albumManager, asset) in
                                     self.albumManager.fetchSelectedPhoto(for: asset)
                                         .sink(receiveCompletion: { completion in
@@ -206,48 +216,62 @@ struct CommentsView: View {
                                             }
                                         }, receiveValue: { image in
                                             imageViewHeight = imageWidth * image.size.height / image.size.width
-                                            calendarData.image = image
+                                            calendarData.image = image.jpegData(compressionQuality: 0.7)
                                         })
                                         .store(in: &albumManager.cancellables)
                                 }
                                 
-                            }
-                            .frame(maxHeight: scrollViewHeight == .zero || !isFocused ? viewHeight - topBarSize.height : scrollViewHeight)
-                            .onChange(of: keyboardObserver.keyboardHeight) { focused in
-                                if keyboardObserver.keyboardHeight > 0{
-                                    scrollViewHeight = viewHeight - topBarSize.height - barSize.height - keyboardObserver.keyboardHeight
-                                    if spacerHeight == .zero{
-                                        spacerHeight = scrollViewHeight - contentHeight
-                                    }
-                                    if spacerHeight > 0 {
-                                        scrollProxy.scrollTo("commentsTitle", anchor: .top)
+                            }, scrollViewDidScroll: {scrollView in })
+                        .frame(width: viewWidth, height: viewHeight - topBarSize.height)
+                        .onChange(of: keyboardObserver.keyboardHeight) { focused in
+                            print(keyboardObserver.keyboardHeight)
+                            if keyboardObserver.keyboardHeight > 0{
+                                if originKeyboardHeight == .zero {
+                                    originKeyboardHeight = keyboardObserver.keyboardHeight
+                                }
+                                scrollViewHeight = viewHeight - topBarSize.height - barSize.height - keyboardObserver.keyboardHeight
+                                spacerHeight = scrollViewHeight - titleViewHeight - textViewSize.height
+                                
+                                
+                                if spacerHeight > 0 {
+                                    scrollToTop()
+                                } else {
+                                    let keyboardBarYPosition = viewHeight - keyboardObserver.keyboardHeight - barSize.height
+                                    let minimumBottomPadding: CGFloat = 20
+                                    
+                                    if previousCursorPosition == .zero{
+                                        scrollToBottom(-1)
+                                    } else if (previousCursorPosition.y > keyboardBarYPosition - minimumBottomPadding) {
+                                        scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.font.pointSize)
                                     }
                                 }
+                                
+                                isFocused = true
                             }
                         }
                     } // VStack 끝
                 }
                 .onAppear{
-                    setImageViewHeight(viewWidth: viewWidth)
                     if let index = calendarManager.calendarDataArrayIndex(){
+                        print(index)
                         self.calendarData = calendarManager.calendarDataArray[index]
-                        if let image = calendarData.image {
+                        if let imageData = calendarData.image, let image = UIImage(data: imageData) {
                             imageViewHeight = imageWidth * image.size.height / image.size.width
                         }
                     } else {
                         calendarData = CalendarData(date: calendarManager.selectedDate()!, image: nil, comments: "")
                     }
                     self.textData = TextData(text: calendarData.comments,
-                                            textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "System"),
-                                            textAlignment: .left,
-                                            textColor: .black,
-                                            backgroundColor: .clear,
-                                            location: .zero,
-                                            size: .zero,
-                                            backgroundColorSizeArray: [],
-                                            scale: 1.0,
-                                            angle: .zero,
-                                            isSelected: false)
+                                             textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "System"),
+                                             textAlignment: .left,
+                                             textColor: .black,
+                                             backgroundColor: .clear,
+                                             location: .zero,
+                                             size: .zero,
+                                             backgroundColorSizeArray: [],
+                                             scale: 1.0,
+                                             angle: .zero,
+                                             isSelected: false)
                     isNavigationLinkActive = false
                 }
                 /* KeyboardView */
@@ -258,6 +282,7 @@ struct CommentsView: View {
                             Spacer()
                             Button(action: {
                                 isFocused = false
+                                hideKeyboard()
                             }) {
                                 Image("xmark_button")
                                     .resizable()
@@ -266,8 +291,11 @@ struct CommentsView: View {
                             .padding(.trailing, 10)
                         }
                     }
-                    .frame(height: barSize.height)
+                    .frame(width: viewWidth, height: barSize.height)
                     .position(x: viewWidth / 2, y: viewHeight - keyboardObserver.keyboardHeight - (barSize.height / 2))
+                    .onAppear{
+                        print("onAppear")
+                    }
                 }
             }
             .edgesIgnoringSafeArea(.bottom)
@@ -276,10 +304,6 @@ struct CommentsView: View {
             }
         }
         .navigationBarHidden(true)
-    }
-    
-    private func setImageViewHeight(viewWidth: CGFloat){
-        imageViewHeight = viewWidth * 667 / 1125
     }
     
     private func calculateHeight() {
@@ -292,5 +316,22 @@ struct CommentsView: View {
             context: nil
         ).height
         self.height = textHeight + 16 // 여백 추가
+    }
+    
+    private func scrollToTop(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.03){
+            contentOffset = CGPoint(x: 0, y: imageViewHeight)
+        }
+    }
+    
+    private func scrollToBottom(_ yPosition: CGFloat){
+        print("bottom \(yPosition)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.03){
+            contentOffset = CGPoint(x: -1, y: yPosition)
+        }
+    }
+    
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

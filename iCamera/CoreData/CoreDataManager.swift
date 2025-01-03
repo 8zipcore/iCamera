@@ -56,8 +56,7 @@ extension CoreDataManager{
                     print("✅ 저장 데이터  - - - -")
                     calendarArray.forEach{
                         if let id = $0.id, let date = $0.date, let comments = $0.comments{
-                            let image = $0.image == nil ? nil : UIImage(data: $0.image!)
-                            let data = CalendarData(id: id, date: date, image: image, comments: comments)
+                            let data = CalendarData(id: id, date: date, image: $0.image, comments: comments)
                             calendarDataArray.append(data)
                             print(data)
                         }
@@ -71,6 +70,7 @@ extension CoreDataManager{
         }
         .eraseToAnyPublisher()
     }
+
     
     func saveData(_ data: CalendarData){
         if let entity = NSEntityDescription.entity(forEntityName: calendarEntity, in: context){
@@ -78,11 +78,7 @@ extension CoreDataManager{
             calendar.setValue(data.id, forKey: "id")
             calendar.setValue(data.date, forKey: "date")
             calendar.setValue(data.comments, forKey: "comments")
-            if let image = data.image, let imageData = image.pngData() {
-                calendar.setValue(imageData, forKey: "image")
-            } else {
-                calendar.setValue(nil, forKey: "image")
-            }
+            calendar.setValue(data.image, forKey: "image")
             saveContext()
         }
     }
@@ -93,15 +89,26 @@ extension CoreDataManager{
         do {
             if let calendar = try context.fetch(fetchRequest).first{
                 calendar.comments = data.comments
-                let image = data.image
-                let imageData = image?.pngData()
-                calendar.image = imageData
+                calendar.image = data.image
                 
                 saveContext()
             }
         } catch {
-            print("🌀 불러오기 Error: \(error.localizedDescription)")
+            print("🌀 Update Error: \(error.localizedDescription)")
         }
+    }
+    
+    func deleteData(_ data: CalendarData){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: calendarEntity)
+         fetchRequest.predicate = NSPredicate(format: "id == %@", data.id.uuidString)
+         do {
+             if let object = try context.fetch(fetchRequest).first as? NSManagedObject{
+                 context.delete(object)
+             }
+             saveContext()
+         } catch {
+             print("🌀 Delete Error: \(error)")
+         }
     }
     
     func deleteAllData() {

@@ -56,6 +56,8 @@ class CalendarManager: ObservableObject{
         selectedYear = currentYear
         selectedMonth = currentMonth
         selectedDay = currentDay
+        
+        dateComment = dateCommentToString()
     }
     
     func daysInMonth(year: Int, month: Int) -> Int? {
@@ -165,11 +167,15 @@ class CalendarManager: ObservableObject{
     }
     
     func createDate(year: Int, month: Int, day: Int) -> Date? {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)! // UTC 기준
+        
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
         dateComponents.day = day
-        return Calendar.current.date(from: dateComponents)
+        
+        return calendar.date(from: dateComponents)
     }
     
     func selectedDate() -> Date?{
@@ -216,10 +222,12 @@ extension CalendarManager{
         if calendarDataArray.filter({ $0.id == calendarData.id }).count == 0 {
             CoreDataManager.shared.saveData(calendarData)
             calendarDataArray.append(calendarData)
-        } else {
-            print(calendarData)
-            CoreDataManager.shared.updateData(calendarData)
-            if let index = calendarDataArrayIndex(){
+        } else if let index = calendarDataArrayIndex() {
+            if calendarData.image == nil && calendarData.comments.count == 0 {
+                CoreDataManager.shared.deleteData(calendarData)
+                calendarDataArray.remove(at: index)
+            } else {
+                CoreDataManager.shared.updateData(calendarData)
                 calendarDataArray[index] = calendarData
             }
         }
