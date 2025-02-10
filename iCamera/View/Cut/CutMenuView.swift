@@ -10,11 +10,12 @@ import SwiftUI
 struct CutMenuView: View {
     
     @StateObject var cutImageManager: CutImageManager
+    @StateObject var pixCropManager: PixCropManager
     
     var body: some View {
         HStack(spacing: 0){
             Button(action: {
-                cutImageManager.flipHorizontalToggle()
+                pixCropManager.flipHorizontally()
             }) {
                 Image("flip_horizontally")
                     .resizable()
@@ -23,7 +24,7 @@ struct CutMenuView: View {
             }
             
             Button(action: {
-                cutImageManager.rotateDegreeTapped.send()
+                pixCropManager.rotateLeft()
             }) {
                 Image("rotation")
                     .resizable()
@@ -50,8 +51,4 @@ struct CutMenuView: View {
             }
         }
     }
-}
-
-#Preview {
-    CutMenuView(cutImageManager: CutImageManager())
 }

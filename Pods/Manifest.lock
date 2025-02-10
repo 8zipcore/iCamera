@@ -1,3 +1,29 @@
-PODFILE CHECKSUM: 3de54d4483f8b4d10c85f4e5aa6ddeac21c35bcc
+PODS:
+  - PixCrop (1.0.0):
+    - SnapKit (>= 5.0.0)
+  - SnapKit (5.7.1)
 
-COCOAPODS: 1.10.0
+DEPENDENCIES:
+  - PixCrop (from `https://github.com/8zipcore/PixCrop.git`, tag `1.0.0`)
+
+SPEC REPOS:
+  trunk:
+    - SnapKit
+
+EXTERNAL SOURCES:
+  PixCrop:
+    :git: https://github.com/8zipcore/PixCrop.git
+    :tag: 1.0.0
+
+CHECKOUT OPTIONS:
+  PixCrop:
+    :git: https://github.com/8zipcore/PixCrop.git
+    :tag: 1.0.0
+
+SPEC CHECKSUMS:
+  PixCrop: 3c6f5dd2090d975b1c5b9eb9ada6ebc5dcc499db
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+
+PODFILE CHECKSUM: d6fdc4ec7f29dc0ec340c211967af6ceb23965a7
+
+COCOAPODS: 1.16.2

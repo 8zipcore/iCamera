@@ -7,19 +7,119 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		017B1FAA778E92AD059C696C89BC6F68 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		0F60887A927B1258C5C68F3D58341665 /* Pods-iCameraTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F7950384CDFF4A2011210E5FF9209B /* Pods-iCameraTests-dummy.m */; };
-		2AF9B9E235350D88E3B98CD42C115268 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		360B7E6145C02E995D27CC5DC591F8A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		A6C94A1AAD984B6256AC8AE4C8334868 /* Pods-iCamera-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CCAC650F1BC26C59C85D44D112F6BAAF /* Pods-iCamera-dummy.m */; };
-		B5340A4F76870ED2695FD36AC8E79C51 /* Pods-iCameraTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 046BF6B650D3C4EE2EC69A7BA38E7A2B /* Pods-iCameraTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D7F9A895AE79A1C10819B2C3FAED18C6 /* Pods-iCamera-iCameraUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 99DCE0EBC718C868E120B6B73754DAAE /* Pods-iCamera-iCameraUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E68B6B7DE3E619916E5BAE44E664F12C /* Pods-iCamera-iCameraUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E4A0EE84461A5E80D6AC879DD7919C /* Pods-iCamera-iCameraUITests-dummy.m */; };
-		F7D17AF80A0E2EECF2E1A2B62C88B4CB /* Pods-iCamera-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D94EFCCF71F8740F169DB87C5454ACD6 /* Pods-iCamera-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		030074EE108B791E60536D0C1DF1B585 /* PixCropImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C08016F865B8FAA3F90B9CF82DF4A7 /* PixCropImageManager.swift */; };
+		0505930312E19D2226CE7C8BB62658B0 /* ConstraintRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64468A1423A46473A289063B4906D305 /* ConstraintRelation.swift */; };
+		0ACB04A48B143C884D5F0A7E82FED8C8 /* Pods-iCameraTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 304B0D82E5830BEA9F857AF024DB7130 /* Pods-iCameraTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0C757CDBB162817260A62B6597DA2145 /* PixCrop-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C10CDE3CE07A8A1DD7E07976936E7C2 /* PixCrop-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23CAD765C3828EA5A208EABAC306E3E2 /* ConstraintViewDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96EEAC0BFFB2053A08EE87B776FAC53 /* ConstraintViewDSL.swift */; };
+		244DEEC8B40F7C7DE6F61DCFDB6FB15B /* PixCropImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E659398D29F9794098D51A7513C22 /* PixCropImageView.swift */; };
+		248A27857D16D68EFB8584DC92EB307A /* PixCropImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD078F3E4FEBCEA94CC33BD3530A6E /* PixCropImage.swift */; };
+		284662E9C13C0E67713B4E4D984910D6 /* ConstraintAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076B9089FC9303AC03C9B32CD3AFC85D /* ConstraintAttributes.swift */; };
+		2987AD01BF056313A0BFD5CFB7FAB322 /* PixCropFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CF47A94ACC2E9989576987038E31F /* PixCropFrameView.swift */; };
+		34A05FDE268441C0F2491C7830437529 /* LayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D433E61BA800BF66F6B5829EFF0ABE /* LayoutUtils.swift */; };
+		36370DDCE6B15F2BA2A50F757FB34918 /* SelectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E104970A77DDDC235A44CC7BEDF58062 /* SelectionBox.swift */; };
+		372DAECD70393466D0B94D947A8CEFB0 /* ConstraintLayoutSupportDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFC214E6B7B4E305EBBCD91785AAAB6 /* ConstraintLayoutSupportDSL.swift */; };
+		3FCF9BD6334FA32278E8DF175D4E5B8E /* SnapKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1104FEEE1FB3EB426A9049F61F0BF171 /* SnapKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		40D4115E74D63AD45311DFC2E3C5AEFB /* ConstraintOffsetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528F585C1AC778D530CF7326E7C49740 /* ConstraintOffsetTarget.swift */; };
+		46E6D598653BF14D476F01F36182BD32 /* ConstraintDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77A56CE9ED280250FB7DC78FFB530C /* ConstraintDSL.swift */; };
+		5201CE6147AEADD2C9689277D54D9270 /* ConstraintMultiplierTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B338BAE0BE20A58A15748B22468BE22C /* ConstraintMultiplierTarget.swift */; };
+		55035C3DD2FA4C327D5F066F72925613 /* PixCropSelectionBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BD66CBE9BD5DC519DA3D36AD4C1AD /* PixCropSelectionBoxView.swift */; };
+		5738721342D68C7587D3C3BD6B1A1CEA /* ConstraintMakerEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1050587B832576A038A5322CF6539975 /* ConstraintMakerEditable.swift */; };
+		5B2B86CDD9535E73CAD815EF373F9DEE /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B766A8A5D0440892AE691572BFE5FC /* Typealiases.swift */; };
+		5C95F8961CE5C2E35C3F679EE5509E6A /* Extension+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AF07711A1DA701EB944A6A114391B /* Extension+.swift */; };
+		5FC0EDC1149C27FAF0AAB151849D3970 /* Pods-iCamera-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BE097BA90057CF2113034C66F47267E /* Pods-iCamera-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FCF94970FE63F72B725A2FF873B6B8D /* ConstraintInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D9E600EFCF0CCF38E49C092E77B18A /* ConstraintInsets.swift */; };
+		611E202AA7FE1E03BA84EF6360E0C9B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		6348777DC12E8D825FEF6DE3913952A6 /* ConstraintRelatableTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AEDF21B5DBE1FD968F723F934FF9A9 /* ConstraintRelatableTarget.swift */; };
+		6415684E053EFF4153FDCE13042843D9 /* ConstraintItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4040B3B430BD58E28578AECE8156271 /* ConstraintItem.swift */; };
+		64FF1CFDB024ADFB4217C701FBFB73DF /* PixCrop-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2987F66BFBA10100ADB17CC73E13EDAE /* PixCrop-dummy.m */; };
+		6883F53041A0CA9EAF71DFE61C7D27C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		6B00B585569A62AE2557836239BFB727 /* ConstraintPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73B2D66F8E6F6C9D52EA10B39D82EE /* ConstraintPriority.swift */; };
+		6EA60AA1BDEF2CEED537658003D30D6D /* ConstraintDirectionalInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAC6D113A00508F276C35E16BBD7846 /* ConstraintDirectionalInsets.swift */; };
+		7A178452E5896A9A993C3FDF3FE250C7 /* PixCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3E82F8AAEA7A0EB40CCA36D121D3F7 /* PixCropView.swift */; };
+		8102836D40110B4DCAB40F94D2279941 /* ConstraintConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF724A6D23A5AF18DAAAF050AC7F0217 /* ConstraintConfig.swift */; };
+		8226B1C6E21B8CE21C44B07098580B7B /* Pods-iCamera-iCameraUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AB84BDD70E11BC14C03E60A723D7C283 /* Pods-iCamera-iCameraUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		838AAF4C14172D32753CF39F12790B18 /* ConstraintView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E9A92F9F0265764E60334345D7EC3C /* ConstraintView+Extensions.swift */; };
+		878C3ED8B9B203C854B89F2D394BCB67 /* Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4611813AB0567CE7CC04E0FB70E011 /* Debugging.swift */; };
+		93DC49A8DA91A68591A289D18ACD1EEF /* ConstraintInsetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26042B52ADDA1D49E3B5EEF120B7437D /* ConstraintInsetTarget.swift */; };
+		955F3C33FEEC54AF65897BAD168BC72A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		96D2851F2421DAE8D34E18DE48D5C532 /* PixCropResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE77C70E1AFD62880F874C868430F88 /* PixCropResultView.swift */; };
+		9BB82C2C60AF69462EAB3EAD575D5591 /* Pods-iCamera-iCameraUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C84874FD51F1F7ED7012902C89588B5B /* Pods-iCamera-iCameraUITests-dummy.m */; };
+		9EA4BF8FB7984A62851FB1C106AD29C2 /* LayoutConstraintItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D4F4A8585D19858754F8237AC2A3F9 /* LayoutConstraintItem.swift */; };
+		A09557783BA358E2BEE5A51CBF4203A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		A289FFF3E4718B5BF40263F9A28DACBE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		A709572F868152AC072D982564970EF6 /* ConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B38C48DAD30FC139FD8B4BBADDD0EBE /* ConstraintView.swift */; };
+		A7FD22139A2C4EBE7098B0D2805D7819 /* ConstraintDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE3BA34CDD06CFDA3B9BEA63C4F11E /* ConstraintDescription.swift */; };
+		AFD848E1919D4A0823B0B1F3956561C7 /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F47E6F8DB92C43CB9EF991D1541033 /* Constraint.swift */; };
+		B513075AC9CD1AA9089E563B925A75C7 /* ConstraintMakerRelatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F594DFEAD5E9561271970B3896749B5 /* ConstraintMakerRelatable.swift */; };
+		B5D3C7FFA3423EF5304FCB7F1CBE1A35 /* SnapKit-SnapKit_Privacy in Resources */ = {isa = PBXBuildFile; fileRef = B9DCB5EC0B1CDADD221717CADDF62359 /* SnapKit-SnapKit_Privacy */; };
+		B6FCF846AF3938BC39F8B26CEA17C9EF /* ConstraintMakerFinalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9121E468BBD755C3A0A896BA953F6E31 /* ConstraintMakerFinalizable.swift */; };
+		B6FEB721A039DACF1125E29EC7FE393D /* ConstraintLayoutGuideDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15639D3A642AD776E65150ECF238BF9F /* ConstraintLayoutGuideDSL.swift */; };
+		BCD85ECA3D79318507E6EC7407458A1F /* PixCropFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA2DF2A258EEB019EE51A0B5B184F5A /* PixCropFrameManager.swift */; };
+		BCF15DD207059EC542F58F2AE4D19D79 /* ConstraintMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CC05AD6F7A8F921DB23A599A02F650 /* ConstraintMaker.swift */; };
+		BF5FE1BE6690DBA9CA64E2666ED7F286 /* ConstraintLayoutGuide+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF3C8937186B9B997950282EBC923D6 /* ConstraintLayoutGuide+Extensions.swift */; };
+		C2B13AA1326492AE6A269A05F0942576 /* SnapKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 129B9EE643BFDB016803D977D41A58B4 /* SnapKit-dummy.m */; };
+		C5C653DDC9AD0C88232BE36867EA6B6E /* Pods-iCameraTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 499A45882354A29525F2923B8E04A767 /* Pods-iCameraTests-dummy.m */; };
+		CA765FEA0964EA1A26FF9D824F7D0E05 /* LayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731A50232EF5479CCA400C5919FDFEF5 /* LayoutConstraint.swift */; };
+		CD22D6FF8335D6B98AFC8BF47B272BEE /* ConstraintPriorityTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949873E23A6734C8EBB7C0BD94A4BA5 /* ConstraintPriorityTarget.swift */; };
+		CFF03E1E941E851B81BA2B71A3A6A3DE /* PixCropFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7D869BC9713713D781457A105B6D00 /* PixCropFrame.swift */; };
+		D8231DDBB99826AA3FD6A9173435750D /* PixCropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7216455D6913CDCF7CC772CD9A6A6640 /* PixCropOverlayView.swift */; };
+		E16E8CFE5680F8FB8D505CD5192C62F8 /* ConstraintMakerRelatable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6413B9FABC58A4144356CCBCD56B880A /* ConstraintMakerRelatable+Extensions.swift */; };
+		E1D186488EA0D9308078EE39E32CFF51 /* ConstraintConstantTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0B73EA5174C9D14FE98DD0101D3C3 /* ConstraintConstantTarget.swift */; };
+		E21486F4B2F1187A8E27A75DF44F7C70 /* UILayoutSupport+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0F0C5B84AA22CD77F18FBD1CC117DF /* UILayoutSupport+Extensions.swift */; };
+		E2442FD0417817052E42B235B5944330 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B967681D28E940E889130220B113DFF3 /* PrivacyInfo.xcprivacy */; };
+		E58886EBB492562B0A4D9E4C8BB20282 /* ConstraintDirectionalInsetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A4A9BFDCA529C6052EF6430D5A3E1F /* ConstraintDirectionalInsetTarget.swift */; };
+		EB129526220249048FF9F37EB69AE5A8 /* ConstraintMakerExtendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA41F95339E347E01C72A6404FE6A50 /* ConstraintMakerExtendable.swift */; };
+		F1B7A3E2400BA08D37EEF2CAD2DBBAF0 /* ConstraintLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDF3BD4D1134F1EEC51873ADC7C554C /* ConstraintLayoutGuide.swift */; };
+		F380C482C57E9F36263E27BBB71BB6E2 /* ConstraintLayoutSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAC339FDD1DE5D533BE9446B82A17EC /* ConstraintLayoutSupport.swift */; };
+		FA3949BB2F0C845C6CE555DD72A24A09 /* Pods-iCamera-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 920211D6BEA238A0E4DF3666BC509AF8 /* Pods-iCamera-dummy.m */; };
+		FBE6FFA3739084DA8DB126960811BD31 /* ConstraintMakerPrioritizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348629885D87249EDE41183624AB7B3 /* ConstraintMakerPrioritizable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F13F2F1D098019DB6DE9D487D7CCA1FA /* PBXContainerItemProxy */ = {
+		8115B5BDCA429C1727906CA11550157B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19622742EBA51E823D6DAE3F8CDBFAD4;
+			remoteInfo = SnapKit;
+		};
+		A2D20C3ED79220C8E0502CCFCD46E338 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 516C8E123D7EAC443AF57A4DB0B3C524;
+			remoteInfo = PixCrop;
+		};
+		A4D286BFBAACCC8786ABC7653B6A19B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19622742EBA51E823D6DAE3F8CDBFAD4;
+			remoteInfo = SnapKit;
+		};
+		B93E6CEF50750E3ABD24E34A5BB2E93C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19622742EBA51E823D6DAE3F8CDBFAD4;
+			remoteInfo = SnapKit;
+		};
+		CA5165729C789D17EE97C8BB6999244D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 516C8E123D7EAC443AF57A4DB0B3C524;
+			remoteInfo = PixCrop;
+		};
+		E840A4DB08BB4B90878147081533FB73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A8DB685241263AFDF5E6B20FE67B93A;
+			remoteInfo = "SnapKit-SnapKit_Privacy";
+		};
+		F9A74F9C4B176A955BD86AD8AD8FFAFF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -29,139 +129,294 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03D44797C5719715882AA31A2D22A1E9 /* Pods-iCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera.release.xcconfig"; sourceTree = "<group>"; };
-		046BF6B650D3C4EE2EC69A7BA38E7A2B /* Pods-iCameraTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iCameraTests-umbrella.h"; sourceTree = "<group>"; };
-		0A7394C799FB8945307C05E244EA270A /* Pods-iCameraTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCameraTests-Info.plist"; sourceTree = "<group>"; };
-		0BE1F0A93008C1A28166F06B76630A02 /* Pods-iCamera-iCameraUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iCamera-iCameraUITests.modulemap"; sourceTree = "<group>"; };
-		101BDCE1C4A249CE24F7E23AA960AB1D /* Pods-iCameraTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCameraTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		10DE9A884E55B5037B3D92F218A528CA /* Pods-iCamera-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iCamera-acknowledgements.markdown"; sourceTree = "<group>"; };
-		2236774C493231277026C4DDA92721CE /* Pods-iCamera-iCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera-iCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
-		2FB1FCC19F05427E6D6218291B4F9189 /* Pods_iCameraTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iCameraTests.framework; path = "Pods-iCameraTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		32F7950384CDFF4A2011210E5FF9209B /* Pods-iCameraTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iCameraTests-dummy.m"; sourceTree = "<group>"; };
-		36B0B83BC68468E1B1904A7C52D29CCB /* Pods-iCamera.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iCamera.modulemap"; sourceTree = "<group>"; };
-		544B7E0F478DBEF13BA8CB07FFE1F351 /* Pods-iCameraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCameraTests.release.xcconfig"; sourceTree = "<group>"; };
-		5F18AE9E7603DA630F38F7AA095EB933 /* Pods-iCameraTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iCameraTests.modulemap"; sourceTree = "<group>"; };
-		65E4A0EE84461A5E80D6AC879DD7919C /* Pods-iCamera-iCameraUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iCamera-iCameraUITests-dummy.m"; sourceTree = "<group>"; };
-		6824A8952F6B20167603A8F2406052E0 /* Pods_iCamera_iCameraUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iCamera_iCameraUITests.framework; path = "Pods-iCamera-iCameraUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		75235D9C385B633E6E752128BF234904 /* Pods-iCamera-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-Info.plist"; sourceTree = "<group>"; };
-		7B6813B4D5B8E8857D661A1A566726C1 /* Pods-iCamera-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-acknowledgements.plist"; sourceTree = "<group>"; };
-		7F2EDC2A557E79D0800FC91C493D9B62 /* Pods-iCameraTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iCameraTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		847CF1813263AE87A29810DED7FF0EC6 /* Pods-iCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera.debug.xcconfig"; sourceTree = "<group>"; };
-		947B7B6406D37626D78A6ED3306F49B4 /* Pods-iCamera-iCameraUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-iCameraUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		99DCE0EBC718C868E120B6B73754DAAE /* Pods-iCamera-iCameraUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iCamera-iCameraUITests-umbrella.h"; sourceTree = "<group>"; };
+		03C93EEBF57BE5A144264947E3CE9541 /* Pods-iCamera-iCameraUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iCamera-iCameraUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		076B9089FC9303AC03C9B32CD3AFC85D /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Sources/ConstraintAttributes.swift; sourceTree = "<group>"; };
+		0E256B7B328617FA8EA3DBE8D621412E /* SnapKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SnapKit-Info.plist"; sourceTree = "<group>"; };
+		0F594DFEAD5E9561271970B3896749B5 /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerRelatable.swift; path = Sources/ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
+		0F7F632BEBF60A04C087C91382A3B37E /* Pods-iCameraTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iCameraTests.modulemap"; sourceTree = "<group>"; };
+		1050587B832576A038A5322CF6539975 /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Sources/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
+		1104FEEE1FB3EB426A9049F61F0BF171 /* SnapKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-umbrella.h"; sourceTree = "<group>"; };
+		11CC05AD6F7A8F921DB23A599A02F650 /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Sources/ConstraintMaker.swift; sourceTree = "<group>"; };
+		129B9EE643BFDB016803D977D41A58B4 /* SnapKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SnapKit-dummy.m"; sourceTree = "<group>"; };
+		13D052E2C42C85F385CD0F3D4D94FECD /* PixCrop */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PixCrop; path = PixCrop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		146BBA66B57A1B4C0F6C7A3DECC8A40C /* Pods-iCamera-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iCamera-acknowledgements.markdown"; sourceTree = "<group>"; };
+		15639D3A642AD776E65150ECF238BF9F /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Sources/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
+		1CFC214E6B7B4E305EBBCD91785AAAB6 /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Sources/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
+		1EE77C70E1AFD62880F874C868430F88 /* PixCropResultView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropResultView.swift; path = PixCrop/Classes/PixCropResultView.swift; sourceTree = "<group>"; };
+		212AACDB0CA1EEF554F2C2F6A80BCA1D /* Pods-iCamera-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-Info.plist"; sourceTree = "<group>"; };
+		248C9975F892D33680711E233AE95669 /* PixCrop-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PixCrop-Info.plist"; sourceTree = "<group>"; };
+		26042B52ADDA1D49E3B5EEF120B7437D /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Sources/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
+		290C4C4DF85B0B9048AFC8FBBC6C6A05 /* Pods-iCamera-iCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera-iCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2987F66BFBA10100ADB17CC73E13EDAE /* PixCrop-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PixCrop-dummy.m"; sourceTree = "<group>"; };
+		2FB1FCC19F05427E6D6218291B4F9189 /* Pods-iCameraTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iCameraTests"; path = Pods_iCameraTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		304B0D82E5830BEA9F857AF024DB7130 /* Pods-iCameraTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iCameraTests-umbrella.h"; sourceTree = "<group>"; };
+		3295508723A2D283C0832B3B49B27AC2 /* PixCrop.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PixCrop.modulemap; sourceTree = "<group>"; };
+		384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		39D9E600EFCF0CCF38E49C092E77B18A /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Sources/ConstraintInsets.swift; sourceTree = "<group>"; };
+		3B38C48DAD30FC139FD8B4BBADDD0EBE /* ConstraintView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintView.swift; path = Sources/ConstraintView.swift; sourceTree = "<group>"; };
+		3BCE3BA34CDD06CFDA3B9BEA63C4F11E /* ConstraintDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDescription.swift; path = Sources/ConstraintDescription.swift; sourceTree = "<group>"; };
+		3C10CDE3CE07A8A1DD7E07976936E7C2 /* PixCrop-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PixCrop-umbrella.h"; sourceTree = "<group>"; };
+		3CE8C9C60CEB8625CEBBDD3A8E02C66E /* Pods-iCamera-iCameraUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iCamera-iCameraUITests-frameworks.sh"; sourceTree = "<group>"; };
+		43B2797D015C5F2E41115BAD84A16D50 /* Pods-iCamera.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iCamera.modulemap"; sourceTree = "<group>"; };
+		43F560A188E868D36A9EC7E9F36E6B6A /* SnapKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SnapKit.modulemap; sourceTree = "<group>"; };
+		4419260915810675C0A75D2D48A3CC11 /* PixCrop-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PixCrop-prefix.pch"; sourceTree = "<group>"; };
+		499A45882354A29525F2923B8E04A767 /* Pods-iCameraTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iCameraTests-dummy.m"; sourceTree = "<group>"; };
+		4BF4DA74E8813084875FD55D82B1FA8D /* SnapKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.debug.xcconfig; sourceTree = "<group>"; };
+		5161276DBBBF2FAD8C96C4339D55FF90 /* Pods-iCamera-iCameraUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-iCameraUITests-Info.plist"; sourceTree = "<group>"; };
+		51D433E61BA800BF66F6B5829EFF0ABE /* LayoutUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutUtils.swift; path = PixCrop/Classes/LayoutUtils.swift; sourceTree = "<group>"; };
+		528F585C1AC778D530CF7326E7C49740 /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Sources/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
+		52C8A490752EB6E3AAC125E052E8FCD8 /* PixCrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PixCrop.release.xcconfig; sourceTree = "<group>"; };
+		5B3CF47A94ACC2E9989576987038E31F /* PixCropFrameView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropFrameView.swift; path = PixCrop/Classes/PixCropFrameView.swift; sourceTree = "<group>"; };
+		5BE097BA90057CF2113034C66F47267E /* Pods-iCamera-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iCamera-umbrella.h"; sourceTree = "<group>"; };
+		5E5BD66CBE9BD5DC519DA3D36AD4C1AD /* PixCropSelectionBoxView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropSelectionBoxView.swift; path = PixCrop/Classes/PixCropSelectionBoxView.swift; sourceTree = "<group>"; };
+		61AEDF21B5DBE1FD968F723F934FF9A9 /* ConstraintRelatableTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelatableTarget.swift; path = Sources/ConstraintRelatableTarget.swift; sourceTree = "<group>"; };
+		6413B9FABC58A4144356CCBCD56B880A /* ConstraintMakerRelatable+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintMakerRelatable+Extensions.swift"; path = "Sources/ConstraintMakerRelatable+Extensions.swift"; sourceTree = "<group>"; };
+		64468A1423A46473A289063B4906D305 /* ConstraintRelation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelation.swift; path = Sources/ConstraintRelation.swift; sourceTree = "<group>"; };
+		64C08016F865B8FAA3F90B9CF82DF4A7 /* PixCropImageManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropImageManager.swift; path = PixCrop/Classes/PixCropImageManager.swift; sourceTree = "<group>"; };
+		64D271232BC5FD950CF9D381397450AF /* Pods-iCamera-iCameraUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera-iCameraUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6824A8952F6B20167603A8F2406052E0 /* Pods-iCamera-iCameraUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iCamera-iCameraUITests"; path = Pods_iCamera_iCameraUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68D4F4A8585D19858754F8237AC2A3F9 /* LayoutConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraintItem.swift; path = Sources/LayoutConstraintItem.swift; sourceTree = "<group>"; };
+		6CA2DF2A258EEB019EE51A0B5B184F5A /* PixCropFrameManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropFrameManager.swift; path = PixCrop/Classes/PixCropFrameManager.swift; sourceTree = "<group>"; };
+		6D73B2D66F8E6F6C9D52EA10B39D82EE /* ConstraintPriority.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriority.swift; path = Sources/ConstraintPriority.swift; sourceTree = "<group>"; };
+		6FAC339FDD1DE5D533BE9446B82A17EC /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Sources/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
+		7216455D6913CDCF7CC772CD9A6A6640 /* PixCropOverlayView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropOverlayView.swift; path = PixCrop/Classes/PixCropOverlayView.swift; sourceTree = "<group>"; };
+		731A50232EF5479CCA400C5919FDFEF5 /* LayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraint.swift; path = Sources/LayoutConstraint.swift; sourceTree = "<group>"; };
+		7949873E23A6734C8EBB7C0BD94A4BA5 /* ConstraintPriorityTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriorityTarget.swift; path = Sources/ConstraintPriorityTarget.swift; sourceTree = "<group>"; };
+		7D2F076EE8AD4E3E95EF3EE2E1C659FE /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
+		88F0A2C7FEAC9D8D4D34AB9DD6645B68 /* Pods-iCameraTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCameraTests-Info.plist"; sourceTree = "<group>"; };
+		89B766A8A5D0440892AE691572BFE5FC /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Sources/Typealiases.swift; sourceTree = "<group>"; };
+		8D3E82F8AAEA7A0EB40CCA36D121D3F7 /* PixCropView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropView.swift; path = PixCrop/Classes/PixCropView.swift; sourceTree = "<group>"; };
+		8F5761450657C4DF0BA0A5EF1451ADB8 /* Pods-iCameraTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCameraTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		90C81A152022AEFEF2C637A94E075443 /* PixCrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PixCrop.debug.xcconfig; sourceTree = "<group>"; };
+		9121E468BBD755C3A0A896BA953F6E31 /* ConstraintMakerFinalizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerFinalizable.swift; path = Sources/ConstraintMakerFinalizable.swift; sourceTree = "<group>"; };
+		920211D6BEA238A0E4DF3666BC509AF8 /* Pods-iCamera-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iCamera-dummy.m"; sourceTree = "<group>"; };
+		927E659398D29F9794098D51A7513C22 /* PixCropImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropImageView.swift; path = PixCrop/Classes/PixCropImageView.swift; sourceTree = "<group>"; };
+		979486118B3E90C08386079D57962701 /* SnapKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		984CBD09E50E717FB0C971FF1A18C215 /* SnapKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.release.xcconfig; sourceTree = "<group>"; };
+		98E9A92F9F0265764E60334345D7EC3C /* ConstraintView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintView+Extensions.swift"; path = "Sources/ConstraintView+Extensions.swift"; sourceTree = "<group>"; };
+		9BCDB9CE73F29E98F92F251DCF770076 /* Pods-iCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera.release.xcconfig"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		B91F968D5D8972B92163B7E66CA2DBA9 /* Pods-iCamera-iCameraUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera-iCameraUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		CCAC650F1BC26C59C85D44D112F6BAAF /* Pods-iCamera-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iCamera-dummy.m"; sourceTree = "<group>"; };
-		D94EFCCF71F8740F169DB87C5454ACD6 /* Pods-iCamera-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iCamera-umbrella.h"; sourceTree = "<group>"; };
-		E86354CDE4374C1C749AF23089778BDD /* Pods-iCamera-iCameraUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-iCameraUITests-Info.plist"; sourceTree = "<group>"; };
-		EE04C6E24AC14F5F5C263F551AE3843C /* Pods-iCamera-iCameraUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iCamera-iCameraUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		F2E1A36B53C4E6110F723F2E5ED6C031 /* Pods-iCameraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCameraTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F957992C558A82AA7716D6E54B4B9134 /* Pods_iCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_iCamera.framework; path = "Pods-iCamera.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4A4A9BFDCA529C6052EF6430D5A3E1F /* ConstraintDirectionalInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsetTarget.swift; path = Sources/ConstraintDirectionalInsetTarget.swift; sourceTree = "<group>"; };
+		A9C64976B3B1DCAC471E245C52FBF860 /* Pods-iCameraTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iCameraTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		AAAC6D113A00508F276C35E16BBD7846 /* ConstraintDirectionalInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsets.swift; path = Sources/ConstraintDirectionalInsets.swift; sourceTree = "<group>"; };
+		AB84BDD70E11BC14C03E60A723D7C283 /* Pods-iCamera-iCameraUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iCamera-iCameraUITests-umbrella.h"; sourceTree = "<group>"; };
+		B338BAE0BE20A58A15748B22468BE22C /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Sources/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
+		B348629885D87249EDE41183624AB7B3 /* ConstraintMakerPrioritizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerPrioritizable.swift; path = Sources/ConstraintMakerPrioritizable.swift; sourceTree = "<group>"; };
+		B481A7A5A348226D36555EF452E5294C /* Pods-iCameraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCameraTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B967681D28E940E889130220B113DFF3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B96EEAC0BFFB2053A08EE87B776FAC53 /* ConstraintViewDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintViewDSL.swift; path = Sources/ConstraintViewDSL.swift; sourceTree = "<group>"; };
+		B9DCB5EC0B1CDADD221717CADDF62359 /* SnapKit-SnapKit_Privacy */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "SnapKit-SnapKit_Privacy"; path = SnapKit_Privacy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA0F0C5B84AA22CD77F18FBD1CC117DF /* UILayoutSupport+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UILayoutSupport+Extensions.swift"; path = "Sources/UILayoutSupport+Extensions.swift"; sourceTree = "<group>"; };
+		BA4611813AB0567CE7CC04E0FB70E011 /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Sources/Debugging.swift; sourceTree = "<group>"; };
+		BE7D869BC9713713D781457A105B6D00 /* PixCropFrame.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropFrame.swift; path = PixCrop/Classes/PixCropFrame.swift; sourceTree = "<group>"; };
+		BEA41F95339E347E01C72A6404FE6A50 /* ConstraintMakerExtendable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerExtendable.swift; path = Sources/ConstraintMakerExtendable.swift; sourceTree = "<group>"; };
+		C84874FD51F1F7ED7012902C89588B5B /* Pods-iCamera-iCameraUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iCamera-iCameraUITests-dummy.m"; sourceTree = "<group>"; };
+		CC0A264A95D5D1286620B114F24B9A9E /* Pods-iCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCamera.debug.xcconfig"; sourceTree = "<group>"; };
+		CEEA4ABF98A369AF7D12B7442458ED23 /* Pods-iCamera-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-acknowledgements.plist"; sourceTree = "<group>"; };
+		CF724A6D23A5AF18DAAAF050AC7F0217 /* ConstraintConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConfig.swift; path = Sources/ConstraintConfig.swift; sourceTree = "<group>"; };
+		D078ACCB21170A3411A72074B9E5E9E7 /* Pods-iCamera-iCameraUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iCamera-iCameraUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		D3D0B73EA5174C9D14FE98DD0101D3C3 /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Sources/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
+		D9F47E6F8DB92C43CB9EF991D1541033 /* Constraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constraint.swift; path = Sources/Constraint.swift; sourceTree = "<group>"; };
+		DAAD078F3E4FEBCEA94CC33BD3530A6E /* PixCropImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixCropImage.swift; path = PixCrop/Classes/PixCropImage.swift; sourceTree = "<group>"; };
+		DC042FC4C72130075DD6B545E2E3EF48 /* Pods-iCamera-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iCamera-frameworks.sh"; sourceTree = "<group>"; };
+		E0174CFD455BDA5BCFBB2B94183CA977 /* ResourceBundle-SnapKit_Privacy-SnapKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-SnapKit_Privacy-SnapKit-Info.plist"; sourceTree = "<group>"; };
+		E104970A77DDDC235A44CC7BEDF58062 /* SelectionBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SelectionBox.swift; path = PixCrop/Classes/SelectionBox.swift; sourceTree = "<group>"; };
+		E3732A410A210356FE075F42D518AC21 /* Pods-iCameraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iCameraTests.release.xcconfig"; sourceTree = "<group>"; };
+		E54E8C0438078E8E1E9DC44E91AD738C /* Pods-iCamera-iCameraUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iCamera-iCameraUITests.modulemap"; sourceTree = "<group>"; };
+		F13AF07711A1DA701EB944A6A114391B /* Extension+.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Extension+.swift"; path = "PixCrop/Classes/Extension+.swift"; sourceTree = "<group>"; };
+		F4040B3B430BD58E28578AECE8156271 /* ConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintItem.swift; path = Sources/ConstraintItem.swift; sourceTree = "<group>"; };
+		F957992C558A82AA7716D6E54B4B9134 /* Pods-iCamera */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iCamera"; path = Pods_iCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF3C8937186B9B997950282EBC923D6 /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintLayoutGuide+Extensions.swift"; path = "Sources/ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
+		FB77A56CE9ED280250FB7DC78FFB530C /* ConstraintDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDSL.swift; path = Sources/ConstraintDSL.swift; sourceTree = "<group>"; };
+		FBDF3BD4D1134F1EEC51873ADC7C554C /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Sources/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5DD60E72EEE15F2F07445AC84A15909D /* Frameworks */ = {
+		6F5D285C55537ECB179B09EA6E97FF31 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AF9B9E235350D88E3B98CD42C115268 /* Foundation.framework in Frameworks */,
+				A289FFF3E4718B5BF40263F9A28DACBE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A94D54FA95199A6F651694C67B8984D5 /* Frameworks */ = {
+		8F860452ADDFE3F9BEF47C101C1B07C7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				017B1FAA778E92AD059C696C89BC6F68 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D2A7A3EBCC8BFE5246B273D798EF93F9 /* Frameworks */ = {
+		AD5779B95171BF75C93A8864834AB7A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				360B7E6145C02E995D27CC5DC591F8A2 /* Foundation.framework in Frameworks */,
+				A09557783BA358E2BEE5A51CBF4203A1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE913B35D51E83B3649E43B778A662AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6883F53041A0CA9EAF71DFE61C7D27C2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5E1EDF97CCA8569E46D5E2C16D60540 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				955F3C33FEEC54AF65897BAD168BC72A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F63C9461615AF296FEE25357C68F8660 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				611E202AA7FE1E03BA84EF6360E0C9B3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		20EB3EB8333B3F1F0D31D4688A3EFE02 /* Pods-iCamera */ = {
+		0C6DD6480E6E6EA5CCBC66E6B69D06B2 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				36B0B83BC68468E1B1904A7C52D29CCB /* Pods-iCamera.modulemap */,
-				10DE9A884E55B5037B3D92F218A528CA /* Pods-iCamera-acknowledgements.markdown */,
-				7B6813B4D5B8E8857D661A1A566726C1 /* Pods-iCamera-acknowledgements.plist */,
-				CCAC650F1BC26C59C85D44D112F6BAAF /* Pods-iCamera-dummy.m */,
-				75235D9C385B633E6E752128BF234904 /* Pods-iCamera-Info.plist */,
-				D94EFCCF71F8740F169DB87C5454ACD6 /* Pods-iCamera-umbrella.h */,
-				847CF1813263AE87A29810DED7FF0EC6 /* Pods-iCamera.debug.xcconfig */,
-				03D44797C5719715882AA31A2D22A1E9 /* Pods-iCamera.release.xcconfig */,
+				E0174CFD455BDA5BCFBB2B94183CA977 /* ResourceBundle-SnapKit_Privacy-SnapKit-Info.plist */,
+				43F560A188E868D36A9EC7E9F36E6B6A /* SnapKit.modulemap */,
+				129B9EE643BFDB016803D977D41A58B4 /* SnapKit-dummy.m */,
+				0E256B7B328617FA8EA3DBE8D621412E /* SnapKit-Info.plist */,
+				7D2F076EE8AD4E3E95EF3EE2E1C659FE /* SnapKit-prefix.pch */,
+				1104FEEE1FB3EB426A9049F61F0BF171 /* SnapKit-umbrella.h */,
+				4BF4DA74E8813084875FD55D82B1FA8D /* SnapKit.debug.xcconfig */,
+				984CBD09E50E717FB0C971FF1A18C215 /* SnapKit.release.xcconfig */,
 			);
-			name = "Pods-iCamera";
-			path = "Target Support Files/Pods-iCamera";
+			name = "Support Files";
+			path = "../Target Support Files/SnapKit";
 			sourceTree = "<group>";
 		};
-		35D8E6A75312BF72C2AF07EE3ED2C0FC /* Pods-iCameraTests */ = {
+		130FB2E8D2050250FD1694CA488BDE0B /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				5F18AE9E7603DA630F38F7AA095EB933 /* Pods-iCameraTests.modulemap */,
-				7F2EDC2A557E79D0800FC91C493D9B62 /* Pods-iCameraTests-acknowledgements.markdown */,
-				101BDCE1C4A249CE24F7E23AA960AB1D /* Pods-iCameraTests-acknowledgements.plist */,
-				32F7950384CDFF4A2011210E5FF9209B /* Pods-iCameraTests-dummy.m */,
-				0A7394C799FB8945307C05E244EA270A /* Pods-iCameraTests-Info.plist */,
-				046BF6B650D3C4EE2EC69A7BA38E7A2B /* Pods-iCameraTests-umbrella.h */,
-				F2E1A36B53C4E6110F723F2E5ED6C031 /* Pods-iCameraTests.debug.xcconfig */,
-				544B7E0F478DBEF13BA8CB07FFE1F351 /* Pods-iCameraTests.release.xcconfig */,
+				3295508723A2D283C0832B3B49B27AC2 /* PixCrop.modulemap */,
+				2987F66BFBA10100ADB17CC73E13EDAE /* PixCrop-dummy.m */,
+				248C9975F892D33680711E233AE95669 /* PixCrop-Info.plist */,
+				4419260915810675C0A75D2D48A3CC11 /* PixCrop-prefix.pch */,
+				3C10CDE3CE07A8A1DD7E07976936E7C2 /* PixCrop-umbrella.h */,
+				90C81A152022AEFEF2C637A94E075443 /* PixCrop.debug.xcconfig */,
+				52C8A490752EB6E3AAC125E052E8FCD8 /* PixCrop.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/PixCrop";
+			sourceTree = "<group>";
+		};
+		1936499020DFE0F233F66870300031CC /* SnapKit */ = {
+			isa = PBXGroup;
+			children = (
+				D9F47E6F8DB92C43CB9EF991D1541033 /* Constraint.swift */,
+				076B9089FC9303AC03C9B32CD3AFC85D /* ConstraintAttributes.swift */,
+				CF724A6D23A5AF18DAAAF050AC7F0217 /* ConstraintConfig.swift */,
+				D3D0B73EA5174C9D14FE98DD0101D3C3 /* ConstraintConstantTarget.swift */,
+				3BCE3BA34CDD06CFDA3B9BEA63C4F11E /* ConstraintDescription.swift */,
+				AAAC6D113A00508F276C35E16BBD7846 /* ConstraintDirectionalInsets.swift */,
+				A4A4A9BFDCA529C6052EF6430D5A3E1F /* ConstraintDirectionalInsetTarget.swift */,
+				FB77A56CE9ED280250FB7DC78FFB530C /* ConstraintDSL.swift */,
+				39D9E600EFCF0CCF38E49C092E77B18A /* ConstraintInsets.swift */,
+				26042B52ADDA1D49E3B5EEF120B7437D /* ConstraintInsetTarget.swift */,
+				F4040B3B430BD58E28578AECE8156271 /* ConstraintItem.swift */,
+				FBDF3BD4D1134F1EEC51873ADC7C554C /* ConstraintLayoutGuide.swift */,
+				FAF3C8937186B9B997950282EBC923D6 /* ConstraintLayoutGuide+Extensions.swift */,
+				15639D3A642AD776E65150ECF238BF9F /* ConstraintLayoutGuideDSL.swift */,
+				6FAC339FDD1DE5D533BE9446B82A17EC /* ConstraintLayoutSupport.swift */,
+				1CFC214E6B7B4E305EBBCD91785AAAB6 /* ConstraintLayoutSupportDSL.swift */,
+				11CC05AD6F7A8F921DB23A599A02F650 /* ConstraintMaker.swift */,
+				1050587B832576A038A5322CF6539975 /* ConstraintMakerEditable.swift */,
+				BEA41F95339E347E01C72A6404FE6A50 /* ConstraintMakerExtendable.swift */,
+				9121E468BBD755C3A0A896BA953F6E31 /* ConstraintMakerFinalizable.swift */,
+				B348629885D87249EDE41183624AB7B3 /* ConstraintMakerPrioritizable.swift */,
+				0F594DFEAD5E9561271970B3896749B5 /* ConstraintMakerRelatable.swift */,
+				6413B9FABC58A4144356CCBCD56B880A /* ConstraintMakerRelatable+Extensions.swift */,
+				B338BAE0BE20A58A15748B22468BE22C /* ConstraintMultiplierTarget.swift */,
+				528F585C1AC778D530CF7326E7C49740 /* ConstraintOffsetTarget.swift */,
+				6D73B2D66F8E6F6C9D52EA10B39D82EE /* ConstraintPriority.swift */,
+				7949873E23A6734C8EBB7C0BD94A4BA5 /* ConstraintPriorityTarget.swift */,
+				61AEDF21B5DBE1FD968F723F934FF9A9 /* ConstraintRelatableTarget.swift */,
+				64468A1423A46473A289063B4906D305 /* ConstraintRelation.swift */,
+				3B38C48DAD30FC139FD8B4BBADDD0EBE /* ConstraintView.swift */,
+				98E9A92F9F0265764E60334345D7EC3C /* ConstraintView+Extensions.swift */,
+				B96EEAC0BFFB2053A08EE87B776FAC53 /* ConstraintViewDSL.swift */,
+				BA4611813AB0567CE7CC04E0FB70E011 /* Debugging.swift */,
+				731A50232EF5479CCA400C5919FDFEF5 /* LayoutConstraint.swift */,
+				68D4F4A8585D19858754F8237AC2A3F9 /* LayoutConstraintItem.swift */,
+				89B766A8A5D0440892AE691572BFE5FC /* Typealiases.swift */,
+				BA0F0C5B84AA22CD77F18FBD1CC117DF /* UILayoutSupport+Extensions.swift */,
+				6E218050FAF42ACFA7130EA3E4C6C864 /* Resources */,
+				0C6DD6480E6E6EA5CCBC66E6B69D06B2 /* Support Files */,
+			);
+			name = SnapKit;
+			path = SnapKit;
+			sourceTree = "<group>";
+		};
+		2F466BF27A8DC4BBD9E9FD4D28AA59D6 /* Pods-iCameraTests */ = {
+			isa = PBXGroup;
+			children = (
+				0F7F632BEBF60A04C087C91382A3B37E /* Pods-iCameraTests.modulemap */,
+				A9C64976B3B1DCAC471E245C52FBF860 /* Pods-iCameraTests-acknowledgements.markdown */,
+				8F5761450657C4DF0BA0A5EF1451ADB8 /* Pods-iCameraTests-acknowledgements.plist */,
+				499A45882354A29525F2923B8E04A767 /* Pods-iCameraTests-dummy.m */,
+				88F0A2C7FEAC9D8D4D34AB9DD6645B68 /* Pods-iCameraTests-Info.plist */,
+				304B0D82E5830BEA9F857AF024DB7130 /* Pods-iCameraTests-umbrella.h */,
+				B481A7A5A348226D36555EF452E5294C /* Pods-iCameraTests.debug.xcconfig */,
+				E3732A410A210356FE075F42D518AC21 /* Pods-iCameraTests.release.xcconfig */,
 			);
 			name = "Pods-iCameraTests";
 			path = "Target Support Files/Pods-iCameraTests";
 			sourceTree = "<group>";
 		};
-		4F59213C1A8FDCFF70F8ACA2A5EF9DBD /* Products */ = {
+		469ED308997B072CE3BFE3B0CF513900 /* PixCrop */ = {
 			isa = PBXGroup;
 			children = (
-				F957992C558A82AA7716D6E54B4B9134 /* Pods_iCamera.framework */,
-				6824A8952F6B20167603A8F2406052E0 /* Pods_iCamera_iCameraUITests.framework */,
-				2FB1FCC19F05427E6D6218291B4F9189 /* Pods_iCameraTests.framework */,
+				F13AF07711A1DA701EB944A6A114391B /* Extension+.swift */,
+				51D433E61BA800BF66F6B5829EFF0ABE /* LayoutUtils.swift */,
+				BE7D869BC9713713D781457A105B6D00 /* PixCropFrame.swift */,
+				6CA2DF2A258EEB019EE51A0B5B184F5A /* PixCropFrameManager.swift */,
+				5B3CF47A94ACC2E9989576987038E31F /* PixCropFrameView.swift */,
+				DAAD078F3E4FEBCEA94CC33BD3530A6E /* PixCropImage.swift */,
+				64C08016F865B8FAA3F90B9CF82DF4A7 /* PixCropImageManager.swift */,
+				927E659398D29F9794098D51A7513C22 /* PixCropImageView.swift */,
+				7216455D6913CDCF7CC772CD9A6A6640 /* PixCropOverlayView.swift */,
+				1EE77C70E1AFD62880F874C868430F88 /* PixCropResultView.swift */,
+				5E5BD66CBE9BD5DC519DA3D36AD4C1AD /* PixCropSelectionBoxView.swift */,
+				8D3E82F8AAEA7A0EB40CCA36D121D3F7 /* PixCropView.swift */,
+				E104970A77DDDC235A44CC7BEDF58062 /* SelectionBox.swift */,
+				130FB2E8D2050250FD1694CA488BDE0B /* Support Files */,
+			);
+			name = PixCrop;
+			path = PixCrop;
+			sourceTree = "<group>";
+		};
+		6E218050FAF42ACFA7130EA3E4C6C864 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B967681D28E940E889130220B113DFF3 /* PrivacyInfo.xcprivacy */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		8FB751165169505F5DC7B8D5AF3D223A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13D052E2C42C85F385CD0F3D4D94FECD /* PixCrop */,
+				F957992C558A82AA7716D6E54B4B9134 /* Pods-iCamera */,
+				6824A8952F6B20167603A8F2406052E0 /* Pods-iCamera-iCameraUITests */,
+				2FB1FCC19F05427E6D6218291B4F9189 /* Pods-iCameraTests */,
+				979486118B3E90C08386079D57962701 /* SnapKit */,
+				B9DCB5EC0B1CDADD221717CADDF62359 /* SnapKit-SnapKit_Privacy */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		63628154B19C4149A6C6FB2ECE558EDE /* Pods-iCamera-iCameraUITests */ = {
-			isa = PBXGroup;
-			children = (
-				0BE1F0A93008C1A28166F06B76630A02 /* Pods-iCamera-iCameraUITests.modulemap */,
-				EE04C6E24AC14F5F5C263F551AE3843C /* Pods-iCamera-iCameraUITests-acknowledgements.markdown */,
-				947B7B6406D37626D78A6ED3306F49B4 /* Pods-iCamera-iCameraUITests-acknowledgements.plist */,
-				65E4A0EE84461A5E80D6AC879DD7919C /* Pods-iCamera-iCameraUITests-dummy.m */,
-				E86354CDE4374C1C749AF23089778BDD /* Pods-iCamera-iCameraUITests-Info.plist */,
-				99DCE0EBC718C868E120B6B73754DAAE /* Pods-iCamera-iCameraUITests-umbrella.h */,
-				B91F968D5D8972B92163B7E66CA2DBA9 /* Pods-iCamera-iCameraUITests.debug.xcconfig */,
-				2236774C493231277026C4DDA92721CE /* Pods-iCamera-iCameraUITests.release.xcconfig */,
-			);
-			name = "Pods-iCamera-iCameraUITests";
-			path = "Target Support Files/Pods-iCamera-iCameraUITests";
-			sourceTree = "<group>";
-		};
-		CA96FE6EED1065359E1282229E0EC080 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				20EB3EB8333B3F1F0D31D4688A3EFE02 /* Pods-iCamera */,
-				63628154B19C4149A6C6FB2ECE558EDE /* Pods-iCamera-iCameraUITests */,
-				35D8E6A75312BF72C2AF07EE3ED2C0FC /* Pods-iCameraTests */,
-			);
-			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -169,43 +424,121 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				4F59213C1A8FDCFF70F8ACA2A5EF9DBD /* Products */,
-				CA96FE6EED1065359E1282229E0EC080 /* Targets Support Files */,
+				FF682910F5AD0905FD01A5E52F921839 /* Pods */,
+				8FB751165169505F5DC7B8D5AF3D223A /* Products */,
+				E4DBA5C60679FFC860FEA081B7D7145A /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
 		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				578452D2E740E91742655AC8F1636D1F /* iOS */,
+				E4801F62A6B08CD9B5410329F1A18FDE /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E4801F62A6B08CD9B5410329F1A18FDE /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		E4DBA5C60679FFC860FEA081B7D7145A /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E59D91158A03F6391754FC063709D43C /* Pods-iCamera */,
+				EB26EF1E619876EE703E3366884D2E6C /* Pods-iCamera-iCameraUITests */,
+				2F466BF27A8DC4BBD9E9FD4D28AA59D6 /* Pods-iCameraTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		E59D91158A03F6391754FC063709D43C /* Pods-iCamera */ = {
+			isa = PBXGroup;
+			children = (
+				43B2797D015C5F2E41115BAD84A16D50 /* Pods-iCamera.modulemap */,
+				146BBA66B57A1B4C0F6C7A3DECC8A40C /* Pods-iCamera-acknowledgements.markdown */,
+				CEEA4ABF98A369AF7D12B7442458ED23 /* Pods-iCamera-acknowledgements.plist */,
+				920211D6BEA238A0E4DF3666BC509AF8 /* Pods-iCamera-dummy.m */,
+				DC042FC4C72130075DD6B545E2E3EF48 /* Pods-iCamera-frameworks.sh */,
+				212AACDB0CA1EEF554F2C2F6A80BCA1D /* Pods-iCamera-Info.plist */,
+				5BE097BA90057CF2113034C66F47267E /* Pods-iCamera-umbrella.h */,
+				CC0A264A95D5D1286620B114F24B9A9E /* Pods-iCamera.debug.xcconfig */,
+				9BCDB9CE73F29E98F92F251DCF770076 /* Pods-iCamera.release.xcconfig */,
+			);
+			name = "Pods-iCamera";
+			path = "Target Support Files/Pods-iCamera";
+			sourceTree = "<group>";
+		};
+		EB26EF1E619876EE703E3366884D2E6C /* Pods-iCamera-iCameraUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E54E8C0438078E8E1E9DC44E91AD738C /* Pods-iCamera-iCameraUITests.modulemap */,
+				03C93EEBF57BE5A144264947E3CE9541 /* Pods-iCamera-iCameraUITests-acknowledgements.markdown */,
+				D078ACCB21170A3411A72074B9E5E9E7 /* Pods-iCamera-iCameraUITests-acknowledgements.plist */,
+				C84874FD51F1F7ED7012902C89588B5B /* Pods-iCamera-iCameraUITests-dummy.m */,
+				3CE8C9C60CEB8625CEBBDD3A8E02C66E /* Pods-iCamera-iCameraUITests-frameworks.sh */,
+				5161276DBBBF2FAD8C96C4339D55FF90 /* Pods-iCamera-iCameraUITests-Info.plist */,
+				AB84BDD70E11BC14C03E60A723D7C283 /* Pods-iCamera-iCameraUITests-umbrella.h */,
+				64D271232BC5FD950CF9D381397450AF /* Pods-iCamera-iCameraUITests.debug.xcconfig */,
+				290C4C4DF85B0B9048AFC8FBBC6C6A05 /* Pods-iCamera-iCameraUITests.release.xcconfig */,
+			);
+			name = "Pods-iCamera-iCameraUITests";
+			path = "Target Support Files/Pods-iCamera-iCameraUITests";
+			sourceTree = "<group>";
+		};
+		FF682910F5AD0905FD01A5E52F921839 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				469ED308997B072CE3BFE3B0CF513900 /* PixCrop */,
+				1936499020DFE0F233F66870300031CC /* SnapKit */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		3521A022D736746C25AD18B4346FD41F /* Headers */ = {
+		32F65C06AA77BE22DFB31493E1A26A6A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7D17AF80A0E2EECF2E1A2B62C88B4CB /* Pods-iCamera-umbrella.h in Headers */,
+				0C757CDBB162817260A62B6597DA2145 /* PixCrop-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7BF5D9F57AFB61A745C5344E9A79C6FB /* Headers */ = {
+		411A55349A3BD9E3D8CA41260EBD5B42 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7F9A895AE79A1C10819B2C3FAED18C6 /* Pods-iCamera-iCameraUITests-umbrella.h in Headers */,
+				5FC0EDC1149C27FAF0AAB151849D3970 /* Pods-iCamera-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E26BC51876A2F65B40CC32983F27A65E /* Headers */ = {
+		C97D96A5FEB82218C2D115AD8B475A0E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5340A4F76870ED2695FD36AC8E79C51 /* Pods-iCameraTests-umbrella.h in Headers */,
+				0ACB04A48B143C884D5F0A7E82FED8C8 /* Pods-iCameraTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE36CAF2DAEEF6E4D73770F018A5BB75 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8226B1C6E21B8CE21C44B07098580B7B /* Pods-iCamera-iCameraUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD7204A323F23E5BA3FB437E8E6819D8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FCF9BD6334FA32278E8DF175D4E5B8E /* SnapKit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,57 +547,116 @@
 /* Begin PBXNativeTarget section */
 		18D14C2AEEC567FB00145A2CD81AFE0B /* Pods-iCamera-iCameraUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5542262447FEBADA7EC8CB9F9E3CF41C /* Build configuration list for PBXNativeTarget "Pods-iCamera-iCameraUITests" */;
+			buildConfigurationList = 646F0B6E872B494D0052ADBE5DB3948E /* Build configuration list for PBXNativeTarget "Pods-iCamera-iCameraUITests" */;
 			buildPhases = (
-				7BF5D9F57AFB61A745C5344E9A79C6FB /* Headers */,
-				2DBB8818B25FC3E442298863B5BDA034 /* Sources */,
-				D2A7A3EBCC8BFE5246B273D798EF93F9 /* Frameworks */,
-				7E67987C6B11235835F3AF7C9E425667 /* Resources */,
+				CE36CAF2DAEEF6E4D73770F018A5BB75 /* Headers */,
+				BB69E7D856B2B152F938047573B21974 /* Sources */,
+				E5E1EDF97CCA8569E46D5E2C16D60540 /* Frameworks */,
+				577C3DB26A84E7C65BE2086AD7C039B9 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A4B9BC221103635A1E132863AAA0BF71 /* PBXTargetDependency */,
+				BFDF964352B41B447FA42D11D90B323F /* PBXTargetDependency */,
 			);
 			name = "Pods-iCamera-iCameraUITests";
-			productName = "Pods-iCamera-iCameraUITests";
-			productReference = 6824A8952F6B20167603A8F2406052E0 /* Pods_iCamera_iCameraUITests.framework */;
+			productName = Pods_iCamera_iCameraUITests;
+			productReference = 6824A8952F6B20167603A8F2406052E0 /* Pods-iCamera-iCameraUITests */;
+			productType = "com.apple.product-type.framework";
+		};
+		19622742EBA51E823D6DAE3F8CDBFAD4 /* SnapKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D0EDD97F434923E92202D339C45604B /* Build configuration list for PBXNativeTarget "SnapKit" */;
+			buildPhases = (
+				FD7204A323F23E5BA3FB437E8E6819D8 /* Headers */,
+				C5553216721B826C397050B1F5EBE76F /* Sources */,
+				6F5D285C55537ECB179B09EA6E97FF31 /* Frameworks */,
+				1A163C5A0E3B495ED3760F1CD2898337 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4CF34D7F2CA442175BF4A0936E0FEA2 /* PBXTargetDependency */,
+			);
+			name = SnapKit;
+			productName = SnapKit;
+			productReference = 979486118B3E90C08386079D57962701 /* SnapKit */;
+			productType = "com.apple.product-type.framework";
+		};
+		516C8E123D7EAC443AF57A4DB0B3C524 /* PixCrop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 265548DF321C5432E7CA43C01EE26297 /* Build configuration list for PBXNativeTarget "PixCrop" */;
+			buildPhases = (
+				32F65C06AA77BE22DFB31493E1A26A6A /* Headers */,
+				59830D6FBE0AAB37E0D32C9476BCB732 /* Sources */,
+				CE913B35D51E83B3649E43B778A662AA /* Frameworks */,
+				21192F03025A88253AC1A0F6F65E7ACD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				05C4BF646E34BA1132CBCD3DA0991B6D /* PBXTargetDependency */,
+			);
+			name = PixCrop;
+			productName = PixCrop;
+			productReference = 13D052E2C42C85F385CD0F3D4D94FECD /* PixCrop */;
 			productType = "com.apple.product-type.framework";
 		};
 		625AB1998B211FDF7258DB740F37E2C7 /* Pods-iCameraTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 42CBABFB18664E3467744A15D85BF40C /* Build configuration list for PBXNativeTarget "Pods-iCameraTests" */;
+			buildConfigurationList = 3B8AC59D4B5B583595080D3373A1FE35 /* Build configuration list for PBXNativeTarget "Pods-iCameraTests" */;
 			buildPhases = (
-				E26BC51876A2F65B40CC32983F27A65E /* Headers */,
-				CB23940C4DA019D942BFBF362D92A6A5 /* Sources */,
-				A94D54FA95199A6F651694C67B8984D5 /* Frameworks */,
-				12F18CC2E4DD268E9D3417F79401C017 /* Resources */,
+				C97D96A5FEB82218C2D115AD8B475A0E /* Headers */,
+				28A311535C5008E469D9A6C3F2BC0A67 /* Sources */,
+				F63C9461615AF296FEE25357C68F8660 /* Frameworks */,
+				E95D057FE24C029703AC3BC3035B676E /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				40DED917C7BE3135D50D8BBF54758669 /* PBXTargetDependency */,
+				7EF0A88F5BEB73E27B651FA7C22F0C76 /* PBXTargetDependency */,
 			);
 			name = "Pods-iCameraTests";
-			productName = "Pods-iCameraTests";
-			productReference = 2FB1FCC19F05427E6D6218291B4F9189 /* Pods_iCameraTests.framework */;
+			productName = Pods_iCameraTests;
+			productReference = 2FB1FCC19F05427E6D6218291B4F9189 /* Pods-iCameraTests */;
 			productType = "com.apple.product-type.framework";
+		};
+		8A8DB685241263AFDF5E6B20FE67B93A /* SnapKit-SnapKit_Privacy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB3BE057A3BAD6DD2D4A5A223C9D04C7 /* Build configuration list for PBXNativeTarget "SnapKit-SnapKit_Privacy" */;
+			buildPhases = (
+				F689A7ECC3E506731DB2C4FAD953BF9A /* Sources */,
+				8F860452ADDFE3F9BEF47C101C1B07C7 /* Frameworks */,
+				34B6FF6D9FF7FF5959DB9C175FE6CA38 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SnapKit-SnapKit_Privacy";
+			productName = SnapKit_Privacy;
+			productReference = B9DCB5EC0B1CDADD221717CADDF62359 /* SnapKit-SnapKit_Privacy */;
+			productType = "com.apple.product-type.bundle";
 		};
 		AEBCA7BF8E0CDFB2DF304541D0093974 /* Pods-iCamera */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00AE88A714D44B33A079FEF746D7B121 /* Build configuration list for PBXNativeTarget "Pods-iCamera" */;
+			buildConfigurationList = 4A8679FC7861AFA632477CE5A9753C39 /* Build configuration list for PBXNativeTarget "Pods-iCamera" */;
 			buildPhases = (
-				3521A022D736746C25AD18B4346FD41F /* Headers */,
-				9CDE4BA226F36600827C4AE31D1A8951 /* Sources */,
-				5DD60E72EEE15F2F07445AC84A15909D /* Frameworks */,
-				7E4DD054E7A3F558EAB60FFE9F3699C0 /* Resources */,
+				411A55349A3BD9E3D8CA41260EBD5B42 /* Headers */,
+				34F7F086F0DCC7F41671705904ADFEDB /* Sources */,
+				AD5779B95171BF75C93A8864834AB7A7 /* Frameworks */,
+				A9A5753FE88B7D921B25239574CEB7EA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B72E1FBD7EB5078E9210F603823ECCE8 /* PBXTargetDependency */,
+				018AFDC10C977AFE753E578C85DCC2C1 /* PBXTargetDependency */,
 			);
 			name = "Pods-iCamera";
-			productName = "Pods-iCamera";
-			productReference = F957992C558A82AA7716D6E54B4B9134 /* Pods_iCamera.framework */;
+			productName = Pods_iCamera;
+			productReference = F957992C558A82AA7716D6E54B4B9134 /* Pods-iCamera */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -273,45 +665,73 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1240;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 4F59213C1A8FDCFF70F8ACA2A5EF9DBD /* Products */;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8FB751165169505F5DC7B8D5AF3D223A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				516C8E123D7EAC443AF57A4DB0B3C524 /* PixCrop */,
 				AEBCA7BF8E0CDFB2DF304541D0093974 /* Pods-iCamera */,
 				18D14C2AEEC567FB00145A2CD81AFE0B /* Pods-iCamera-iCameraUITests */,
 				625AB1998B211FDF7258DB740F37E2C7 /* Pods-iCameraTests */,
+				19622742EBA51E823D6DAE3F8CDBFAD4 /* SnapKit */,
+				8A8DB685241263AFDF5E6B20FE67B93A /* SnapKit-SnapKit_Privacy */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		12F18CC2E4DD268E9D3417F79401C017 /* Resources */ = {
+		1A163C5A0E3B495ED3760F1CD2898337 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5D3C7FFA3423EF5304FCB7F1CBE1A35 /* SnapKit-SnapKit_Privacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21192F03025A88253AC1A0F6F65E7ACD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7E4DD054E7A3F558EAB60FFE9F3699C0 /* Resources */ = {
+		34B6FF6D9FF7FF5959DB9C175FE6CA38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2442FD0417817052E42B235B5944330 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		577C3DB26A84E7C65BE2086AD7C039B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7E67987C6B11235835F3AF7C9E425667 /* Resources */ = {
+		A9A5753FE88B7D921B25239574CEB7EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E95D057FE24C029703AC3BC3035B676E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -321,109 +741,172 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2DBB8818B25FC3E442298863B5BDA034 /* Sources */ = {
+		28A311535C5008E469D9A6C3F2BC0A67 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E68B6B7DE3E619916E5BAE44E664F12C /* Pods-iCamera-iCameraUITests-dummy.m in Sources */,
+				C5C653DDC9AD0C88232BE36867EA6B6E /* Pods-iCameraTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9CDE4BA226F36600827C4AE31D1A8951 /* Sources */ = {
+		34F7F086F0DCC7F41671705904ADFEDB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6C94A1AAD984B6256AC8AE4C8334868 /* Pods-iCamera-dummy.m in Sources */,
+				FA3949BB2F0C845C6CE555DD72A24A09 /* Pods-iCamera-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CB23940C4DA019D942BFBF362D92A6A5 /* Sources */ = {
+		59830D6FBE0AAB37E0D32C9476BCB732 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F60887A927B1258C5C68F3D58341665 /* Pods-iCameraTests-dummy.m in Sources */,
+				5C95F8961CE5C2E35C3F679EE5509E6A /* Extension+.swift in Sources */,
+				34A05FDE268441C0F2491C7830437529 /* LayoutUtils.swift in Sources */,
+				64FF1CFDB024ADFB4217C701FBFB73DF /* PixCrop-dummy.m in Sources */,
+				CFF03E1E941E851B81BA2B71A3A6A3DE /* PixCropFrame.swift in Sources */,
+				BCD85ECA3D79318507E6EC7407458A1F /* PixCropFrameManager.swift in Sources */,
+				2987AD01BF056313A0BFD5CFB7FAB322 /* PixCropFrameView.swift in Sources */,
+				248A27857D16D68EFB8584DC92EB307A /* PixCropImage.swift in Sources */,
+				030074EE108B791E60536D0C1DF1B585 /* PixCropImageManager.swift in Sources */,
+				244DEEC8B40F7C7DE6F61DCFDB6FB15B /* PixCropImageView.swift in Sources */,
+				D8231DDBB99826AA3FD6A9173435750D /* PixCropOverlayView.swift in Sources */,
+				96D2851F2421DAE8D34E18DE48D5C532 /* PixCropResultView.swift in Sources */,
+				55035C3DD2FA4C327D5F066F72925613 /* PixCropSelectionBoxView.swift in Sources */,
+				7A178452E5896A9A993C3FDF3FE250C7 /* PixCropView.swift in Sources */,
+				36370DDCE6B15F2BA2A50F757FB34918 /* SelectionBox.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB69E7D856B2B152F938047573B21974 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BB82C2C60AF69462EAB3EAD575D5591 /* Pods-iCamera-iCameraUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5553216721B826C397050B1F5EBE76F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD848E1919D4A0823B0B1F3956561C7 /* Constraint.swift in Sources */,
+				284662E9C13C0E67713B4E4D984910D6 /* ConstraintAttributes.swift in Sources */,
+				8102836D40110B4DCAB40F94D2279941 /* ConstraintConfig.swift in Sources */,
+				E1D186488EA0D9308078EE39E32CFF51 /* ConstraintConstantTarget.swift in Sources */,
+				A7FD22139A2C4EBE7098B0D2805D7819 /* ConstraintDescription.swift in Sources */,
+				6EA60AA1BDEF2CEED537658003D30D6D /* ConstraintDirectionalInsets.swift in Sources */,
+				E58886EBB492562B0A4D9E4C8BB20282 /* ConstraintDirectionalInsetTarget.swift in Sources */,
+				46E6D598653BF14D476F01F36182BD32 /* ConstraintDSL.swift in Sources */,
+				5FCF94970FE63F72B725A2FF873B6B8D /* ConstraintInsets.swift in Sources */,
+				93DC49A8DA91A68591A289D18ACD1EEF /* ConstraintInsetTarget.swift in Sources */,
+				6415684E053EFF4153FDCE13042843D9 /* ConstraintItem.swift in Sources */,
+				F1B7A3E2400BA08D37EEF2CAD2DBBAF0 /* ConstraintLayoutGuide.swift in Sources */,
+				BF5FE1BE6690DBA9CA64E2666ED7F286 /* ConstraintLayoutGuide+Extensions.swift in Sources */,
+				B6FEB721A039DACF1125E29EC7FE393D /* ConstraintLayoutGuideDSL.swift in Sources */,
+				F380C482C57E9F36263E27BBB71BB6E2 /* ConstraintLayoutSupport.swift in Sources */,
+				372DAECD70393466D0B94D947A8CEFB0 /* ConstraintLayoutSupportDSL.swift in Sources */,
+				BCF15DD207059EC542F58F2AE4D19D79 /* ConstraintMaker.swift in Sources */,
+				5738721342D68C7587D3C3BD6B1A1CEA /* ConstraintMakerEditable.swift in Sources */,
+				EB129526220249048FF9F37EB69AE5A8 /* ConstraintMakerExtendable.swift in Sources */,
+				B6FCF846AF3938BC39F8B26CEA17C9EF /* ConstraintMakerFinalizable.swift in Sources */,
+				FBE6FFA3739084DA8DB126960811BD31 /* ConstraintMakerPrioritizable.swift in Sources */,
+				B513075AC9CD1AA9089E563B925A75C7 /* ConstraintMakerRelatable.swift in Sources */,
+				E16E8CFE5680F8FB8D505CD5192C62F8 /* ConstraintMakerRelatable+Extensions.swift in Sources */,
+				5201CE6147AEADD2C9689277D54D9270 /* ConstraintMultiplierTarget.swift in Sources */,
+				40D4115E74D63AD45311DFC2E3C5AEFB /* ConstraintOffsetTarget.swift in Sources */,
+				6B00B585569A62AE2557836239BFB727 /* ConstraintPriority.swift in Sources */,
+				CD22D6FF8335D6B98AFC8BF47B272BEE /* ConstraintPriorityTarget.swift in Sources */,
+				6348777DC12E8D825FEF6DE3913952A6 /* ConstraintRelatableTarget.swift in Sources */,
+				0505930312E19D2226CE7C8BB62658B0 /* ConstraintRelation.swift in Sources */,
+				A709572F868152AC072D982564970EF6 /* ConstraintView.swift in Sources */,
+				838AAF4C14172D32753CF39F12790B18 /* ConstraintView+Extensions.swift in Sources */,
+				23CAD765C3828EA5A208EABAC306E3E2 /* ConstraintViewDSL.swift in Sources */,
+				878C3ED8B9B203C854B89F2D394BCB67 /* Debugging.swift in Sources */,
+				CA765FEA0964EA1A26FF9D824F7D0E05 /* LayoutConstraint.swift in Sources */,
+				9EA4BF8FB7984A62851FB1C106AD29C2 /* LayoutConstraintItem.swift in Sources */,
+				C2B13AA1326492AE6A269A05F0942576 /* SnapKit-dummy.m in Sources */,
+				5B2B86CDD9535E73CAD815EF373F9DEE /* Typealiases.swift in Sources */,
+				E21486F4B2F1187A8E27A75DF44F7C70 /* UILayoutSupport+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F689A7ECC3E506731DB2C4FAD953BF9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		40DED917C7BE3135D50D8BBF54758669 /* PBXTargetDependency */ = {
+		018AFDC10C977AFE753E578C85DCC2C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SnapKit;
+			target = 19622742EBA51E823D6DAE3F8CDBFAD4 /* SnapKit */;
+			targetProxy = B93E6CEF50750E3ABD24E34A5BB2E93C /* PBXContainerItemProxy */;
+		};
+		05C4BF646E34BA1132CBCD3DA0991B6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SnapKit;
+			target = 19622742EBA51E823D6DAE3F8CDBFAD4 /* SnapKit */;
+			targetProxy = A4D286BFBAACCC8786ABC7653B6A19B6 /* PBXContainerItemProxy */;
+		};
+		7EF0A88F5BEB73E27B651FA7C22F0C76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-iCamera";
 			target = AEBCA7BF8E0CDFB2DF304541D0093974 /* Pods-iCamera */;
-			targetProxy = F13F2F1D098019DB6DE9D487D7CCA1FA /* PBXContainerItemProxy */;
+			targetProxy = F9A74F9C4B176A955BD86AD8AD8FFAFF /* PBXContainerItemProxy */;
+		};
+		A4B9BC221103635A1E132863AAA0BF71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PixCrop;
+			target = 516C8E123D7EAC443AF57A4DB0B3C524 /* PixCrop */;
+			targetProxy = CA5165729C789D17EE97C8BB6999244D /* PBXContainerItemProxy */;
+		};
+		B72E1FBD7EB5078E9210F603823ECCE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PixCrop;
+			target = 516C8E123D7EAC443AF57A4DB0B3C524 /* PixCrop */;
+			targetProxy = A2D20C3ED79220C8E0502CCFCD46E338 /* PBXContainerItemProxy */;
+		};
+		BFDF964352B41B447FA42D11D90B323F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SnapKit;
+			target = 19622742EBA51E823D6DAE3F8CDBFAD4 /* SnapKit */;
+			targetProxy = 8115B5BDCA429C1727906CA11550157B /* PBXContainerItemProxy */;
+		};
+		E4CF34D7F2CA442175BF4A0936E0FEA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SnapKit-SnapKit_Privacy";
+			target = 8A8DB685241263AFDF5E6B20FE67B93A /* SnapKit-SnapKit_Privacy */;
+			targetProxy = E840A4DB08BB4B90878147081533FB73 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		032504F201C69275441D32C68CCD1F0E /* Release */ = {
+		1257ADEC22DB07D5403989BC096C7F44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BF4DA74E8813084875FD55D82B1FA8D /* SnapKit.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				SYMROOT = "${SRCROOT}/../build";
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SnapKit";
+				IBSC_MODULE = SnapKit;
+				INFOPLIST_FILE = "Target Support Files/SnapKit/ResourceBundle-SnapKit_Privacy-SnapKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = SnapKit_Privacy;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
 			};
-			name = Release;
+			name = Debug;
 		};
-		12A25CEC218C66C98CD90CB5A64E4A55 /* Debug */ = {
+		148A38E6F9C3DE434F93174C41AED025 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 847CF1813263AE87A29810DED7FF0EC6 /* Pods-iCamera.debug.xcconfig */;
+			baseConfigurationReference = 984CBD09E50E717FB0C971FF1A18C215 /* SnapKit.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -433,32 +916,154 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-iCamera/Pods-iCamera-Info.plist";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/SnapKit/SnapKit-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-iCamera/Pods-iCamera.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				MODULEMAP_FILE = "Target Support Files/SnapKit/SnapKit.modulemap";
+				PRODUCT_MODULE_NAME = SnapKit;
+				PRODUCT_NAME = SnapKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		22A90700633AA469606415F4CC634BC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BF4DA74E8813084875FD55D82B1FA8D /* SnapKit.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/SnapKit/SnapKit-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SnapKit/SnapKit.modulemap";
+				PRODUCT_MODULE_NAME = SnapKit;
+				PRODUCT_NAME = SnapKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		3B8AA247617C00E23B0B2184A9F73CF0 /* Release */ = {
+		2CAF1A71436D64FAA4D7693D274DECE1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 544B7E0F478DBEF13BA8CB07FFE1F351 /* Pods-iCameraTests.release.xcconfig */;
+			baseConfigurationReference = 52C8A490752EB6E3AAC125E052E8FCD8 /* PixCrop.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/PixCrop/PixCrop-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/PixCrop/PixCrop-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/PixCrop/PixCrop.modulemap";
+				PRODUCT_MODULE_NAME = PixCrop;
+				PRODUCT_NAME = PixCrop;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		551C09203E79C00EF517BA069F786B6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90C81A152022AEFEF2C637A94E075443 /* PixCrop.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/PixCrop/PixCrop-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/PixCrop/PixCrop-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/PixCrop/PixCrop.modulemap";
+				PRODUCT_MODULE_NAME = PixCrop;
+				PRODUCT_NAME = PixCrop;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		682C629D7A386B836B41D1CAEC2EF5DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E3732A410A210356FE075F42D518AC21 /* Pods-iCameraTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -470,9 +1075,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-iCameraTests/Pods-iCameraTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -494,7 +1101,143 @@
 			};
 			name = Release;
 		};
-		48F67AB1E5DBE79CCF2F86C75296AB01 /* Debug */ = {
+		6C3D6D4B10CE68A8814B938149E788E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B481A7A5A348226D36555EF452E5294C /* Pods-iCameraTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-iCameraTests/Pods-iCameraTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iCameraTests/Pods-iCameraTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6ED69D1C74214916A1C58ADF0D72BED1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 984CBD09E50E717FB0C971FF1A18C215 /* SnapKit.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SnapKit";
+				IBSC_MODULE = SnapKit;
+				INFOPLIST_FILE = "Target Support Files/SnapKit/ResourceBundle-SnapKit_Privacy-SnapKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = SnapKit_Privacy;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		8351C0EFA975DC8852E230EB67B164A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 290C4C4DF85B0B9048AFC8FBBC6C6A05 /* Pods-iCamera-iCameraUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		838D89C9027A564261EF769E42715A7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BCDB9CE73F29E98F92F251DCF770076 /* Pods-iCamera.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-iCamera/Pods-iCamera-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-iCamera/Pods-iCamera.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -547,7 +1290,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -560,9 +1303,9 @@
 			};
 			name = Debug;
 		};
-		84BFA4DD12E2BA85A3D234BC4EA9BF83 /* Debug */ = {
+		952E97F2F4AB0078F8D4F3EE31A1AFC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2E1A36B53C4E6110F723F2E5ED6C031 /* Pods-iCameraTests.debug.xcconfig */;
+			baseConfigurationReference = CC0A264A95D5D1286620B114F24B9A9E /* Pods-iCamera.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -574,84 +1317,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-iCameraTests/Pods-iCameraTests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-iCameraTests/Pods-iCameraTests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		9478DD2DBAD078E915980023BC70C55F /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2236774C493231277026C4DDA92721CE /* Pods-iCamera-iCameraUITests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		9B7299516D91FAA2C88DEFD770F05F2F /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03D44797C5719715882AA31A2D22A1E9 /* Pods-iCamera.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-iCamera/Pods-iCamera-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -667,15 +1337,76 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
+			name = Debug;
+		};
+		9553C89E183877A5CB2F3C6801BEC129 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
 			name = Release;
 		};
-		CDED9B84F0E6E2710C184F3A07EB7B90 /* Debug */ = {
+		C0DC7718CAAC9D6072C3F3CEBBC53FDB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B91F968D5D8972B92163B7E66CA2DBA9 /* Pods-iCamera-iCameraUITests.debug.xcconfig */;
+			baseConfigurationReference = 64D271232BC5FD950CF9D381397450AF /* Pods-iCamera-iCameraUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -687,9 +1418,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -713,20 +1446,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00AE88A714D44B33A079FEF746D7B121 /* Build configuration list for PBXNativeTarget "Pods-iCamera" */ = {
+		265548DF321C5432E7CA43C01EE26297 /* Build configuration list for PBXNativeTarget "PixCrop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				12A25CEC218C66C98CD90CB5A64E4A55 /* Debug */,
-				9B7299516D91FAA2C88DEFD770F05F2F /* Release */,
+				551C09203E79C00EF517BA069F786B6B /* Debug */,
+				2CAF1A71436D64FAA4D7693D274DECE1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		42CBABFB18664E3467744A15D85BF40C /* Build configuration list for PBXNativeTarget "Pods-iCameraTests" */ = {
+		3B8AC59D4B5B583595080D3373A1FE35 /* Build configuration list for PBXNativeTarget "Pods-iCameraTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				84BFA4DD12E2BA85A3D234BC4EA9BF83 /* Debug */,
-				3B8AA247617C00E23B0B2184A9F73CF0 /* Release */,
+				6C3D6D4B10CE68A8814B938149E788E7 /* Debug */,
+				682C629D7A386B836B41D1CAEC2EF5DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -734,17 +1467,44 @@
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				48F67AB1E5DBE79CCF2F86C75296AB01 /* Debug */,
-				032504F201C69275441D32C68CCD1F0E /* Release */,
+				90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */,
+				9553C89E183877A5CB2F3C6801BEC129 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5542262447FEBADA7EC8CB9F9E3CF41C /* Build configuration list for PBXNativeTarget "Pods-iCamera-iCameraUITests" */ = {
+		4A8679FC7861AFA632477CE5A9753C39 /* Build configuration list for PBXNativeTarget "Pods-iCamera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CDED9B84F0E6E2710C184F3A07EB7B90 /* Debug */,
-				9478DD2DBAD078E915980023BC70C55F /* Release */,
+				952E97F2F4AB0078F8D4F3EE31A1AFC5 /* Debug */,
+				838D89C9027A564261EF769E42715A7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D0EDD97F434923E92202D339C45604B /* Build configuration list for PBXNativeTarget "SnapKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22A90700633AA469606415F4CC634BC7 /* Debug */,
+				148A38E6F9C3DE434F93174C41AED025 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		646F0B6E872B494D0052ADBE5DB3948E /* Build configuration list for PBXNativeTarget "Pods-iCamera-iCameraUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0DC7718CAAC9D6072C3F3CEBBC53FDB /* Debug */,
+				8351C0EFA975DC8852E230EB67B164A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB3BE057A3BAD6DD2D4A5A223C9D04C7 /* Build configuration list for PBXNativeTarget "SnapKit-SnapKit_Privacy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1257ADEC22DB07D5403989BC096C7F44 /* Debug */,
+				6ED69D1C74214916A1C58ADF0D72BED1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

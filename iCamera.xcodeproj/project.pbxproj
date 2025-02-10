@@ -48,8 +48,6 @@
 		366794122CFF5DE30052612F /* From_SLog2SGumut_To_SLog2-709_.cube in Resources */ = {isa = PBXBuildFile; fileRef = 366794102CFF5DE30052612F /* From_SLog2SGumut_To_SLog2-709_.cube */; };
 		366794132CFF5DE30052612F /* SLog3SGamut3.CineToSLog2-709.cube in Resources */ = {isa = PBXBuildFile; fileRef = 366794112CFF5DE30052612F /* SLog3SGamut3.CineToSLog2-709.cube */; };
 		36697BFF2CD1241B00070A55 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36697BFE2CD1241B00070A55 /* CalendarManager.swift */; };
-		366AC8662CB1572B007A15D1 /* MaskRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */; };
-		366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */; };
 		36810C512C8F0F09002C680A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C502C8F0F09002C680A /* MainView.swift */; };
 		36810C532C8F1E7E002C680A /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C522C8F1E7E002C680A /* TopBarView.swift */; };
 		36810C552C8F287A002C680A /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C542C8F287A002C680A /* ListView.swift */; };
@@ -79,13 +77,15 @@
 		36AFA2D42D1DADCA00215534 /* CommentsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */; };
 		36BCF7242C94AA8500FF2529 /* AlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BCF7232C94AA8500FF2529 /* AlbumManager.swift */; };
 		36CB5ECD2D1437FE00B4B3AB /* GalleryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */; };
-		36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CF3DF22CB139C5004D58BF /* CutImageView.swift */; };
 		36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CFA3702CD345D100DF6E1E /* CommentsView.swift */; };
 		36D096212C943DCA00F37AE0 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D096202C943DCA00F37AE0 /* GalleryView.swift */; };
 		36D221BB2CDA4C000007A0D3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D221BA2CDA4C000007A0D3 /* CoreDataManager.swift */; };
 		36D221C12CDA5C760007A0D3 /* CalendarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D221C02CDA5C760007A0D3 /* CalendarData.swift */; };
 		36D221D02CDA6F1E0007A0D3 /* iCamera.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 36D221CE2CDA6F1E0007A0D3 /* iCamera.xcdatamodeld */; };
 		36D782B02CE0884F003F07B8 /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D782AF2CE0884F003F07B8 /* ImageInfo.swift */; };
+		36DA5EBA2D58F24B004EAE9D /* ImageCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA5EB92D58F24B004EAE9D /* ImageCropView.swift */; };
+		36DA5EBC2D58F253004EAE9D /* ImageCropResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA5EBB2D58F253004EAE9D /* ImageCropResultView.swift */; };
+		36DA5EBE2D58F28C004EAE9D /* PixCropManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA5EBD2D58F28C004EAE9D /* PixCropManager.swift */; };
 		36DB6CD52D01D9EA00A74BD0 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DB6CD42D01D9EA00A74BD0 /* LaunchView.swift */; };
 		36EC6DA22CE4EEA800A5D784 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EC6DA12CE4EEA800A5D784 /* CustomSlider.swift */; };
 		36F84FB62CD1EA7D008275F5 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */; };
@@ -156,8 +156,6 @@
 		366794102CFF5DE30052612F /* From_SLog2SGumut_To_SLog2-709_.cube */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "From_SLog2SGumut_To_SLog2-709_.cube"; sourceTree = "<group>"; };
 		366794112CFF5DE30052612F /* SLog3SGamut3.CineToSLog2-709.cube */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SLog3SGamut3.CineToSLog2-709.cube"; sourceTree = "<group>"; };
 		36697BFE2CD1241B00070A55 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
-		366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskRectangleView.swift; sourceTree = "<group>"; };
-		366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionFrameView.swift; sourceTree = "<group>"; };
 		36810C502C8F0F09002C680A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		36810C522C8F1E7E002C680A /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		36810C542C8F287A002C680A /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -190,13 +188,15 @@
 		36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTextView.swift; sourceTree = "<group>"; };
 		36BCF7232C94AA8500FF2529 /* AlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumManager.swift; sourceTree = "<group>"; };
 		36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionView.swift; sourceTree = "<group>"; };
-		36CF3DF22CB139C5004D58BF /* CutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutImageView.swift; sourceTree = "<group>"; };
 		36CFA3702CD345D100DF6E1E /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
 		36D096202C943DCA00F37AE0 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		36D221BA2CDA4C000007A0D3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		36D221C02CDA5C760007A0D3 /* CalendarData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarData.swift; sourceTree = "<group>"; };
 		36D221CF2CDA6F1E0007A0D3 /* iCamera.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iCamera.xcdatamodel; sourceTree = "<group>"; };
 		36D782AF2CE0884F003F07B8 /* ImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
+		36DA5EB92D58F24B004EAE9D /* ImageCropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropView.swift; sourceTree = "<group>"; };
+		36DA5EBB2D58F253004EAE9D /* ImageCropResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropResultView.swift; sourceTree = "<group>"; };
+		36DA5EBD2D58F28C004EAE9D /* PixCropManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixCropManager.swift; sourceTree = "<group>"; };
 		36DB6CD42D01D9EA00A74BD0 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		36EC6DA12CE4EEA800A5D784 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
@@ -284,6 +284,7 @@
 				361BAB952CE87B970091346B /* StoredStickerManager.swift */,
 				361BAB9B2CE88A520091346B /* Array.swift */,
 				361BAB9D2CE8D7B90091346B /* EditManager.swift */,
+				36DA5EBD2D58F28C004EAE9D /* PixCropManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -310,10 +311,9 @@
 		366306792CDF2D49008F16E9 /* Cut */ = {
 			isa = PBXGroup;
 			children = (
-				366AC8652CB1572B007A15D1 /* MaskRectangleView.swift */,
-				366AC8672CB15B27007A15D1 /* SelectionFrameView.swift */,
 				366306772CDF2B0D008F16E9 /* CutMenuView.swift */,
-				36CF3DF22CB139C5004D58BF /* CutImageView.swift */,
+				36DA5EB92D58F24B004EAE9D /* ImageCropView.swift */,
+				36DA5EBB2D58F253004EAE9D /* ImageCropResultView.swift */,
 			);
 			path = Cut;
 			sourceTree = "<group>";
@@ -511,6 +511,7 @@
 				369E7BED2C8DAB970044EAF1 /* Sources */,
 				369E7BEE2C8DAB970044EAF1 /* Frameworks */,
 				369E7BEF2C8DAB970044EAF1 /* Resources */,
+				ADF9AC0DF0F3E868F9EB2821 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -548,6 +549,7 @@
 				369E7C072C8DAB980044EAF1 /* Sources */,
 				369E7C082C8DAB980044EAF1 /* Frameworks */,
 				369E7C092C8DAB980044EAF1 /* Resources */,
+				ADF7782978DF0AA0836335E4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -709,6 +711,40 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		ADF7782978DF0AA0836335E4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADF9AC0DF0F3E868F9EB2821 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iCamera/Pods-iCamera-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iCamera/Pods-iCamera-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iCamera/Pods-iCamera-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -733,6 +769,7 @@
 				361C09D42CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift in Sources */,
 				36D221D02CDA6F1E0007A0D3 /* iCamera.xcdatamodeld in Sources */,
 				3692E40C2CC4E540003CBACB /* CustomTextEditor.swift in Sources */,
+				36DA5EBE2D58F28C004EAE9D /* PixCropManager.swift in Sources */,
 				3653CCFB2CE47730005459E4 /* FontManager.swift in Sources */,
 				369E7BF52C8DAB970044EAF1 /* iCameraApp.swift in Sources */,
 				36D221BB2CDA4C000007A0D3 /* CoreDataManager.swift in Sources */,
@@ -744,13 +781,12 @@
 				362222362CA0087600AA9EA5 /* EditPhotoView.swift in Sources */,
 				36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */,
 				36DB6CD52D01D9EA00A74BD0 /* LaunchView.swift in Sources */,
+				36DA5EBA2D58F24B004EAE9D /* ImageCropView.swift in Sources */,
 				361BAB9A2CE882BD0091346B /* StickerData.swift in Sources */,
 				36F84FB62CD1EA7D008275F5 /* CalendarCell.swift in Sources */,
-				36CF3DF32CB139C5004D58BF /* CutImageView.swift in Sources */,
 				36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */,
 				362222382CA00E1F00AA9EA5 /* MenuButtonView.swift in Sources */,
 				361BAB982CE882940091346B /* Sticker.swift in Sources */,
-				366AC8662CB1572B007A15D1 /* MaskRectangleView.swift in Sources */,
 				369651602CA9831E004E0134 /* TestPhotoView.swift in Sources */,
 				36039EEF2CF1EB6F0002EE48 /* ShareSheet.swift in Sources */,
 				362BD6B72CAAE3ED000955D5 /* MenuButtonManager.swift in Sources */,
@@ -764,6 +800,7 @@
 				361BAB9E2CE8D7B90091346B /* EditManager.swift in Sources */,
 				365978F42CE5AB3E00D58159 /* EditTextView.swift in Sources */,
 				3682653A2CF6E89F0065E945 /* EditFilterView.swift in Sources */,
+				36DA5EBC2D58F253004EAE9D /* ImageCropResultView.swift in Sources */,
 				36D221C12CDA5C760007A0D3 /* CalendarData.swift in Sources */,
 				36A12E092CA19D1F00228784 /* FilterImageView.swift in Sources */,
 				362BD6B52CAAE351000955D5 /* EditImageView.swift in Sources */,
@@ -773,7 +810,6 @@
 				368D426E2CCBCF9B00E3E0FB /* CalendarView.swift in Sources */,
 				361BAB942CE85F180091346B /* EditStickerView.swift in Sources */,
 				3682653C2CF6F1000065E945 /* FilterTypeCell.swift in Sources */,
-				366AC8682CB15B27007A15D1 /* SelectionFrameView.swift in Sources */,
 				36CFA3712CD345D100DF6E1E /* CommentsView.swift in Sources */,
 				3688E9ED2CAE6933001DC9DC /* StickerView.swift in Sources */,
 				36CB5ECD2D1437FE00B4B3AB /* GalleryCollectionView.swift in Sources */,
@@ -950,6 +986,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = SG72AH33ZM;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한을 허용해주세요.";
@@ -985,6 +1022,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = SG72AH33ZM;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iCamera/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한을 허용해주세요.";
@@ -1018,6 +1056,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SG72AH33ZM;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
@@ -1039,6 +1078,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SG72AH33ZM;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;

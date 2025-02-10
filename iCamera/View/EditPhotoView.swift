@@ -24,6 +24,7 @@ struct EditPhotoView: View {
     @StateObject var textManager = TextManager()
     @StateObject var customSliderManager = CustomSliderManager()
     @StateObject var editManager = EditManager()
+    @StateObject var pixCropManager = PixCropManager()
     
     @State private var isFirstDrag: Bool = true
     
@@ -61,16 +62,8 @@ struct EditPhotoView: View {
                             dismiss()
                         } else if buttonType == .confirm {
                             deselectAll()
-                            
-                            if menuButtonManager.isSelected(.cut){
-                                NotificationCenter.default.post(name: .saveImageInfo, object: nil)
-                            } else {
-                                saveData(viewSize: geometry.size)
-                            }
+                            saveData(viewSize: geometry.size)
                         }
-                    }
-                    .onReceive(cutImageManager.completeSaveImageInfo){ _ in
-                        saveData(viewSize: geometry.size)
                     }
                     .onReceive(textManager.completeSaveTextInfo){ _ in
                         createImage(viewSize: geometry.size)
@@ -95,13 +88,11 @@ struct EditPhotoView: View {
                     ZStack{
                         Color.white
                         
-                        EditImageView(inputImage: $albumManager.selectedImage,
+                        EditImageView(image: $albumManager.selectedImage,
                                       filterManager: filterManager,
                                       menuButtonManager: menuButtonManager,
-                                      cutImageManager: cutImageManager){ image in
-                            self.renderedImage = image
-                            self.isNavigationActive = true
-                        }
+                                      cutImageManager: cutImageManager,
+                                      pixCropManager: pixCropManager)
                         .onTapGesture {
                             deselectAll()
                         }
@@ -187,10 +178,10 @@ struct EditPhotoView: View {
                             if menuButtonManager.isSelected(.cut){
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack(spacing: 20){
-                                        ForEach(cutImageManager.ratioArray.indices, id: \.self){ index in
+                                        ForEach(cutImageManager.ratioArray.indices, id: \.self){ index in 
                                             let ratio = cutImageManager.ratioArray[index]
                                             Button(action: {
-                                                cutImageManager.frameRatioTapped.send(ratio)
+                                                pixCropManager.ratio(CGSize(width: ratio.widthRatio, height: ratio.heightRatio))
                                             }){
                                                 let text = index == 0 ? "원본" : ratio.string
                                                 Text(text)
@@ -202,7 +193,7 @@ struct EditPhotoView: View {
                                     .padding([.leading, .trailing], 20)
                                 }
                                 .frame(height: viewHeight * 0.13)
-                                CutMenuView(cutImageManager: cutImageManager)
+                                CutMenuView(cutImageManager: cutImageManager, pixCropManager: pixCropManager)
                                 Spacer()
                             }
                             /* 📌 Text */
@@ -282,7 +273,7 @@ struct EditPhotoView: View {
         
         guard let image = albumManager.selectedImage else { print("Image not loading"); return nil }
         
-        let captureView = CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager, filterManager: filterManager).frame(width: viewSize.width, height: viewSize.height)
+        let captureView = CaptureImageView(image: image, cutImageManager: cutImageManager, textManager: textManager, stickerManager: stickerManager, filterManager: filterManager, pixCropManager: pixCropManager).frame(width: viewSize.width, height: viewSize.height)
         let controller = UIHostingController(rootView: captureView)
         guard let view = controller.view else { return nil }
 
@@ -290,9 +281,8 @@ struct EditPhotoView: View {
         // 뷰 크기를 imageSize에 맞게 설정
         
         view.bounds = CGRect(origin: .zero, size: window.bounds.size)
-        view.backgroundColor = .green
         
-        let targetSize = cutImageManager.imageSize(imageSize: CGSize(width: cutImageManager.frameWidth, height: cutImageManager.frameHeight), viewSize: viewSize)
+        let targetSize = cutImageManager.imageSize(imageSize: pixCropManager.maskSize, viewSize: viewSize)
         
         let safeAreaInsets = window.safeAreaInsets
         

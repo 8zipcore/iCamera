@@ -4,6 +4,8 @@
 target 'iCamera' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  
+  pod 'PixCrop', :git => 'https://github.com/8zipcore/PixCrop.git', :tag => '1.0.0'
 
   # Pods for iCamera
 

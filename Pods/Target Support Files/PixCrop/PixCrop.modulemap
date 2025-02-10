@@ -1,0 +1,6 @@
+framework module PixCrop {
+  umbrella header "PixCrop-umbrella.h"
+
+  export *
+  module * { export * }
+}
