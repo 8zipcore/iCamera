@@ -1,5 +1,5 @@
 //
-//  Extension+CGFloat.swift
+//  CGFloat+Extension.swift
 //  iCamera
 //
 //  Created by 홍승아 on 9/8/25.

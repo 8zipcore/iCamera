@@ -19,7 +19,6 @@ struct CommentsView: View {
   @StateObject var calendarManager: CalendarManager
   var viewType: PreviousViewType
   
-  @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
   @StateObject private var albumManager = AlbumManager()
   @StateObject private var keyboardObserver = KeyboardObserver()
   @State private var imageViewHeight: CGFloat = .zero
@@ -43,7 +42,6 @@ struct CommentsView: View {
         let viewWidth = geometry.size.width
         let viewHeight = geometry.size.height
         let imageWidth = viewWidth
-        let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
         let barSize = CGSize(width: viewWidth, height: viewHeight * 0.05)
         let buttonSize = CGSize(width: barSize.height * 0.75, height: barSize.height * 0.75)
         let titleViewHeight = viewWidth * 110 / 1134
@@ -54,32 +52,32 @@ struct CommentsView: View {
         
         VStack{
           VStack(spacing: 0){
-            let topBarSize = TopBarViewButtonManager().topBarViewSize(viewWidth: viewWidth)
             
-            TopBarView(title: "Comments",
-                       imageSize: topBarSize,
-                       isLeadingButtonHidden: viewType == .main,
-                       isTrailingButtonHidden: false,
-                       buttonManager: topBarViewButtonManager)
-            .frame(width: topBarSize.width, height: topBarSize.height)
-            .padding(.bottom, 3)
-            .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-              switch buttonType{
-              case .cancel:
-                dismiss()
-              case .home:
-                if viewType == .calendar{
-                  navigationPath.removeLast(navigationPath.count)
-                } else {
-                  dismiss()
-                }
-              default:
-                break
-              }
-            }
+//            PrimaryNavigationBar(title: "Comments",
+//                       imageSize: topBarSize,
+//                       isLeadingButtonHidden: viewType == .main,
+//                       isTrailingButtonHidden: false,
+//                       buttonManager: topBarViewButtonManager)
+//            .frame(width: topBarSize.width, height: topBarSize.height)
+//            .padding(.bottom, 3)
+//            .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+//              switch buttonType{
+//              case .cancel:
+//                dismiss()
+//              case .home:
+//                if viewType == .calendar{
+//                  navigationPath.removeLast(navigationPath.count)
+//                } else {
+//                  dismiss()
+//                }
+//              default:
+//                break
+//              }
+//            }
             
             ScrollViewWithOnScrollChanged(
-              scrollViewHeight: viewHeight - topBarSize.height,
+              scrollViewHeight: 30,
+//              scrollViewHeight: viewHeight - topBarSize.height,
               contentOffset: $contentOffset,
               content: {
                 VStack(spacing: 0){
@@ -221,14 +219,14 @@ struct CommentsView: View {
                 }
                 
               }, scrollViewDidScroll: {scrollView in })
-            .frame(width: viewWidth, height: viewHeight - topBarSize.height)
+//            .frame(width: viewWidth, height: viewHeight - topBarSize.height)
             .onChange(of: keyboardObserver.keyboardHeight) { focused in
               print(keyboardObserver.keyboardHeight)
               if keyboardObserver.keyboardHeight > 0{
                 if originKeyboardHeight == .zero {
                   originKeyboardHeight = keyboardObserver.keyboardHeight
                 }
-                scrollViewHeight = viewHeight - topBarSize.height - barSize.height - keyboardObserver.keyboardHeight
+//                scrollViewHeight = viewHeight - topBarSize.height - barSize.height - keyboardObserver.keyboardHeight
                 spacerHeight = scrollViewHeight - titleViewHeight - textViewSize.height
                 
                 

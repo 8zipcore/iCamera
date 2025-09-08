@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
-import Combine
 
 struct CameraView: View {
   @Binding var navigationPath: NavigationPath
   
   @StateObject private var cameraManager = CameraManager()
   @StateObject var albumManager = AlbumManager()
-  @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
   
   @State private var backZoomScale: CGFloat = 1.0
   
@@ -32,18 +30,16 @@ struct CameraView: View {
         
         VStack(spacing: 0){
           
-          let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
-          
-          TopBarView(title: "Camera",
-                     imageSize: topBarSize,
-                     isTrailingButtonHidden: false,
-                     buttonManager: topBarViewButtonManager)
-          .frame(width: topBarSize.width, height: topBarSize.height)
-          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-            if buttonType == .home {
-              dismiss()
-            }
-          }
+//          PrimaryNavigationBar(title: "Camera",
+//                     imageSize: topBarSize,
+//                     isTrailingButtonHidden: false,
+//                     buttonManager: topBarViewButtonManager)
+//          .frame(width: topBarSize.width, height: topBarSize.height)
+//          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+//            if buttonType == .home {
+//              dismiss()
+//            }
+//          }
           
           // let bottomViewHeight = viewWidth * 361 / 1125
           let cameraPreviewHeight = viewWidth * 4 / 3
@@ -77,8 +73,6 @@ struct CameraView: View {
               Spacer()
             }
           }
-          
-          let bottomViewHeight = viewHeight - topBarSize.height - cameraPreviewHeight
           
           VStack{
             ZStack{
@@ -125,7 +119,7 @@ struct CameraView: View {
               .hidden()
               
             }
-            .padding(.top, bottomViewHeight / 5)
+            
             Spacer()
           }
           .background(

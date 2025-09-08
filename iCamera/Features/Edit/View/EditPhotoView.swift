@@ -15,7 +15,6 @@ struct EditPhotoView: View {
   
   @ObservedObject var albumManager: AlbumManager
   
-  @StateObject var topBarViewButtonManager = TopBarViewButtonManager()
   @StateObject var menuButtonManager = MenuButtonManager()
   @StateObject var filterManager = FilterManager()
   @StateObject var stickerManager = StickerManager()
@@ -41,32 +40,27 @@ struct EditPhotoView: View {
         let viewWidth = geometry.size.width
         let viewHeight = geometry.size.height
         
-        let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
-        
         let editImageViewHeight = viewHeight * 0.6
         let editImageViewPositionArray = editImageViewPositionArray(editImageViewHeight: editImageViewHeight, viewSize: geometry.size)
         
         VStack(spacing: 0){
-          TopBarView(title: "iCamera",
-                     imageSize: topBarSize,
-                     isLeadingButtonHidden: false,
-                     isTrailingButtonHidden: false,
-                     trailingButtonType: .confirm,
-                     buttonManager: topBarViewButtonManager)
-          .frame(width: topBarSize.width, height: topBarSize.height)
-          .zIndex(1)
-          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-            if buttonType == .cancel {
-              albumManager.selectedImage = nil
-              dismiss()
-            } else if buttonType == .confirm {
-              deselectAll()
-              saveData(viewSize: geometry.size)
-            }
-          }
-          .onReceive(textManager.completeSaveTextInfo){ _ in
-            createImage(viewSize: geometry.size)
-          }
+//          PrimaryNavigationBar(title: "iCamera",
+//                     imageSize: topBarSize,
+//                     isLeadingButtonHidden: false,
+//                     isTrailingButtonHidden: false,
+//                     trailingButtonType: .confirm,
+//                     buttonManager: topBarViewButtonManager)
+//          .frame(width: topBarSize.width, height: topBarSize.height)
+//          .zIndex(1)
+//          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+//            if buttonType == .cancel {
+//              albumManager.selectedImage = nil
+//              dismiss()
+//            } else if buttonType == .confirm {
+//              deselectAll()
+//              saveData(viewSize: geometry.size)
+//            }
+//          }
           
           NavigationLink(
             isActive: $isNavigationActive,
@@ -208,6 +202,9 @@ struct EditPhotoView: View {
           .ignoresSafeArea(.all, edges: .bottom)
           /* ⭐️ menuView 끝 */
         }
+        .onReceive(textManager.completeSaveTextInfo){ _ in
+          createImage(viewSize: geometry.size)
+        }
         
         if showTextInputView{
           if let textData = textManager.selectedTextData(){
@@ -225,6 +222,7 @@ struct EditPhotoView: View {
         }
       }
       .ignoresSafeArea(.keyboard)
+
     }
     .navigationBarHidden(true)
     .onAppear{

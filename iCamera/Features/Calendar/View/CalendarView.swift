@@ -11,7 +11,6 @@ struct CalendarView: View {
   @Binding var navigationPath: NavigationPath
   
   @StateObject var calendarManager: CalendarManager
-  @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
   
   @Environment(\.dismiss) var dismiss
   
@@ -22,19 +21,18 @@ struct CalendarView: View {
         let viewHeight = geometry.size.height
         
         VStack(spacing: 0){
-          let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
-          
           ZStack{
-            TopBarView(title: "Calendar",
-                       imageSize: topBarSize,
-                       isTrailingButtonHidden: false,
-                       buttonManager: topBarViewButtonManager)
-            .frame(width: topBarSize.width, height: topBarSize.height)
-            .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-              if buttonType == .home {
-                dismiss()
-              }
-            }
+//            PrimaryNavigationBar(title: "Calendar",
+//                       imageSize: topBarSize,
+//                       isTrailingButtonHidden: false,
+//                       buttonManager: topBarViewButtonManager)
+//            .frame(width: topBarSize.width, height: topBarSize.height)
+//            .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+//              if buttonType == .home {
+//                dismiss()
+//              }
+//            }
+            
             HStack{
               Button(action:{
                 calendarManager.todayDate()

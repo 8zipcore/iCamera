@@ -34,54 +34,42 @@ struct MainView: View {
   @StateObject private var calendarManager = CalendarManager.shared
   
   var body: some View {
-    GeometryReader { geometry in
-      NavigationStack(path: $navigationPath) {
-        let viewWidth = geometry.size.width
+    NavigationStack(path: $navigationPath) {
+      VStack(spacing: .mediumPadding){
+        menuSection()
         
-        VStack(spacing: .zero){
-          
-          let topBarSize = TopBarViewButtonManager().topBarViewSize(viewWidth: viewWidth)
-          
-          TopBarView(title: "iCamera", imageSize: topBarSize, buttonManager: TopBarViewButtonManager())
-            .frame(width: topBarSize.width, height: topBarSize.height)
-          
-          VStack(spacing: .mediumPadding){
-            menuSection()
-            
-            calendarSection()
-            
-            Spacer()
-          }
-          .padding(.vertical, .defaultPadding)
-          .padding(.horizontal, .mediumPadding)
-          .grayGridentBackground()
-          .navigationDestination(for: Screen.self) { screen in
-            switch screen {
-            case .camera:
-              CameraView(navigationPath: $navigationPath)
-            case .gallery:
-              GalleryView(navigationPath: $navigationPath, viewType: .main)
-            case .calendar:
-              CalendarView(navigationPath: $navigationPath, calendarManager: calendarManager)
-            case .comments:
-              CommentsView(
-                navigationPath: $navigationPath,
-                calendarManager: calendarManager,
-                viewType: .main
-              )
-            default:
-              TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())
-            }
-          }
-        }
-        .edgesIgnoringSafeArea(.bottom)
-        .onAppear{
-          // CoreDataManager.shared.deleteAllData()
-          calendarManager.fetchData()
-          calendarManager.todayDate()
+        calendarSection()
+        
+        Spacer()
+      }
+      .padding(.vertical, .defaultPadding)
+      .padding(.horizontal, .mediumPadding)
+      .grayGridentBackground()
+      .navigationDestination(for: Screen.self) { screen in
+        switch screen {
+        case .camera:
+          CameraView(navigationPath: $navigationPath)
+        case .gallery:
+          GalleryView(navigationPath: $navigationPath, viewType: .main)
+        case .calendar:
+          CalendarView(navigationPath: $navigationPath, calendarManager: calendarManager)
+        case .comments:
+          CommentsView(
+            navigationPath: $navigationPath,
+            calendarManager: calendarManager,
+            viewType: .main
+          )
+        default:
+          TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())
         }
       }
-      .navigationBarHidden(true)
+      .navigationBar(.main)
+      .edgesIgnoringSafeArea(.bottom)
+      .onAppear{
+        // CoreDataManager.shared.deleteAllData()
+        calendarManager.fetchData()
+        calendarManager.todayDate()
+      }
     }
   }
 }

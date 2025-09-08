@@ -15,7 +15,6 @@ struct TestPhotoView: View {
   
   @State private var filterValue: CGFloat = 0.0
   
-  @StateObject var topBarViewButtonManager = TopBarViewButtonManager()
   @StateObject var menuButtonManager = MenuButtonManager()
   
   @Environment(\.dismiss) var dismiss
@@ -26,22 +25,20 @@ struct TestPhotoView: View {
         let viewWidth = geometry.size.width
         let viewHeight = geometry.size.height
         
-        let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
-        
         VStack(spacing: 0){
-          TopBarView(title: "iCamera",
-                     imageSize: topBarSize,
-                     isLeadingButtonHidden: false,
-                     isTrailingButtonHidden: false,
-                     buttonManager: topBarViewButtonManager)
-          .frame(width: topBarSize.width, height: topBarSize.height)
-          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-            if buttonType == .cancel {
-              dismiss()
-            } else if buttonType == .home {
-              navigationPath.removeLast(navigationPath.count)
-            }
-          }
+//          PrimaryNavigationBar(title: "iCamera",
+//                     imageSize: topBarSize,
+//                     isLeadingButtonHidden: false,
+//                     isTrailingButtonHidden: false,
+//                     buttonManager: topBarViewButtonManager)
+//          .frame(width: topBarSize.width, height: topBarSize.height)
+//          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+//            if buttonType == .cancel {
+//              dismiss()
+//            } else if buttonType == .home {
+//              navigationPath.removeLast(navigationPath.count)
+//            }
+//          }
           
           ZStack{
             Color.white

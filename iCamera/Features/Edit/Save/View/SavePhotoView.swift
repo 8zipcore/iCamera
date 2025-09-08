@@ -10,7 +10,6 @@ import SwiftUI
 struct SavePhotoView: View {
   @Binding var navigationPath: NavigationPath
   @State var image: UIImage
-  @StateObject var topBarViewButtonManager = TopBarViewButtonManager()
   @StateObject var albumManager = AlbumManager()
   
   @State private var showShareSheet = false
@@ -24,21 +23,20 @@ struct SavePhotoView: View {
         let viewWidth = geometry.size.width
         let viewHeight = geometry.size.height
         
-        let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
-        
         VStack(spacing: 0){
-          TopBarView(title: "iCamera",
-                     imageSize: topBarSize,
-                     isLeadingButtonHidden: false,
-                     isTrailingButtonHidden: false,
-                     buttonManager: topBarViewButtonManager)
-          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-            if buttonType == .cancel {
-              dismiss()
-            } else if buttonType == .home {
-              navigationPath.removeLast(navigationPath.count)
-            }
-          }
+//          PrimaryNavigationBar(title: "iCamera",
+//                     imageSize: topBarSize,
+//                     isLeadingButtonHidden: false,
+//                     isTrailingButtonHidden: false,
+//                     buttonManager: topBarViewButtonManager)
+//          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+//            if buttonType == .cancel {
+//              dismiss()
+//            } else if buttonType == .home {
+//              navigationPath.removeLast(navigationPath.count)
+//            }
+//          }
+          
           ZStack{
             GradientRectangleView()
             VStack(spacing: 0){

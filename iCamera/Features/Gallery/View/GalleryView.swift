@@ -18,7 +18,6 @@ struct GalleryView: View {
   @State var calendarManager = CalendarManager()
   
   @StateObject var albumManager = AlbumManager()
-  @StateObject private var topBarViewButtonManager = TopBarViewButtonManager()
   
   @State private var isShowingAlbumView = false
   
@@ -38,31 +37,28 @@ struct GalleryView: View {
       GeometryReader { geometry in
         
         let viewWidth = geometry.size.width
-        let viewHeight = geometry.size.height
         
         VStack(spacing: 0){
           
-          let topBarSize = topBarViewButtonManager.topBarViewSize(viewWidth: viewWidth)
-          
-          TopBarView(title: "Photos",
-                     imageSize: topBarSize,
-                     isLeadingButtonHidden: viewType == .main,
-                     isTrailingButtonHidden: false,
-                     isAlbumButtonHidden: false,
-                     buttonManager: topBarViewButtonManager)
-          .frame(width: topBarSize.width, height: topBarSize.height)
-          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-            switch buttonType{
-            case .cancel:
-              dismiss()
-            case .home:
-              navigationPath.removeLast(navigationPath.count)
-            case .album:
-              isShowingAlbumView = true
-            default:
-              break
-            }
-          }
+//          PrimaryNavigationBar(title: "Photos",
+//                     imageSize: topBarSize,
+//                     isLeadingButtonHidden: viewType == .main,
+//                     isTrailingButtonHidden: false,
+//                     isAlbumButtonHidden: false,
+//                     buttonManager: topBarViewButtonManager)
+//          .frame(width: topBarSize.width, height: topBarSize.height)
+//          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
+//            switch buttonType{
+//            case .cancel:
+//              dismiss()
+//            case .home:
+//              navigationPath.removeLast(navigationPath.count)
+//            case .album:
+//              isShowingAlbumView = true
+//            default:
+//              break
+//            }
+//          }
           
           if isShowingAlbumView {
             AlbumView(navigationPath: $navigationPath, albumManager: albumManager){ album in
@@ -142,19 +138,5 @@ struct GalleryView: View {
       }
     }
   }
-  
-  /*
-   private func visibleAssets() -> [PHAsset?] {
-   return Array(albumManager.assets.prefix(visibleRange.upperBound))
-   }
-   
-   private func updateVisibleRange(using proxy: GeometryProxy, imageWidth: CGFloat, topBarViewHeight: CGFloat) {
-   let scrollPosition = topBarViewHeight - proxy.frame(in: .global).minY
-   let startIndex = max(Int(scrollPosition / imageWidth) * 3, 0)
-   let endIndex = min(startIndex + 30, 11532)
-   visibleRange = startIndex..<endIndex
-   print(visibleRange)
-   }
-   */
 }
 
