@@ -8,6 +8,6 @@
 import UIKit
 
 extension Notification.Name {
-    static let didFinishProcessingPhoto = Notification.Name("didFinishProcessingPhoto")
-    static let saveTextInfo = Notification.Name("saveTextInfo")
+  static let didFinishProcessingPhoto = Notification.Name("didFinishProcessingPhoto")
+  static let saveTextInfo = Notification.Name("saveTextInfo")
 }

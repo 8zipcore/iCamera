@@ -9,41 +9,41 @@ import SwiftUI
 
 /* 기본 fonts */
 func AppleMyungjo(size: CGFloat) -> Font{
-    return Font.custom("Apple Myungjo", size: size)
+  return Font.custom("Apple Myungjo", size: size)
 }
 
 func AppleLiGothic(size: CGFloat) -> Font{
-    return Font.custom("Apple LiGothic", size: size)
+  return Font.custom("Apple LiGothic", size: size)
 }
 
 func HelveticaNeue(size: CGFloat) -> Font{
-    return Font.custom("Helvetica Neue", size: size)
+  return Font.custom("Helvetica Neue", size: size)
 }
 
 func Avenir(size: CGFloat) -> Font{
-    return Font.custom("Avenir", size: size)
+  return Font.custom("Avenir", size: size)
 }
 
 func Georgia(size: CGFloat) -> Font{
-    return Font.custom("Georgia", size: size)
+  return Font.custom("Georgia", size: size)
 }
 
 func AppleGothic(size: CGFloat) -> Font{
-    return Font.custom("Apple SD Gothic Neo Font", size: size)
+  return Font.custom("Apple SD Gothic Neo Font", size: size)
 }
 /* Google fonts */
 func NotoSans(size: CGFloat) -> Font{
-    return Font.custom("NotoSansKR-Regular", size: size)
+  return Font.custom("NotoSansKR-Regular", size: size)
 }
 
 func NanumGothic(size: CGFloat) -> Font{
-    return Font.custom("NanumGothicCoding-Regular", size: size)
+  return Font.custom("NanumGothicCoding-Regular", size: size)
 }
 
 func IBMPlexSans(size: CGFloat) -> Font{
-    return Font.custom("IBMPlexSansKR-Regular", size: size)
+  return Font.custom("IBMPlexSansKR-Regular", size: size)
 }
 
 func Karla(size: CGFloat) -> Font{
-    return Font.custom("Karla-Medium", size: size)
+  return Font.custom("Karla-Medium", size: size)
 }

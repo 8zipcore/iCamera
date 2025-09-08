@@ -8,35 +8,35 @@
 import SwiftUI
 
 struct SelectedTextCell: View {
-    var title: String
-    var font: Font
-    var isSelected: Bool
-    
-    @State private var textSize: CGSize = .zero
-    
-    var body: some View {
-        ZStack{
-            if isSelected{
-                Image("selected")
-                    .resizable()
-                    .frame(width: textSize.width, height: 40)
+  var title: String
+  var font: Font
+  var isSelected: Bool
+  
+  @State private var textSize: CGSize = .zero
+  
+  var body: some View {
+    ZStack{
+      if isSelected{
+        Image("selected")
+          .resizable()
+          .frame(width: textSize.width, height: 40)
+      }
+      Text(title)
+        .font(font)
+        .padding([.leading, .trailing], 10)
+        .foregroundStyle(.black)
+        .background(
+          GeometryReader{ geometry in
+            Color.clear.onAppear{
+              textSize = geometry.size
             }
-            Text(title)
-                .font(font)
-                .padding([.leading, .trailing], 10)
-                .foregroundStyle(.black)
-                .background(
-                    GeometryReader{ geometry in
-                        Color.clear.onAppear{
-                            textSize = geometry.size
-                        }
-                    }
-                )
-        }
+          }
+        )
     }
+  }
 }
 /*
-#Preview {
-    SelectedTextCell(title: "Tfdfddffdfdfdfdfdfdfdfdfddfdf", font: .system(size: 15), isSelected: true)
-}
-*/
+ #Preview {
+ SelectedTextCell(title: "Tfdfddffdfdfdfdfdfdfdfdfddfdf", font: .system(size: 15), isSelected: true)
+ }
+ */

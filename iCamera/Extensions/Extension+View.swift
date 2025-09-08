@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    func hidden(_ shouldHide: Bool) -> some View {
-        self.opacity(shouldHide ? 0 : 1) // opacity를 통해 뷰를 숨김
-    }
+  func hidden(_ shouldHide: Bool) -> some View {
+    self.opacity(shouldHide ? 0 : 1) // opacity를 통해 뷰를 숨김
+  }
 }

@@ -9,15 +9,15 @@ import SwiftUI
 import PixCrop
 
 struct ImageCropView: UIViewRepresentable{
-    @ObservedObject var pixCropManager: PixCropManager
-
-    func makeUIView(context: Context) -> PixCropView{
-        return pixCropManager.pixCropView
+  @ObservedObject var pixCropManager: PixCropManager
+  
+  func makeUIView(context: Context) -> PixCropView{
+    return pixCropManager.pixCropView
+  }
+  
+  func updateUIView(_ uiView: PixCropView, context: Context) {
+    DispatchQueue.main.async{
+      pixCropManager.pixCropView = uiView
     }
-    
-    func updateUIView(_ uiView: PixCropView, context: Context) {
-        DispatchQueue.main.async{
-            pixCropManager.pixCropView = uiView
-        }
-    }
+  }
 }
