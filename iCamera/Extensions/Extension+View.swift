@@ -9,6 +9,24 @@ import SwiftUI
 
 extension View {
   func hidden(_ shouldHide: Bool) -> some View {
-    self.opacity(shouldHide ? 0 : 1) // opacity를 통해 뷰를 숨김
+    self.opacity(shouldHide ? 0 : 1)
+  }
+  
+  func roundedBackground(
+    cornerRadius: CGFloat = .defaultCornerRadius,
+    strokeColor: Color = .black,
+    lineWidth: CGFloat = 1,
+    fillColor: Color = .white
+  ) -> some View {
+    self.modifier(RoundedBackgroundModifier(
+      cornerRadius: cornerRadius,
+      strokeColor: strokeColor,
+      lineWidth: lineWidth,
+      fillColor: fillColor
+    ))
+  }
+  
+  func grayGridentBackground() -> some View {
+    self.modifier(GrayGradientBackgroundModifier())
   }
 }

@@ -10,7 +10,6 @@ import SwiftUI
 struct ListView: View {
   
   @State var title: String
-  @State var imageWidth: CGFloat
   
   var body: some View {
     HStack{
@@ -23,20 +22,8 @@ struct ListView: View {
       
       Image("arrow")
         .resizable()
-        .frame(width: imageWidth, height: imageWidth)
-      
-      /*
-       Button(action: action) {
-       Image("arrow")
-       .resizable()
-       .frame(width: imageWidth, height: imageWidth)
-       }
-       */
+        .frame(width: 16, height: 16)
     }
-    .contentShape(Rectangle()) // Spacer도 터치 가능하게 해줌
+    .contentShape(Rectangle())
   }
-}
-
-#Preview {
-  ListView(title: "Camera", imageWidth: 15)
 }
