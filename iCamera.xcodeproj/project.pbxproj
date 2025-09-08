@@ -51,7 +51,6 @@
 		36810C512C8F0F09002C680A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C502C8F0F09002C680A /* MainView.swift */; };
 		36810C532C8F1E7E002C680A /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C522C8F1E7E002C680A /* TopBarView.swift */; };
 		36810C552C8F287A002C680A /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C542C8F287A002C680A /* ListView.swift */; };
-		36810C572C8F3199002C680A /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36810C562C8F3199002C680A /* TestView.swift */; };
 		3682653A2CF6E89F0065E945 /* EditFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368265392CF6E89F0065E945 /* EditFilterView.swift */; };
 		3682653C2CF6F1000065E945 /* FilterTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3682653B2CF6F1000065E945 /* FilterTypeCell.swift */; };
 		3682EF1A2CC8BA5D00D18FE1 /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3682EF192CC8BA5D00D18FE1 /* AttributedTextView.swift */; };
@@ -66,9 +65,7 @@
 		369651602CA9831E004E0134 /* TestPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3696515F2CA9831E004E0134 /* TestPhotoView.swift */; };
 		3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697D1B22C9FEF990012ABDC /* NotificationName.swift */; };
 		369E7BF52C8DAB970044EAF1 /* iCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */; };
-		369E7BF72C8DAB970044EAF1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7BF62C8DAB970044EAF1 /* ContentView.swift */; };
 		369E7BF92C8DAB980044EAF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 369E7BF82C8DAB980044EAF1 /* Assets.xcassets */; };
-		369E7BFC2C8DAB980044EAF1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 369E7BFB2C8DAB980044EAF1 /* Preview Assets.xcassets */; };
 		369E7C062C8DAB980044EAF1 /* iCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7C052C8DAB980044EAF1 /* iCameraTests.swift */; };
 		369E7C102C8DAB980044EAF1 /* iCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7C0F2C8DAB980044EAF1 /* iCameraUITests.swift */; };
 		369E7C122C8DAB980044EAF1 /* iCameraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369E7C112C8DAB980044EAF1 /* iCameraUITestsLaunchTests.swift */; };
@@ -159,7 +156,6 @@
 		36810C502C8F0F09002C680A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		36810C522C8F1E7E002C680A /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		36810C542C8F287A002C680A /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		36810C562C8F3199002C680A /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		368265392CF6E89F0065E945 /* EditFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterView.swift; sourceTree = "<group>"; };
 		3682653B2CF6F1000065E945 /* FilterTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTypeCell.swift; sourceTree = "<group>"; };
 		3682EF192CC8BA5D00D18FE1 /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
@@ -175,9 +171,7 @@
 		3697D1B22C9FEF990012ABDC /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		369E7BF12C8DAB970044EAF1 /* iCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCameraApp.swift; sourceTree = "<group>"; };
-		369E7BF62C8DAB970044EAF1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		369E7BF82C8DAB980044EAF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		369E7BFB2C8DAB980044EAF1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		369E7C012C8DAB980044EAF1 /* iCameraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iCameraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		369E7C052C8DAB980044EAF1 /* iCameraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCameraTests.swift; sourceTree = "<group>"; };
 		369E7C0B2C8DAB980044EAF1 /* iCameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iCameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,56 +238,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3605F5622C913CCD00665348 /* Supporting Views */ = {
-			isa = PBXGroup;
-			children = (
-				3605F5632C913CDE00665348 /* Colors.swift */,
-				36810C522C8F1E7E002C680A /* TopBarView.swift */,
-				36810C542C8F287A002C680A /* ListView.swift */,
-				3605F56D2C91957600665348 /* FlashButtonView.swift */,
-				362222372CA00E1F00AA9EA5 /* MenuButtonView.swift */,
-				3692E40B2CC4E540003CBACB /* CustomTextEditor.swift */,
-				3634CAC22CC91DD20061D5DE /* Extension+View.swift */,
-				36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */,
-				36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */,
-				365FF5122CE232A300D6EE8B /* SelectedTextCell.swift */,
-				36EC6DA12CE4EEA800A5D784 /* CustomSlider.swift */,
-				36039EEE2CF1EB6F0002EE48 /* ShareSheet.swift */,
-				3630F89F2CF3003200C59F62 /* CaptureImageView.swift */,
-				36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */,
-			);
-			path = "Supporting Views";
-			sourceTree = "<group>";
-		};
-		3605F5692C917DDA00665348 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				3605F5672C917DBF00665348 /* CameraManager.swift */,
-				36BCF7232C94AA8500FF2529 /* AlbumManager.swift */,
-				3697D1B22C9FEF990012ABDC /* NotificationName.swift */,
-				362BD6B22CAADB4C000955D5 /* FilterManager.swift */,
-				362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */,
-				36447A372CAC0DDA008E1268 /* LUTManager.swift */,
-				3688E9EE2CAE7036001DC9DC /* StickerManager.swift */,
-				36A954C32CB25BDE00E43960 /* CutImageManager.swift */,
-				362940D52CC3F12C007C8A54 /* TextManager.swift */,
-				361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */,
-				36697BFE2CD1241B00070A55 /* CalendarManager.swift */,
-				36F84FBC2CD24AE5008275F5 /* Font.swift */,
-				3653CCFA2CE47730005459E4 /* FontManager.swift */,
-				361BAB952CE87B970091346B /* StoredStickerManager.swift */,
-				361BAB9B2CE88A520091346B /* Array.swift */,
-				361BAB9D2CE8D7B90091346B /* EditManager.swift */,
-				36DA5EBD2D58F28C004EAE9D /* PixCropManager.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		361BAB912CE85EBF0091346B /* Sticker */ = {
 			isa = PBXGroup;
 			children = (
-				3688E9EC2CAE6933001DC9DC /* StickerView.swift */,
-				361BAB932CE85F180091346B /* EditStickerView.swift */,
+				3686EF2C2E6EC21200E24EA5 /* View */,
+				3686EF2B2E6EC20C00E24EA5 /* Manager */,
 			);
 			path = Sticker;
 			sourceTree = "<group>";
@@ -301,9 +250,8 @@
 		361BAB922CE85ED40091346B /* Filter */ = {
 			isa = PBXGroup;
 			children = (
-				36A12E082CA19D1F00228784 /* FilterImageView.swift */,
-				368265392CF6E89F0065E945 /* EditFilterView.swift */,
-				3682653B2CF6F1000065E945 /* FilterTypeCell.swift */,
+				3686EF302E6EC23200E24EA5 /* View */,
+				3686EF2F2E6EC22800E24EA5 /* Manager */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -311,9 +259,9 @@
 		366306792CDF2D49008F16E9 /* Cut */ = {
 			isa = PBXGroup;
 			children = (
+				3686EF2E2E6EC22100E24EA5 /* View */,
+				3686EF2D2E6EC21B00E24EA5 /* Manager */,
 				366306772CDF2B0D008F16E9 /* CutMenuView.swift */,
-				36DA5EB92D58F24B004EAE9D /* ImageCropView.swift */,
-				36DA5EBB2D58F253004EAE9D /* ImageCropResultView.swift */,
 			);
 			path = Cut;
 			sourceTree = "<group>";
@@ -321,12 +269,8 @@
 		3663067A2CDF2D80008F16E9 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				3692E4092CC4D3AC003CBACB /* TextInputView.swift */,
-				3682EF192CC8BA5D00D18FE1 /* AttributedTextView.swift */,
-				3682EF1B2CC8ECC500D18FE1 /* TextView.swift */,
-				3692E40F2CC544E9003CBACB /* SelectColorView.swift */,
-				3692E40D2CC527E0003CBACB /* TextMenuView.swift */,
-				365978F32CE5AB3E00D58159 /* EditTextView.swift */,
+				3686EF2A2E6EC20700E24EA5 /* Manager */,
+				3686EF292E6EC1FE00E24EA5 /* View */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -357,27 +301,312 @@
 			path = Lut;
 			sourceTree = "<group>";
 		};
-		36810C4D2C8F0ED4002C680A /* View */ = {
+		36810C4D2C8F0ED4002C680A /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				3686ECC82E6EC06300E24EA5 /* Common */,
+				3686ECC72E6EBFEB00E24EA5 /* Camera */,
+				3686ECC42E6EBF4D00E24EA5 /* Edit */,
+				3686ECC32E6EBF2F00E24EA5 /* Calendar */,
+				3686ECC12E6EBEFD00E24EA5 /* Main */,
+				36EA099C2D12D56F007C82CA /* Gallery */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		3686ECC02E6EBE6800E24EA5 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				36DB6CD42D01D9EA00A74BD0 /* LaunchView.swift */,
+				369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */,
+				369E7BF82C8DAB980044EAF1 /* Assets.xcassets */,
+				36F84FB92CD24A32008275F5 /* Font */,
+				366793F12CFF3AB80052612F /* Lut */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		3686ECC12E6EBEFD00E24EA5 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				3686EF362E6EC29E00E24EA5 /* Components */,
+				3686EF352E6EC27C00E24EA5 /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		3686ECC32E6EBF2F00E24EA5 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				3686EF332E6EC25A00E24EA5 /* Manager */,
+				3686EF322E6EC24C00E24EA5 /* Componenets */,
+				3686EF312E6EC24000E24EA5 /* View */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		3686ECC42E6EBF4D00E24EA5 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				3686EF252E6EC1AB00E24EA5 /* Manager */,
+				3686EF242E6EC19E00E24EA5 /* Components */,
+				3686EF232E6EC18F00E24EA5 /* View */,
+				3686ECC52E6EBF7600E24EA5 /* Save */,
+				3663067A2CDF2D80008F16E9 /* Text */,
+				361BAB912CE85EBF0091346B /* Sticker */,
+				366306792CDF2D49008F16E9 /* Cut */,
+				361BAB922CE85ED40091346B /* Filter */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		3686ECC52E6EBF7600E24EA5 /* Save */ = {
+			isa = PBXGroup;
+			children = (
+				3686EF282E6EC1F900E24EA5 /* View */,
+			);
+			path = Save;
+			sourceTree = "<group>";
+		};
+		3686ECC62E6EBFBA00E24EA5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3634CAC22CC91DD20061D5DE /* Extension+View.swift */,
+				3605F5632C913CDE00665348 /* Colors.swift */,
+				3653CCFA2CE47730005459E4 /* FontManager.swift */,
+				361BAB9B2CE88A520091346B /* Array.swift */,
+				3697D1B22C9FEF990012ABDC /* NotificationName.swift */,
+				36F84FBC2CD24AE5008275F5 /* Font.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3686ECC72E6EBFEB00E24EA5 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				3686EF222E6EC18700E24EA5 /* Manager */,
+				3686EF212E6EC17F00E24EA5 /* Components */,
+				3686EF202E6EC17700E24EA5 /* View */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		3686ECC82E6EC06300E24EA5 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */,
+				361C09D32CC68D6F00BFF4E3 /* KeyboardAwareModifier.swift */,
+				36810C522C8F1E7E002C680A /* TopBarView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		3686EF202E6EC17700E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				36039EEE2CF1EB6F0002EE48 /* ShareSheet.swift */,
+				3605F5652C917CDD00665348 /* CameraView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF212E6EC17F00E24EA5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3605F56D2C91957600665348 /* FlashButtonView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		3686EF222E6EC18700E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				3605F5672C917DBF00665348 /* CameraManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF232E6EC18F00E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				362BD6B42CAAE351000955D5 /* EditImageView.swift */,
+				362222352CA0087600AA9EA5 /* EditPhotoView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF242E6EC19E00E24EA5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				36EC6DA12CE4EEA800A5D784 /* CustomSlider.swift */,
+				362222372CA00E1F00AA9EA5 /* MenuButtonView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		3686EF252E6EC1AB00E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				361BAB9D2CE8D7B90091346B /* EditManager.swift */,
+				362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF282E6EC1F900E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3630F89F2CF3003200C59F62 /* CaptureImageView.swift */,
+				36039EEC2CF1A2020002EE48 /* SavePhotoView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF292E6EC1FE00E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3692E4092CC4D3AC003CBACB /* TextInputView.swift */,
+				3682EF192CC8BA5D00D18FE1 /* AttributedTextView.swift */,
+				3682EF1B2CC8ECC500D18FE1 /* TextView.swift */,
+				3692E40F2CC544E9003CBACB /* SelectColorView.swift */,
+				3692E40D2CC527E0003CBACB /* TextMenuView.swift */,
+				365978F32CE5AB3E00D58159 /* EditTextView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF2A2E6EC20700E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				362940D52CC3F12C007C8A54 /* TextManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF2B2E6EC20C00E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				3688E9EE2CAE7036001DC9DC /* StickerManager.swift */,
+				361BAB952CE87B970091346B /* StoredStickerManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF2C2E6EC21200E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3688E9EC2CAE6933001DC9DC /* StickerView.swift */,
+				361BAB932CE85F180091346B /* EditStickerView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF2D2E6EC21B00E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				36DA5EBD2D58F28C004EAE9D /* PixCropManager.swift */,
+				36A954C32CB25BDE00E43960 /* CutImageManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF2E2E6EC22100E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				36DA5EB92D58F24B004EAE9D /* ImageCropView.swift */,
+				36DA5EBB2D58F253004EAE9D /* ImageCropResultView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF2F2E6EC22800E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				36447A372CAC0DDA008E1268 /* LUTManager.swift */,
+				362BD6B22CAADB4C000955D5 /* FilterManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF302E6EC23200E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				36A12E082CA19D1F00228784 /* FilterImageView.swift */,
+				368265392CF6E89F0065E945 /* EditFilterView.swift */,
+				3682653B2CF6F1000065E945 /* FilterTypeCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF312E6EC24000E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				36CFA3702CD345D100DF6E1E /* CommentsView.swift */,
+				368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */,
+				3601C59C2C954E6800E71978 /* AlbumView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF322E6EC24C00E24EA5 /* Componenets */ = {
+			isa = PBXGroup;
+			children = (
+				36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */,
+				3692E40B2CC4E540003CBACB /* CustomTextEditor.swift */,
+				36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */,
+				365FF5122CE232A300D6EE8B /* SelectedTextCell.swift */,
+				36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */,
+			);
+			path = Componenets;
+			sourceTree = "<group>";
+		};
+		3686EF332E6EC25A00E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				36697BFE2CD1241B00070A55 /* CalendarManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF352E6EC27C00E24EA5 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				36810C502C8F0F09002C680A /* MainView.swift */,
-				36810C562C8F3199002C680A /* TestView.swift */,
-				3601C59C2C954E6800E71978 /* AlbumView.swift */,
-				36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */,
-				362222352CA0087600AA9EA5 /* EditPhotoView.swift */,
-				3696515F2CA9831E004E0134 /* TestPhotoView.swift */,
-				368D426D2CCBCF9B00E3E0FB /* CalendarView.swift */,
-				36CFA3702CD345D100DF6E1E /* CommentsView.swift */,
-				362BD6B42CAAE351000955D5 /* EditImageView.swift */,
-				36EA099C2D12D56F007C82CA /* Gallery */,
-				361BAB922CE85ED40091346B /* Filter */,
-				366306792CDF2D49008F16E9 /* Cut */,
-				361BAB912CE85EBF0091346B /* Sticker */,
-				3663067A2CDF2D80008F16E9 /* Text */,
-				36039EEC2CF1A2020002EE48 /* SavePhotoView.swift */,
-				36DB6CD42D01D9EA00A74BD0 /* LaunchView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF362E6EC29E00E24EA5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				36810C542C8F287A002C680A /* ListView.swift */,
+				3696515F2CA9831E004E0134 /* TestPhotoView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		3686EF372E6EC2A800E24EA5 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				36BCF7232C94AA8500FF2529 /* AlbumManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3686EF382E6EC2AF00E24EA5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				36D096202C943DCA00F37AE0 /* GalleryView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3686EF392E6EC2B300E24EA5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		369E7BE82C8DAB970044EAF1 = {
@@ -405,27 +634,13 @@
 		369E7BF32C8DAB970044EAF1 /* iCamera */ = {
 			isa = PBXGroup;
 			children = (
-				366793F12CFF3AB80052612F /* Lut */,
-				36D221BC2CDA527D0007A0D3 /* CoreData */,
-				36F84FB92CD24A32008275F5 /* Font */,
-				3605F5692C917DDA00665348 /* Utilities */,
-				3605F5622C913CCD00665348 /* Supporting Views */,
+				3686ECC62E6EBFBA00E24EA5 /* Extensions */,
+				3686ECC02E6EBE6800E24EA5 /* Resource */,
+				36D221BC2CDA527D0007A0D3 /* Persistence */,
 				3663067B2CDF2F4A008F16E9 /* Model */,
-				36810C4D2C8F0ED4002C680A /* View */,
-				369E7BF42C8DAB970044EAF1 /* iCameraApp.swift */,
-				369E7BF62C8DAB970044EAF1 /* ContentView.swift */,
-				369E7BF82C8DAB980044EAF1 /* Assets.xcassets */,
-				369E7BFA2C8DAB980044EAF1 /* Preview Content */,
+				36810C4D2C8F0ED4002C680A /* Features */,
 			);
 			path = iCamera;
-			sourceTree = "<group>";
-		};
-		369E7BFA2C8DAB980044EAF1 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				369E7BFB2C8DAB980044EAF1 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		369E7C042C8DAB980044EAF1 /* iCameraTests */ = {
@@ -445,7 +660,7 @@
 			path = iCameraUITests;
 			sourceTree = "<group>";
 		};
-		36D221BC2CDA527D0007A0D3 /* CoreData */ = {
+		36D221BC2CDA527D0007A0D3 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
 				36D221BA2CDA4C000007A0D3 /* CoreDataManager.swift */,
@@ -453,15 +668,15 @@
 				36D221CE2CDA6F1E0007A0D3 /* iCamera.xcdatamodeld */,
 				361BAB992CE882BD0091346B /* StickerData.swift */,
 			);
-			path = CoreData;
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		36EA099C2D12D56F007C82CA /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				3605F5652C917CDD00665348 /* CameraView.swift */,
-				36D096202C943DCA00F37AE0 /* GalleryView.swift */,
-				36CB5ECC2D1437FE00B4B3AB /* GalleryCollectionView.swift */,
+				3686EF392E6EC2B300E24EA5 /* Components */,
+				3686EF382E6EC2AF00E24EA5 /* View */,
+				3686EF372E6EC2A800E24EA5 /* Manager */,
 			);
 			path = Gallery;
 			sourceTree = "<group>";
@@ -611,7 +826,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				366793FE2CFF3D020052612F /* RED_Achromic_Rec2020_N-Log_to_Rec709_BT1886.cube in Resources */,
-				369E7BFC2C8DAB980044EAF1 /* Preview Assets.xcassets in Resources */,
 				36F84FBF2CD24BA1008275F5 /* NanumGothicCoding-Regular.ttf in Resources */,
 				3667940D2CFF59CF0052612F /* JS - Deep Green.cube in Resources */,
 				366794122CFF5DE30052612F /* From_SLog2SGumut_To_SLog2-709_.cube in Resources */,
@@ -719,9 +933,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iCamera-iCameraUITests/Pods-iCamera-iCameraUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -736,9 +954,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iCamera/Pods-iCamera-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iCamera/Pods-iCamera-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -752,7 +974,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36810C572C8F3199002C680A /* TestView.swift in Sources */,
 				3682EF1A2CC8BA5D00D18FE1 /* AttributedTextView.swift in Sources */,
 				36BCF7242C94AA8500FF2529 /* AlbumManager.swift in Sources */,
 				3630F8A02CF3003200C59F62 /* CaptureImageView.swift in Sources */,
@@ -760,7 +981,6 @@
 				362940D62CC3F12C007C8A54 /* TextManager.swift in Sources */,
 				3682EF1C2CC8ECC500D18FE1 /* TextView.swift in Sources */,
 				3605F56E2C91957600665348 /* FlashButtonView.swift in Sources */,
-				369E7BF72C8DAB970044EAF1 /* ContentView.swift in Sources */,
 				3634CAC32CC91DD20061D5DE /* Extension+View.swift in Sources */,
 				36810C512C8F0F09002C680A /* MainView.swift in Sources */,
 				3605F5642C913CDF00665348 /* Colors.swift in Sources */,
@@ -983,7 +1203,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iCamera/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = SG72AH33ZM;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1019,7 +1239,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"iCamera/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = SG72AH33ZM;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
