@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct TestPhotoView: View {
   @Binding var navigationPath: NavigationPath
   @State var image: UIImage = UIImage()

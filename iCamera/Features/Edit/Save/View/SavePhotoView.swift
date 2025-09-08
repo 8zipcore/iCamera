@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct SavePhotoView: View {
   @Binding var navigationPath: NavigationPath
   @State var image: UIImage
@@ -102,7 +101,7 @@ struct SavePhotoView: View {
     .navigationBarHidden(true)
   }
 }
-@available(iOS 16.0, *)
+
 #Preview {
   SavePhotoView(navigationPath: .constant(NavigationPath()), image: UIImage(named: "test")!)
 }

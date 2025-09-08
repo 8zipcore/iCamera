@@ -8,7 +8,6 @@
 import SwiftUI
 import Photos
 
-@available(iOS 16.0, *)
 struct GalleryView: View {
   enum PreviousViewType{
     case main, camera, comments

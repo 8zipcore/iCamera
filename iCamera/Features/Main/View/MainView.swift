@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct MainView: View {
   
   @State private var navigationPath = NavigationPath()

@@ -14,14 +14,10 @@ struct iCameraApp: App {
   var body: some Scene {
     WindowGroup {
       ZStack{
-        if #available(iOS 16.0, *) {
-          if isActive {
-            MainView()
-          } else {
-            LaunchView()
-          }
+        if isActive {
+          MainView()
         } else {
-          // Fallback on earlier versions
+          LaunchView()
         }
       }
       .animation(.easeInOut(duration: 0.1), value: isActive)

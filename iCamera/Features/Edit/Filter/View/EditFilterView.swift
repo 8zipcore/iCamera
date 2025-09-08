@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct EditFilterView: View {
   @Binding var navigationPath: NavigationPath
   @StateObject var filterManager: FilterManager

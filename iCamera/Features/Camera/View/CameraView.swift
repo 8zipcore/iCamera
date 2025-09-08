@@ -8,7 +8,6 @@
 import SwiftUI
 import Combine
 
-@available(iOS 16.0, *)
 struct CameraView: View {
   @Binding var navigationPath: NavigationPath
   

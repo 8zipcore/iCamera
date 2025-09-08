@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct TextInputView: View {
   @State var textData: TextData
   @StateObject var textManager: TextManager

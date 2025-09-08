@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct CalendarView: View {
   @Binding var navigationPath: NavigationPath
   

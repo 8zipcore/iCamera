@@ -8,7 +8,6 @@
 import SwiftUI
 import Photos
 
-@available(iOS 16.0, *)
 struct EditPhotoView: View {
   @Binding var navigationPath: NavigationPath
   @State var image: UIImage = UIImage()

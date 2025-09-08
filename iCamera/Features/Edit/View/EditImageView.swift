@@ -9,7 +9,6 @@ import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
-@available(iOS 16.0, *)
 struct EditImageView: View {
   @Binding var image: UIImage?
   @StateObject var filterManager: FilterManager
