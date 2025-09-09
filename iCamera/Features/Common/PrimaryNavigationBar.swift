@@ -29,7 +29,7 @@ struct PrimaryNavigationBar: View {
     
     var isLeadingButtonHidden: Bool {
       switch self {
-      case .main, .edit, .save:
+      case .main, .gallry, .edit, .save:
         return true
       default:
         return false
@@ -58,9 +58,10 @@ struct PrimaryNavigationBar: View {
   var onLeadingButtonTap: (() -> Void)?
   var trailingButtonType: ButtonType?
   var onTrailingButtonTap: (() -> Void)?
+  @Binding var centerButtonRotated: Bool
   var onCenterButtonTap: (() -> Void)?
   
-  private let imageSize = CGSize(width: 25, height: 25)
+  private let imageSize = CGSize(width: 30, height: 30)
   
   var body: some View {
     
@@ -105,6 +106,8 @@ struct PrimaryNavigationBar: View {
             Image(ButtonType.album.imageName)
               .resizable()
               .frame(width: 12, height: 10)
+              .rotationEffect(.degrees(centerButtonRotated ? 180 : 0))
+              .animation(nil, value: centerButtonRotated)
           }
           .padding(.top, 3)
           .padding(.leading, 3)

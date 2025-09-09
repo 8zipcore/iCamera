@@ -10,18 +10,7 @@ import Photos
 import UIKit
 import Combine
 
-enum AlbumError: Error{
-  case loading
-}
-
-struct Album: Identifiable, Hashable {
-  var id = UUID()
-  var image: UIImage?
-  var name: String
-  var asset: PHAssetCollection
-}
-
-class AlbumManager: ObservableObject {
+class AlbumViewModel: ObservableObject {
   @Published var albums: [Album] = []
   @Published var images: [UIImage] = []
   @Published var selectedImage: UIImage?
@@ -38,7 +27,7 @@ class AlbumManager: ObservableObject {
   func fetchAlbums() -> AnyPublisher<Void, Error>{
     Future { promise in
       let fetchOptions = PHFetchOptions()
-      fetchOptions.sortDescriptors = [NSSortDescriptor(key: "startDate", ascending: true)]
+      fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
       
       var albumResult: [PHAssetCollection] = []
       

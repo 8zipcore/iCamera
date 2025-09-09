@@ -13,33 +13,112 @@ struct GalleryView: View {
     case main, camera, comments
   }
   
+  @Environment(\.dismiss) var dismiss
+  
   @Binding var navigationPath: NavigationPath
   var viewType: PreviousViewType
   @State var calendarManager = CalendarManager()
   
-  @StateObject var albumManager = AlbumManager()
+  @StateObject var albumVM = AlbumViewModel()
   
   @State private var isShowingAlbumView = false
-  
-  @State private var isNavigating: Bool = false
   @State private var selectedAsset: PHAsset = PHAsset()
   
-  @Environment(\.dismiss) var dismiss
-  
-  private let columns = [
-    GridItem(.flexible()),
-    GridItem(.flexible()),
-    GridItem(.flexible())
-  ]
+  private var albumView: some View {
+    AlbumView(
+      navigationPath: $navigationPath,
+      albums: albumVM.albums
+    ){ album in
+      isShowingAlbumView = false
+      
+      Task{
+        await albumVM.resetAlbum(album)
+        loadPhotos()
+      }
+    }
+  }
   
   var body: some View {
-    NavigationView{
-      GeometryReader { geometry in
-        
-        let viewWidth = geometry.size.width
-        
-        VStack(spacing: 0){
+    VStack(spacing: .zero) {
+      if isShowingAlbumView {
+        albumView
+      } else {
+        galleryCollectionView()
+      }
+      
+      Spacer()
+    }
+    .navigationBar(
+      .gallry,
+      trailingButtonType: .cancel,
+      onTrailingButtonTap: {
+        navigationPath.removeLast(navigationPath.count)
+      },
+      centerButtonRotated: $isShowingAlbumView,
+      onCenterButtonTap: {
+        isShowingAlbumView.toggle()
+      }
+    )
+    .background(.white)
+    .ignoresSafeArea(edges: .bottom)
+    .navigationDestination(for: PHAsset.self) { asset in
+      EditPhotoView(
+        navigationPath: $navigationPath,
+        asset: asset,
+        albumManager: albumVM
+      )
+    }
+    .onAppear{
+      loadPhotos(includeAlbums: true)
+    }
+  }
+}
+
+extension GalleryView {
+  private func loadPhotos(includeAlbums: Bool = false) {
+    Task {
+      let status = await PHPhotoLibrary.requestAuthorization(for: .readWrite)
+      
+      switch status {
+      case .authorized:
+        albumVM.fetchPhotos()
+        if includeAlbums {
+          await albumVM.fetchAlbums()
+        }
+      default:
+        print("사진 라이브러리 접근 권한이 없습니다.")
+      }
+    }
+  }
+}
+
+extension GalleryView {
+  private func galleryCollectionView() -> some View {
+    GeometryReader { geometry in
+      let cellSpcacing: CGFloat = 3
+      let columnNumber: CGFloat = 3
+      let cellWidth = (geometry.size.width - (columnNumber - 1) * cellSpcacing) / columnNumber
+      
+      GalleryCollectionView(
+        assets: $albumVM.assets,
+        itemSize: CGSize(width: cellWidth, height: cellWidth),
+        spacing: 3,
+        onTap: { asset in
+          selectedAsset = asset
           
+          if viewType == .comments {
+            calendarManager.selectedImage.send((albumVM, asset))
+            dismiss()
+          } else {
+            navigationPath.append(asset)
+          }
+        }
+      )
+    }
+  }
+}
+
+
 //          PrimaryNavigationBar(title: "Photos",
 //                     imageSize: topBarSize,
 //                     isLeadingButtonHidden: viewType == .main,
@@ -59,84 +138,3 @@ struct GalleryView: View {
 //              break
 //            }
 //          }
-          
-          if isShowingAlbumView {
-            AlbumView(navigationPath: $navigationPath, albumManager: albumManager){ album in
-              isShowingAlbumView = false
-              Task{
-                await albumManager.resetAlbum(album)
-                loadPhotos()
-              }
-            }
-          } else {
-            let cellSpcacing: CGFloat = 3
-            let columnNumber: CGFloat = 3
-            let cellWidth = (viewWidth - (columnNumber - 1) * cellSpcacing) / columnNumber
-            
-            NavigationLink(
-              destination: EditPhotoView(
-                navigationPath:$navigationPath,
-                asset: selectedAsset,
-                albumManager: albumManager),
-              isActive: $isNavigating
-            ) {
-              EmptyView()
-            }
-            .hidden()
-            
-            GalleryCollectionView(
-              albumManager: albumManager,
-              itemSize: CGSize(width: cellWidth, height: cellWidth),
-              spacing: 3,
-              onTap: { asset in
-                selectedAsset = asset
-                if viewType == .comments {
-                  calendarManager.selectedImage.send((albumManager, asset))
-                  dismiss()
-                } else {
-                  isNavigating = true
-                }
-              }
-            )
-          }
-        }
-        .background(.white)
-      }
-    }
-    .navigationBarHidden(true)
-    .onAppear{
-      loadPhotos()
-      albumManager.fetchAlbums()
-        .sink(receiveCompletion: { completion in
-          switch completion {
-          case .finished:
-            print("✅ 앨범 불러오기 완료")
-          case .failure(_):
-            print("🌀 앨범 불러오기 오류")
-          }
-        }, receiveValue: {})
-        .store(in: &albumManager.cancellables)
-    }
-  }
-  
-  func loadPhotos(){
-    print("✅ 사진 불러오기 시작")
-    PHPhotoLibrary.requestAuthorization { status in
-      if status == .authorized {
-        albumManager.fetchPhotos()
-          .sink(receiveCompletion: { completion in
-            switch completion{
-            case .finished:
-              print("✅ 사진 불러오기 완료")
-            case .failure(let error):
-              print("🌀 error : \(error)")
-            }
-          }, receiveValue: {})
-          .store(in: &albumManager.cancellables)
-      } else {
-        print("사진 라이브러리 접근 권한이 없습니다.")
-      }
-    }
-  }
-}
-

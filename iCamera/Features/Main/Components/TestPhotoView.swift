@@ -11,7 +11,7 @@ struct TestPhotoView: View {
   @Binding var navigationPath: NavigationPath
   @State var image: UIImage = UIImage()
   @State var index: Int = -1
-  @State var albumManager: AlbumManager
+  @State var albumManager: AlbumViewModel
   
   @State private var filterValue: CGFloat = 0.0
   

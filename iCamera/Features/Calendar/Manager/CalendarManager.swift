@@ -40,7 +40,7 @@ class CalendarManager: ObservableObject{
     return monthArray[selectedMonth - 1]
   }
   
-  var selectedImage = PassthroughSubject<(AlbumManager, PHAsset), Never>()
+  var selectedImage = PassthroughSubject<(AlbumViewModel, PHAsset), Never>()
   @Published var calendarDataArray: [CalendarData] = []
   private var cancellables = Set<AnyCancellable>()
   

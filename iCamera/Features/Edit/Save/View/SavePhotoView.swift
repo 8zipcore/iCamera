@@ -10,7 +10,7 @@ import SwiftUI
 struct SavePhotoView: View {
   @Binding var navigationPath: NavigationPath
   @State var image: UIImage
-  @StateObject var albumManager = AlbumManager()
+  @StateObject var albumManager = AlbumViewModel()
   
   @State private var showShareSheet = false
   @State private var isSaved = false
@@ -55,9 +55,10 @@ struct SavePhotoView: View {
                 .padding([.top, .bottom], 40)
               
               Button(action:{
-                albumManager.saveImageToPhotos(image: image, completion: {
+                Task {
+                  await albumManager.saveImageToPhotos(image: image)
                   isSaved = true
-                })
+                }
               }){
                 let imageWidth: CGFloat = viewWidth * 0.19
                 let imageHeight: CGFloat = imageWidth * 54 / 119

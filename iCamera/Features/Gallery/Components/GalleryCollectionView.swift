@@ -9,7 +9,7 @@ import SwiftUI
 import Photos
 
 struct GalleryCollectionView: UIViewRepresentable {
-  @ObservedObject var albumManager: AlbumManager
+  @Binding var assets: [PHAsset]
   var itemSize: CGSize
   var spacing: CGFloat
   var onTap: (PHAsset) -> Void
@@ -21,8 +21,11 @@ struct GalleryCollectionView: UIViewRepresentable {
     layout.minimumInteritemSpacing = spacing
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.contentInset = .zero
+    collectionView.scrollIndicatorInsets = .zero
     collectionView.delegate = context.coordinator
     collectionView.dataSource = context.coordinator
+    collectionView.prefetchDataSource = context.coordinator
     collectionView.register(GalleryImageViewCell.self, forCellWithReuseIdentifier: GalleryImageViewCell.identifier)
     return collectionView
   }
@@ -32,71 +35,78 @@ struct GalleryCollectionView: UIViewRepresentable {
   }
   
   func makeCoordinator() -> Coordinator {
-    return Coordinator(albumManager: albumManager, itemSize: itemSize, onTap: onTap)
+    return Coordinator(parent: self)
   }
   
-  class Coordinator: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    @ObservedObject var albumManager: AlbumManager
-    var itemSize: CGSize
-    var onTap: (PHAsset) -> Void
+  class Coordinator: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
+    var parent: GalleryCollectionView
+    let imageManager = PHCachingImageManager()
     
-    init(albumManager: AlbumManager, itemSize: CGSize, onTap: @escaping (PHAsset) -> Void) {
-      self.albumManager = albumManager
-      self.itemSize = itemSize
-      self.onTap = onTap
+    init(parent: GalleryCollectionView) {
+      self.parent = parent
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      return albumManager.assets.count
+      return parent.assets.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      if let asset = albumManager.assets[indexPath.item]{
-        onTap(asset)
-      }
+      let asset = parent.assets[indexPath.item]
+      parent.onTap(asset)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryImageViewCell.identifier, for: indexPath) as! GalleryImageViewCell
-      
-      cell.configureView(asset: albumManager.assets[indexPath.item], targetSize: itemSize)
-      
+      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryImageViewCell.identifier, for: indexPath) as? GalleryImageViewCell else { return UICollectionViewCell() }
+      let asset = parent.assets[indexPath.item]
+      cell.configureView(asset: asset, targetSize: parent.itemSize)
       return cell
+    }
+    
+    // MARK: - Prefetching
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+      let assetsToPrefetch = indexPaths.map { parent.assets[$0.item] }
+      let options = PHImageRequestOptions()
+      options.deliveryMode = .opportunistic
+      imageManager.startCachingImages(for: assetsToPrefetch, targetSize: parent.itemSize, contentMode: .aspectFill, options: options)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+      let assetsToCancel = indexPaths.map { parent.assets[$0.item] }
+      imageManager.stopCachingImages(for: assetsToCancel, targetSize: parent.itemSize, contentMode: .aspectFill, options: nil)
     }
   }
 }
 
 class GalleryImageViewCell: UICollectionViewCell {
   static let identifier = "GalleryImageViewCell"
-  let imageManager = PHCachingImageManager()
-  let imageView = UIImageView()
+  
+  private let imageManager = PHCachingImageManager()
+  private let imageView = UIImageView()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = .lightGray
-    
     contentView.addSubview(imageView)
     imageView.frame = contentView.bounds
     imageView.contentMode = .scaleAspectFill
     imageView.clipsToBounds = true
-  }
-  
-  func configureView(asset: PHAsset?, targetSize: CGSize){
-    imageView.image = nil
-    
-    if let asset = asset{
-      let options = PHImageRequestOptions()
-      options.deliveryMode = .opportunistic
-      
-      imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: options) { image, _ in
-        DispatchQueue.main.async {
-          self.imageView.image = image
-        }
-      }
-    }
+    backgroundColor = .lightGray
   }
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    super.init(coder: coder)
+  }
+  
+  func configureView(asset: PHAsset?, targetSize: CGSize) {
+    imageView.image = nil
+    guard let asset = asset else { return }
+    
+    let options = PHImageRequestOptions()
+    options.deliveryMode = .opportunistic
+    
+    imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: options) { [weak self] image, _ in
+      Task { @MainActor in
+        self?.imageView.image = image
+      }
+    }
   }
 }

@@ -35,6 +35,7 @@ extension View {
     onLeadingButtonTap: (() -> Void)? = nil,
     trailingButtonType: PrimaryNavigationBar.ButtonType? = nil,
     onTrailingButtonTap: (() -> Void)? = nil,
+    centerButtonRotated: Binding<Bool> = .constant(false),
     onCenterButtonTap: (() -> Void)? = nil
   ) -> some View {
     self
@@ -45,6 +46,7 @@ extension View {
           onLeadingButtonTap: onLeadingButtonTap,
           trailingButtonType: trailingButtonType,
           onTrailingButtonTap: onTrailingButtonTap,
+          centerButtonRotated: centerButtonRotated,
           onCenterButtonTap: onCenterButtonTap
         )
       }

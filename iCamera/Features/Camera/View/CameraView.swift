@@ -11,7 +11,7 @@ struct CameraView: View {
   @Binding var navigationPath: NavigationPath
   
   @StateObject private var cameraManager = CameraManager()
-  @StateObject var albumManager = AlbumManager()
+  @StateObject var albumManager = AlbumViewModel()
   
   @State private var backZoomScale: CGFloat = 1.0
   
@@ -140,17 +140,7 @@ struct CameraView: View {
     .navigationBarHidden(true)
     .onAppear{
       cameraButtonControlFlag = false
-      
       albumManager.fetchRecentlyPhoto()
-        .sink(receiveCompletion: { completion in
-          switch completion{
-          case .finished:
-            print("finish")
-          case .failure(_):
-            print("fail")
-          }
-        }, receiveValue: {})
-        .store(in: &albumManager.cancellables)
     }
     .onChange(of: cameraManager.capturedImage) { newImage in
       if let newImage = newImage, let fixedImage = newImage.fixOrientation() {

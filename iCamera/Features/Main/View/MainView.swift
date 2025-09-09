@@ -60,7 +60,7 @@ struct MainView: View {
             viewType: .main
           )
         default:
-          TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumManager())
+          TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumViewModel())
         }
       }
       .navigationBar(.main)

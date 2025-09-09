@@ -19,7 +19,7 @@ struct CommentsView: View {
   @StateObject var calendarManager: CalendarManager
   var viewType: PreviousViewType
   
-  @StateObject private var albumManager = AlbumManager()
+  @StateObject private var albumManager = AlbumViewModel()
   @StateObject private var keyboardObserver = KeyboardObserver()
   @State private var imageViewHeight: CGFloat = .zero
   @State private var textViewSize: CGSize = .zero
@@ -84,7 +84,7 @@ struct CommentsView: View {
                   ZStack{
                     if let imageData = calendarData.image, let image = UIImage(data: imageData) {
                       ZStack{
-                        NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager), isActive: $isNavigationLinkActive){
+                        NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumVM: albumManager), isActive: $isNavigationLinkActive){
                           Image(uiImage: image)
                             .resizable()
                             .onTapGesture {
@@ -116,7 +116,7 @@ struct CommentsView: View {
                       }
                       
                     } else {
-                      NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumManager: albumManager), isActive: $isNavigationLinkActive){
+                      NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumVM: albumManager), isActive: $isNavigationLinkActive){
                         ZStack{
                           let buttonWidth = viewWidth * 0.08
                           Rectangle()
@@ -203,19 +203,13 @@ struct CommentsView: View {
                   }
                 }
                 .onReceive(calendarManager.selectedImage){ (albumManager, asset) in
-                  self.albumManager.fetchSelectedPhoto(for: asset)
-                    .sink(receiveCompletion: { completion in
-                      switch completion{
-                      case .finished:
-                        print("finish")
-                      case .failure(_):
-                        print("fail")
-                      }
-                    }, receiveValue: { image in
-                      imageViewHeight = imageWidth * image.size.height / image.size.width
-                      calendarData.image = image.jpegData(compressionQuality: 0.7)
-                    })
-                    .store(in: &albumManager.cancellables)
+                  Task {
+                    await self.albumManager.fetchSelectedPhoto(for: asset)
+                  }
+                  /*
+                    imageViewHeight = imageWidth * image.size.height / image.size.width
+                    calendarData.image = image.jpegData(compressionQuality: 0.7)
+                   */
                 }
                 
               }, scrollViewDidScroll: {scrollView in })
