@@ -77,20 +77,23 @@ struct Filter: Hashable, Equatable{
   }
 }
 
-class FilterManager: NSObject, ObservableObject {
+final class FilterManager: NSObject, ObservableObject {
   var filterSelected = PassthroughSubject<FilterType, Never>()
   
   @Published var filterValue: CGFloat = .zero
   @Published var selectedFilter: Filter = Filter(type: .none)
   
-  var filterImageSet: [Filter : UIImage] = [:]
+  private let context = CIContext()
   
-  let context = CIContext()
+  // NSCache 사용 → 메모리 부족 시 자동 삭제
+  private let filterImageCache = NSCache<NSString, UIImage>()
   
   var cancellables = Set<AnyCancellable>()
   
-  func allFilters() -> [Filter] {
-    return [
+  var isSelectedFilter: Bool { selectedFilter.type != .none }
+  
+  var filters: [Filter] {
+    [
       Filter(type: .none),
       Filter(type: .bloom),
       Filter(type: .fuji),
@@ -104,68 +107,81 @@ class FilterManager: NSObject, ObservableObject {
     ]
   }
   
-  func setFilter(_ filter: Filter){
+  func setFilter(_ filter: Filter) {
     selectedFilter = filter
     filterValue = 0.5
   }
   
-  func isSameFilter(_ filter: Filter) -> Bool{
-    return selectedFilter == filter
+  func isSameFilter(_ filter: Filter) -> Bool {
+    selectedFilter == filter
   }
   
-  func setFilterValue(_ value: CGFloat){
+  func setFilterValue(_ value: CGFloat) {
     filterValue = value
   }
   
-  func previewFilterImage(filter: Filter) -> UIImage?{
-    return UIImage(named: "filter_\(filter.title)")
+  func previewFilterImage(filter: Filter) -> UIImage? {
+    UIImage(named: "filter_\(filter.title)")
   }
   
-  func filterImage(image: UIImage) -> UIImage?{
-    if let filterImage = filterImageSet[selectedFilter]{
-      return filterImage
+  // MARK: - 필터 적용 + 캐시
+  func filterImage(image: UIImage, targetSize: CGSize? = nil) -> UIImage? {
+    let cacheKey = "\(selectedFilter.type)_\(targetSize?.width ?? 0)x\(targetSize?.height ?? 0)" as NSString
+    
+    if let cached = filterImageCache.object(forKey: cacheKey) {
+      return cached
     }
     
-    if let image = applyFilters(to: image){
-      filterImageSet[selectedFilter] = image
-      return image
-    }
+    guard let filtered = applyFilters(to: image, targetSize: targetSize) else { return nil }
     
-    return nil
+    filterImageCache.setObject(filtered, forKey: cacheKey)
+    return filtered
   }
   
-  func applyFilters(filter: Filter, image: UIImage) -> UIImage?{
+  func applyFilters(filter: Filter, image: UIImage, targetSize: CGSize? = nil) -> UIImage? {
     selectedFilter = filter
-    return applyFilters(to: image)
+    return applyFilters(to: image, targetSize: targetSize)
   }
   
-  func applyFilters(to image: UIImage) -> UIImage? {
+  func applyFilters(to image: UIImage, targetSize: CGSize? = nil) -> UIImage? {
     guard let ciImage = CIImage(image: image) else { return nil }
-    
-    let filterValue = filterValue
-    let filter = selectedFilter
     
     var outputImage: CIImage?
     
-    switch filter.type {
+    switch selectedFilter.type {
     case .none:
       outputImage = ciImage
     case .bloom:
       let bloomFilter = CIFilter.bloom()
       bloomFilter.inputImage = ciImage
-      //bloomFilter.intensity = Float(filterValue)
+      // bloomFilter.intensity = Float(filterValue)
       outputImage = bloomFilter.outputImage
     default:
-      guard let filteredImage = LUTManager.shared.applyLUTFilter(to: image, lutFileName: filter.fileName, intensity: filterValue) else { return nil }
-      outputImage = filteredImage
+      guard let filtered = LUTManager.shared.applyLUTFilter(
+        to: image,
+        lutFileName: selectedFilter.fileName,
+        intensity: filterValue
+      ) else { return nil }
+      outputImage = filtered
     }
     
-    guard let outputImage = outputImage else { return nil}
-    // CIContext를 통해 최종 이미지 생성
-    if let cgImage = context.createCGImage(outputImage, from: ciImage.extent) {
-      return UIImage(cgImage: cgImage)
+    guard let outputImage = outputImage,
+          let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
+    
+    var resultImage = UIImage(cgImage: cgImage)
+    
+    // targetSize가 있으면 리사이즈
+    if let targetSize = targetSize {
+      let renderer = UIGraphicsImageRenderer(size: targetSize)
+      resultImage = renderer.image { _ in
+        resultImage.draw(in: CGRect(origin: .zero, size: targetSize))
+      }
     }
-    return nil
+    
+    return resultImage
   }
   
+  func resetFilterImageCache() {
+    filterImageCache.removeAllObjects()
+  }
 }

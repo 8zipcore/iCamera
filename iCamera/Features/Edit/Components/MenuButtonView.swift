@@ -11,7 +11,7 @@ import Combine
 struct MenuButtonView: View {
   @Binding var menuButton: MenuButton
   
-  @ObservedObject var buttonManager: MenuButtonManager
+  @ObservedObject var buttonManager: EditMenuViewModel
   
   var body: some View {
     ZStack{

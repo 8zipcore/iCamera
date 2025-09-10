@@ -15,7 +15,7 @@ struct TestPhotoView: View {
   
   @State private var filterValue: CGFloat = 0.0
   
-  @StateObject var menuButtonManager = MenuButtonManager()
+  @StateObject var menuButtonManager = EditMenuViewModel()
   
   @Environment(\.dismiss) var dismiss
   

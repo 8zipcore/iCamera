@@ -17,7 +17,7 @@ struct ImageCropResultView: UIViewRepresentable{
   func makeUIView(context: Context) -> PixCropResultView{
     var pixCropView = pixCropManager.pixCropView
     
-    if let image = image, pixCropManager.isInitialized() == false {
+    if let image = image, pixCropManager.isInitialized == false {
       pixCropView = PixCropView(frame: frame, image: image)
     }
     
@@ -26,12 +26,17 @@ struct ImageCropResultView: UIViewRepresentable{
     if let image = image {
       resultView.image = image
     }
-    
+
     resultView.alpha = oppacity
     
     return resultView
   }
   
   func updateUIView(_ uiView: PixCropResultView, context: Context) {
+    if let image = image {
+      uiView.image = image
+    }
+    
+    uiView.alpha = oppacity
   }
 }

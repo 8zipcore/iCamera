@@ -29,7 +29,7 @@
 		362940D62CC3F12C007C8A54 /* TextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362940D52CC3F12C007C8A54 /* TextManager.swift */; };
 		362BD6B32CAADB4C000955D5 /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362BD6B22CAADB4C000955D5 /* FilterManager.swift */; };
 		362BD6B52CAAE351000955D5 /* EditImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362BD6B42CAAE351000955D5 /* EditImageView.swift */; };
-		362BD6B72CAAE3ED000955D5 /* MenuButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */; };
+		362BD6B72CAAE3ED000955D5 /* EditMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362BD6B62CAAE3ED000955D5 /* EditMenuViewModel.swift */; };
 		3630F8A02CF3003200C59F62 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3630F89F2CF3003200C59F62 /* CaptureImageView.swift */; };
 		36447A382CAC0DDA008E1268 /* LUTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36447A372CAC0DDA008E1268 /* LUTManager.swift */; };
 		3653CCFB2CE47730005459E4 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CCFA2CE47730005459E4 /* FontManager.swift */; };
@@ -138,7 +138,7 @@
 		362940D52CC3F12C007C8A54 /* TextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManager.swift; sourceTree = "<group>"; };
 		362BD6B22CAADB4C000955D5 /* FilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
 		362BD6B42CAAE351000955D5 /* EditImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageView.swift; sourceTree = "<group>"; };
-		362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonManager.swift; sourceTree = "<group>"; };
+		362BD6B62CAAE3ED000955D5 /* EditMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuViewModel.swift; sourceTree = "<group>"; };
 		3630F89F2CF3003200C59F62 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		36447A372CAC0DDA008E1268 /* LUTManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUTManager.swift; sourceTree = "<group>"; };
 		3653CCFA2CE47730005459E4 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
@@ -460,7 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				361BAB9D2CE8D7B90091346B /* EditManager.swift */,
-				362BD6B62CAAE3ED000955D5 /* MenuButtonManager.swift */,
+				362BD6B62CAAE3ED000955D5 /* EditMenuViewModel.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1023,7 +1023,7 @@
 				361BAB982CE882940091346B /* Sticker.swift in Sources */,
 				369651602CA9831E004E0134 /* TestPhotoView.swift in Sources */,
 				36039EEF2CF1EB6F0002EE48 /* ShareSheet.swift in Sources */,
-				362BD6B72CAAE3ED000955D5 /* MenuButtonManager.swift in Sources */,
+				362BD6B72CAAE3ED000955D5 /* EditMenuViewModel.swift in Sources */,
 				3601C59D2C954E6800E71978 /* AlbumView.swift in Sources */,
 				36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */,
 				3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */,
@@ -1269,7 +1269,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

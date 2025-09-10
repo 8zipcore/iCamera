@@ -14,7 +14,7 @@ struct StickerView: View {
   @StateObject var stickerManager: StickerManager
   @StateObject var editManager: EditManager
   
-  var editImageViewPositionArray: [CGPoint]
+  var imageViewPositions: [CGPoint]
   
   @State private var lastAngle: Angle = .zero
   @State private var buttonWidth: CGFloat = 20
@@ -202,16 +202,16 @@ struct StickerView: View {
     
     let stickerViewPositionArray = [CGPoint(x: newLocation.x - viewWidth / 2, y: newLocation.y - viewHeight / 2), CGPoint(x: newLocation.x + viewWidth / 2, y: newLocation.y + viewHeight / 2)]
     
-    if stickerViewPositionArray[0].x < editImageViewPositionArray[0].x {
-      newLocation.x = editImageViewPositionArray[0].x + viewWidth / 2
-    } else if stickerViewPositionArray[1].x > editImageViewPositionArray[1].x {
-      newLocation.x = editImageViewPositionArray[1].x - viewWidth / 2
+    if stickerViewPositionArray[0].x < imageViewPositions[0].x {
+      newLocation.x = imageViewPositions[0].x + viewWidth / 2
+    } else if stickerViewPositionArray[1].x > imageViewPositions[1].x {
+      newLocation.x = imageViewPositions[1].x - viewWidth / 2
     }
     
-    if stickerViewPositionArray[0].y < editImageViewPositionArray[0].y {
-      newLocation.y = editImageViewPositionArray[0].y + viewHeight / 2
-    } else if stickerViewPositionArray[1].y > editImageViewPositionArray[1].y {
-      newLocation.y = editImageViewPositionArray[1].y - viewHeight / 2
+    if stickerViewPositionArray[0].y < imageViewPositions[0].y {
+      newLocation.y = imageViewPositions[0].y + viewHeight / 2
+    } else if stickerViewPositionArray[1].y > imageViewPositions[1].y {
+      newLocation.y = imageViewPositions[1].y - viewHeight / 2
     }
     return newLocation
   }

@@ -40,7 +40,7 @@ struct CaptureImageView: View {
           let newSize = updateSize(size: sticker.size, viewSize: viewSize)
           let newLocation = updatePosition(position: sticker.location, viewSize: viewSize)
           let newSticker = stickerManager.updateSticker(sticker: sticker, size: newSize, location: newLocation)
-          StickerView(index: index, sticker: newSticker, stickerManager: stickerManager, editManager: EditManager(), editImageViewPositionArray: [])
+          StickerView(index: index, sticker: newSticker, stickerManager: stickerManager, editManager: EditManager(), imageViewPositions: [])
             .frame(width: newSize.width, height: newSize.height)
             .position(newLocation)
         }

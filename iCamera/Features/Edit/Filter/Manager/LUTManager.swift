@@ -112,26 +112,5 @@ class LUTManager{
     }
     
     return filteredImage
-    
-    /*
-     // 강도 조정: 원본 이미지와 LUT 적용 이미지를 혼합
-     
-     let mixFilter = CIFilter(name: "CIMix") ?? CIFilter(name: "CIBlendWithAlphaMask")!
-     mixFilter.setValue(ciImage, forKey: kCIInputBackgroundImageKey) // 원본 이미지
-     mixFilter.setValue(filteredImage, forKey: kCIInputImageKey)     // LUT 적용 이미지
-     mixFilter.setValue(intensity, forKey: "inputAmount")
-     
-     guard let outputImage = mixFilter.outputImage else {
-     print("outputImage nil after blending")
-     return nil
-     }
-     */
-    /*
-     if let cgImage = context.createCGImage(outputImage, from: filterImage.extent) {
-     return UIImage(cgImage: cgImage)
-     }
-     
-     return nil
-     */
   }
 }

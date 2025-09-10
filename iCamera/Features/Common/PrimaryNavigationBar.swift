@@ -29,7 +29,7 @@ struct PrimaryNavigationBar: View {
     
     var isLeadingButtonHidden: Bool {
       switch self {
-      case .main, .gallry, .edit, .save:
+      case .main, .gallry, .save:
         return true
       default:
         return false
@@ -61,7 +61,7 @@ struct PrimaryNavigationBar: View {
   @Binding var centerButtonRotated: Bool
   var onCenterButtonTap: (() -> Void)?
   
-  private let imageSize = CGSize(width: 30, height: 30)
+  private let imageSize = CGSize(width: 35, height: 35)
   
   var body: some View {
     

@@ -1,5 +1,5 @@
 //
-//  MenuButtonManager.swift
+//  EditMenuViewModel.swift
 //  iCamera
 //
 //  Created by 홍승아 on 9/30/24.
@@ -12,8 +12,10 @@ struct MenuButton: Hashable{
   enum ButtonType: Int{
     case filter, cut, sticker, text
   }
+  
   var type: ButtonType
   var isSelected: Bool = false
+  
   var title: String {
     switch type {
     case .filter:
@@ -28,7 +30,7 @@ struct MenuButton: Hashable{
   }
 }
 
-class MenuButtonManager: ObservableObject{
+final class EditMenuViewModel: ObservableObject{
   @Published var menuButtons: [MenuButton] = []
   var buttonClicked = PassthroughSubject<MenuButton.ButtonType, Never>()
   

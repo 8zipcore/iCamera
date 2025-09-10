@@ -11,13 +11,11 @@ import PixCrop
 struct ImageCropView: UIViewRepresentable{
   @ObservedObject var pixCropManager: PixCropManager
   
-  func makeUIView(context: Context) -> PixCropView{
-    return pixCropManager.pixCropView
+  func makeUIView(context: Context) -> PixCropView {
+    return pixCropManager.pixCropView ?? PixCropView()
   }
   
   func updateUIView(_ uiView: PixCropView, context: Context) {
-    DispatchQueue.main.async{
-      pixCropManager.pixCropView = uiView
-    }
+    Task { @MainActor in pixCropManager.pixCropView = uiView }
   }
 }

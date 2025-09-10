@@ -19,8 +19,8 @@ class PixCropManager: ObservableObject, Equatable {
     return lhs.pixCropView == rhs.pixCropView
   }
   
-  func isInitialized() -> Bool {
-    return pixCropView.frame.size != .zero
+  var isInitialized: Bool {
+    pixCropView.frame.size != .zero
   }
   
   func reset() {

@@ -19,7 +19,7 @@ struct EditFilterView: View {
         ScrollView(.horizontal, showsIndicators: false){
           HStack(spacing: 0){
             let cellWidth = viewWidth * 0.17
-            ForEach(filterManager.allFilters(), id:\.self){ filter in
+            ForEach(filterManager.filters, id:\.self){ filter in
               FilterTypeCell(filter: filter)
                 .frame(width: cellWidth, height: cellWidth)
                 .onTapGesture {
@@ -30,6 +30,7 @@ struct EditFilterView: View {
             }
           }
         }
+        
         if filterManager.selectedFilter.type != .none {
           let filterValue = filterManager.filterValue
           
