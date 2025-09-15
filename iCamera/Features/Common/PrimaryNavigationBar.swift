@@ -29,7 +29,7 @@ struct PrimaryNavigationBar: View {
     
     var isLeadingButtonHidden: Bool {
       switch self {
-      case .main, .gallry, .save, .camera:
+      case .main, .gallry, .camera:
         return true
       default:
         return false
