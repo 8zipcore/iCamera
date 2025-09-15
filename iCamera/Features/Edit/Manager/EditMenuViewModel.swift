@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct MenuButton: Hashable{
-  enum ButtonType: Int{
+  enum ButtonType: Int {
     case filter, cut, sticker, text
   }
   
@@ -33,9 +33,7 @@ struct MenuButton: Hashable{
 final class EditMenuViewModel: ObservableObject{
   @Published var menuButtons: [MenuButton] = []
   var buttonClicked = PassthroughSubject<MenuButton.ButtonType, Never>()
-  
-  var cancellables = Set<AnyCancellable>()
-  
+
   init(){
     menuButtons =  [
       MenuButton(type: .filter, isSelected: true),

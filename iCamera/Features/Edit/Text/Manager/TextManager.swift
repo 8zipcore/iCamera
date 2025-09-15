@@ -17,21 +17,43 @@ struct TextData: Equatable{
   var text: String
   var textFont: TextFont
   var textAlignment: NSTextAlignment
+  var alignment: TextAlignment {
+    switch textAlignment {
+    case .left:
+      return .leading
+    case .right:
+      return .trailing
+    default:
+      return .center
+    }
+  }
   var textColor: Color
   var backgroundColor: Color
   var location: CGPoint
   var size: CGSize
-  var backgroundColorSizeArray: [CGSize]
+  var textBackgroundSizes: [CGSize]
   var scale: CGFloat
   var angle: Angle
   var isSelected: Bool
   
   static func ==(lhs: TextData, rhs: TextData) -> Bool {
-    return lhs.text == rhs.text && lhs.backgroundColorSizeArray == rhs.backgroundColorSizeArray && lhs.size == rhs.size
+    return lhs.text == rhs.text && lhs.textBackgroundSizes == rhs.textBackgroundSizes && lhs.size == rhs.size
   }
   
   static func emptyTextData() -> TextData{
-    return TextData(text: "", textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: ""), textAlignment: .left, textColor: .black, backgroundColor: .clear, location: .zero, size: .zero, backgroundColorSizeArray: [], scale: .zero, angle: .zero, isSelected: false)
+    return TextData(
+      text: "",
+      textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: ""),
+      textAlignment: .left,
+      textColor: .black,
+      backgroundColor: .clear,
+      location: .zero,
+      size: .zero,
+      textBackgroundSizes: [],
+      scale: .zero,
+      angle: .zero,
+      isSelected: false
+    )
   }
 }
 
@@ -113,7 +135,7 @@ class TextManager: ObservableObject{
       backgroundColor: .clear,
       location: location,
       size: size,
-      backgroundColorSizeArray: [], 
+      textBackgroundSizes: [],
       scale: 1,
       angle: Angle(degrees: 0),
       isSelected: true)
@@ -253,10 +275,10 @@ class TextManager: ObservableObject{
     let previousLineHeight = font.lineHeight
     let newFontLineHeight = text.textFont.font.lineHeight
     
-    for index in text.backgroundColorSizeArray.indices{
-      let width = text.backgroundColorSizeArray[index].width
-      text.backgroundColorSizeArray[index].width = width * newFontLineHeight / previousLineHeight
-      text.backgroundColorSizeArray[index].height = newFontLineHeight
+    for index in text.textBackgroundSizes.indices{
+      let width = text.textBackgroundSizes[index].width
+      text.textBackgroundSizes[index].width = width * newFontLineHeight / previousLineHeight
+      text.textBackgroundSizes[index].height = newFontLineHeight
     }
     
     text.size = size

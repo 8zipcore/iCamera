@@ -22,7 +22,7 @@ struct EditImageView: View {
       
       ZStack {
         if isCutSelected {
-          ImageCropView(pixCropManager: pixCropManager)
+          ImageCropView(pixCropView: $pixCropManager.pixCropView)
         } else {
           if let image = image {
             ImageCropResultView(
@@ -47,7 +47,6 @@ struct EditImageView: View {
           }
         }
       }
-      .background(.yellow)
       .onChange(of: image){ _ in
         if let image = image,
            cutImageManager.imageRatio == .zero {

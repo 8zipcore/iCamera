@@ -124,7 +124,6 @@ struct StickerView: View {
   }
   
   private func stickerButtonTapped(data: EditStickerButtonData){
-    // let initialSize = sticker.image.size
     let currentSize = sticker.size
     var newSize = CGSize(width: data.location.x, height: data.location.y)
     

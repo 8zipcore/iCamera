@@ -53,7 +53,7 @@ class StickerManager: ObservableObject{
   }
   
   func selectSticker(index: Int){
-    if stickerArray[index].isSelected{ return }
+    if stickerArray[index].isSelected { return }
     stickerArray.indices.forEach{ stickerArray[$0].isSelected = false }
     stickerArray[index].isSelected = true
     selectedSticker = stickerArray[index]

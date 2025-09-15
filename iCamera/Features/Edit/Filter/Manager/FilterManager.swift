@@ -126,6 +126,8 @@ final class FilterManager: NSObject, ObservableObject {
   
   // MARK: - 필터 적용 + 캐시
   func filterImage(image: UIImage, targetSize: CGSize? = nil) -> UIImage? {
+    guard isSelectedFilter else { return nil }
+    
     let cacheKey = "\(selectedFilter.type)_\(targetSize?.width ?? 0)x\(targetSize?.height ?? 0)" as NSString
     
     if let cached = filterImageCache.object(forKey: cacheKey) {

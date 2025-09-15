@@ -19,14 +19,14 @@ struct EditPhotoView: View {
   
   @StateObject var albumManager: AlbumViewModel
   
-  @StateObject var editMenuVM = EditMenuViewModel()
-  @StateObject var filterManager = FilterManager()
-  @StateObject var stickerManager = StickerManager()
-  @StateObject var cutImageManager = CutImageManager()
-  @StateObject var textManager = TextManager()
-  @StateObject var customSliderManager = CustomSliderManager()
-  @StateObject var editManager = EditManager()
-  @StateObject var pixCropManager = PixCropManager()
+  @StateObject private var editMenuVM = EditMenuViewModel()
+  @StateObject private var filterManager = FilterManager()
+  @StateObject private var stickerManager = StickerManager()
+  @StateObject private var cutImageManager = CutImageManager()
+  @StateObject private var textManager = TextManager()
+  @StateObject private var customSliderManager = CustomSliderManager()
+  @StateObject private var editManager = EditManager()
+  @StateObject private var pixCropManager = PixCropManager()
   
   @State private var isFirstDrag: Bool = true
   
@@ -62,20 +62,7 @@ struct EditPhotoView: View {
           createImage(viewSize: geometry.size)
         }
         
-        if showTextInputView {
-          if let textData = textManager.selectedTextData() {
-            TextInputView(textData: textData, textManager: textManager)
-              .onReceive(textManager.textInputCancelButtonTapped) { data in
-                textManager.restoreTextData(textData: data)
-                showTextInputView = false
-              }
-              .onReceive(textManager.textInputConfirmButtonTapped) { data in
-                print("tapped", data.size)
-                textManager.setTextData(textData: data)
-                showTextInputView = false
-              }
-          }
-        }
+        textInputView()
       }
       .navigationBar(
         .edit,
@@ -116,8 +103,26 @@ struct EditPhotoView: View {
   }
 }
 
-// MARK: - ImageEditorSection
+// MARK: - Subviews
 extension EditPhotoView {
+  @ViewBuilder
+  private func textInputView() -> some View {
+    if showTextInputView {
+      if let textData = textManager.selectedTextData() {
+        TextInputView(textData: textData, textManager: textManager)
+          .onReceive(textManager.textInputCancelButtonTapped) { data in
+            textManager.restoreTextData(textData: data)
+            showTextInputView = false
+          }
+          .onReceive(textManager.textInputConfirmButtonTapped) { data in
+            textManager.setTextData(textData: data)
+            showTextInputView = false
+          }
+      }
+    }
+  }
+  
+  // MARK: - ImageEditorSection
   private func imageEditorSection(_ imageViewPositions: [CGPoint]) -> some View {
     ZStack {
       EditImageView(
@@ -176,9 +181,9 @@ extension EditPhotoView {
         textData: data,
         textManager: textManager,
         editManager: editManager,
-        editImageViewPositionArray: imageViewPositions
+        editImageViewPositionArray: imageViewPositions,
+        containerSize: CGSize(width: viewWidth, height: imageEditorSectionHeight)
       )
-      .hidden(isTextViewHidden(index))
       .zIndex(data.isSelected ? 1 : 0)
       .position(data.location)
       .onTapGesture {
@@ -193,10 +198,8 @@ extension EditPhotoView {
       }
     }
   }
-}
-
-// MARK: - MenuSection
-extension EditPhotoView {
+  
+  // MARK: - MenuSection
   private func menuSection() -> some View {
     VStack {
       menuButtonSection()
@@ -224,7 +227,7 @@ extension EditPhotoView {
       ForEach(menuButtons.indices, id: \.self){ index in
         MenuButtonView(
           menuButton: $editMenuVM.menuButtons[index],
-          buttonManager: editMenuVM
+          editMenuVM: editMenuVM
         )
         .frame(width: menuButtonViewWidth, height: menuButtonViewHeight)
       }

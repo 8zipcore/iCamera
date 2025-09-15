@@ -50,7 +50,7 @@ class CutImageManager: ObservableObject{
     ratioArray = ratioArray.map { return FrameRatio(widthRatio: $0.heightRatio, heightRatio: $0.widthRatio)}
   }
   
-  func frameRatio(aspectRatio: CGSize) -> FrameRatio{
+  func frameRatio(aspectRatio: CGSize) -> FrameRatio {
     if currentRatioDirection == .horizontal{
       return FrameRatio(widthRatio: max(aspectRatio.width, aspectRatio.height), heightRatio: min(aspectRatio.width, aspectRatio.height))
     } else {
@@ -67,7 +67,7 @@ class CutImageManager: ObservableObject{
     return CGSize(width: size.width / divisor, height: size.height / divisor)
   }
   
-  func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize{
+  func imageSize(imageSize: CGSize, viewSize: CGSize) -> CGSize {
     let widthRatio = viewSize.width / imageSize.width
     let heightRatio = viewSize.height / imageSize.height
     let scale = min(widthRatio, heightRatio)

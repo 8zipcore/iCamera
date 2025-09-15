@@ -24,7 +24,7 @@ class KeyboardObserver: ObservableObject {
     
     NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
       .sink { [weak self] _ in
-        self?.keyboardHeight = 0
+        Task { @MainActor in self?.keyboardHeight = 0 }
       }
       .store(in: &cancellables)
   }

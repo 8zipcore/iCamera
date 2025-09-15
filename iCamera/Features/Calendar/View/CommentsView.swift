@@ -252,17 +252,19 @@ struct CommentsView: View {
           } else {
             calendarData = CalendarData(date: calendarManager.selectedDate()!, image: nil, comments: "")
           }
-          self.textData = TextData(text: calendarData.comments,
-                                   textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "System"),
-                                   textAlignment: .left,
-                                   textColor: .black,
-                                   backgroundColor: .clear,
-                                   location: .zero,
-                                   size: .zero,
-                                   backgroundColorSizeArray: [],
-                                   scale: 1.0,
-                                   angle: .zero,
-                                   isSelected: false)
+          self.textData = TextData(
+            text: calendarData.comments,
+            textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "System"),
+            textAlignment: .left,
+            textColor: .black,
+            backgroundColor: .clear,
+            location: .zero,
+            size: .zero,
+            textBackgroundSizes: [],
+            scale: 1.0,
+            angle: .zero,
+            isSelected: false
+          )
           isNavigationLinkActive = false
         }
         /* KeyboardView */
