@@ -152,7 +152,6 @@ final class AlbumViewModel: ObservableObject {
                               options: requestOptions) { image, _ in
       if let image = image {
         self.selectedImage = image
-        print(image)
       }
     }
   }

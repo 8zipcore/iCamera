@@ -18,18 +18,20 @@ struct EditImageView: View {
   
   var body: some View {
     GeometryReader { geometry in
-      let viewSize = geometry.size
-      
       ZStack {
         if isCutSelected {
           ImageCropView(pixCropView: $pixCropManager.pixCropView)
         } else {
-          if let image = image {
+          if geometry.size.height > 0,
+             let image = image {
             ImageCropResultView(
               pixCropManager: pixCropManager,
-              frame: CGRect(origin: .zero, size: viewSize),
+              frame: CGRect(origin: .zero, size: geometry.size),
               image: image
             )
+            .onAppear {
+              initImage(containerSize: geometry.size)
+            }
             
             if filterManager.isSelectedFilter {
               if let filteredImage = filterManager.filterImage(
@@ -38,7 +40,7 @@ struct EditImageView: View {
               ) {
                 ImageCropResultView(
                   pixCropManager: pixCropManager,
-                  frame: CGRect(origin: .zero, size: viewSize),
+                  frame: CGRect(origin: .zero, size: geometry.size),
                   image: filteredImage,
                   oppacity: filterManager.filterValue
                 )
@@ -47,13 +49,14 @@ struct EditImageView: View {
           }
         }
       }
-      .onChange(of: image){ _ in
-        if let image = image,
-           cutImageManager.imageRatio == .zero {
-          cutImageManager.imageRatio = cutImageManager.ratio(size: image.size)
-          pixCropManager.initPixCropView(size: viewSize, image: image)
-        }
-      }
+    }
+  }
+  
+  private func initImage(containerSize: CGSize) {
+    if let image = image,
+       cutImageManager.imageRatio == .zero {
+      cutImageManager.imageRatio = cutImageManager.ratio(size: image.size)
+      pixCropManager.initPixCropView(size: containerSize, image: image)
     }
   }
 }

@@ -91,6 +91,8 @@
 		36DA5EBE2D58F28C004EAE9D /* PixCropManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA5EBD2D58F28C004EAE9D /* PixCropManager.swift */; };
 		36DB6CD52D01D9EA00A74BD0 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DB6CD42D01D9EA00A74BD0 /* LaunchView.swift */; };
 		36EC6DA22CE4EEA800A5D784 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EC6DA12CE4EEA800A5D784 /* CustomSlider.swift */; };
+		36EEABFB2E77C43D00BB1404 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EEABFA2E77C43D00BB1404 /* UIImage+Extension.swift */; };
+		36EEABFD2E77C91F00BB1404 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EEABFC2E77C91D00BB1404 /* CameraPreview.swift */; };
 		36F84FB62CD1EA7D008275F5 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */; };
 		36F84FB82CD1EFBC008275F5 /* GradientRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */; };
 		36F84FBB2CD24A9C008275F5 /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F84FBA2CD24A9C008275F5 /* NotoSansKR-Regular.ttf */; };
@@ -205,6 +207,8 @@
 		36DA5EBD2D58F28C004EAE9D /* PixCropManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixCropManager.swift; sourceTree = "<group>"; };
 		36DB6CD42D01D9EA00A74BD0 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		36EC6DA12CE4EEA800A5D784 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		36EEABFA2E77C43D00BB1404 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		36EEABFC2E77C91D00BB1404 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		36F84FB72CD1EFBC008275F5 /* GradientRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRectangleView.swift; sourceTree = "<group>"; };
 		36F84FBA2CD24A9C008275F5 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
@@ -392,6 +396,7 @@
 				361BAB9B2CE88A520091346B /* Array.swift */,
 				3697D1B22C9FEF990012ABDC /* NotificationName.swift */,
 				36F84FBC2CD24AE5008275F5 /* Font.swift */,
+				36EEABFA2E77C43D00BB1404 /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -430,6 +435,7 @@
 		3686EF212E6EC17F00E24EA5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				36EEABFC2E77C91D00BB1404 /* CameraPreview.swift */,
 				3605F56D2C91957600665348 /* FlashButtonView.swift */,
 			);
 			path = Components;
@@ -1030,9 +1036,11 @@
 				361BAB982CE882940091346B /* Sticker.swift in Sources */,
 				369651602CA9831E004E0134 /* TestPhotoView.swift in Sources */,
 				36039EEF2CF1EB6F0002EE48 /* ShareSheet.swift in Sources */,
+				36EEABFB2E77C43D00BB1404 /* UIImage+Extension.swift in Sources */,
 				362BD6B72CAAE3ED000955D5 /* EditMenuViewModel.swift in Sources */,
 				3601C59D2C954E6800E71978 /* AlbumView.swift in Sources */,
 				36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */,
+				36EEABFD2E77C91F00BB1404 /* CameraPreview.swift in Sources */,
 				3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */,
 				362BD6B32CAADB4C000955D5 /* FilterManager.swift in Sources */,
 				36697BFF2CD1241B00070A55 /* CalendarManager.swift in Sources */,

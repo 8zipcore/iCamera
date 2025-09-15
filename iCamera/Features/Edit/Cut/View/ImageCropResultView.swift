@@ -33,6 +33,8 @@ struct ImageCropResultView: UIViewRepresentable{
   }
   
   func updateUIView(_ uiView: PixCropResultView, context: Context) {
+    uiView.frame = frame
+    
     if let image = image {
       uiView.image = image
     }
