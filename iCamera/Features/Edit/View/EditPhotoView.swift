@@ -95,11 +95,6 @@ struct EditPhotoView: View {
         albumManager.fetchSelectedPhoto(for: asset)
       }
     }
-    .onDisappear {
-      filterManager.resetFilterImageCache()
-      albumManager.selectedImage = nil
-      asset = nil
-    }
   }
 }
 
