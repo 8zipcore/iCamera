@@ -183,7 +183,7 @@ class CalendarManager: ObservableObject{
   }
   
   func selectedCommnets() -> String{
-    let nothingComments = "noting . . ."
+    let nothingComments = "nothing . . ."
     if let index = calendarDataArrayIndex() {
       if calendarDataArray[index].comments.count == 0 {
         return nothingComments
@@ -220,6 +220,8 @@ extension CalendarManager{
   
   func updateData(_ calendarData: CalendarData){
     if calendarDataArray.filter({ $0.id == calendarData.id }).count == 0 {
+      if calendarData.comments.isEmpty && calendarData.image == nil { return }
+      
       CoreDataManager.shared.saveData(calendarData)
       calendarDataArray.append(calendarData)
     } else if let index = calendarDataArrayIndex() {

@@ -32,6 +32,7 @@ extension View {
   
   func navigationBar(
     _ viewType: PrimaryNavigationBar.ViewType,
+    leadingButtonType: PrimaryNavigationBar.ButtonType? = nil,
     onLeadingButtonTap: (() -> Void)? = nil,
     trailingButtonType: PrimaryNavigationBar.ButtonType? = nil,
     onTrailingButtonTap: (() -> Void)? = nil,
@@ -43,6 +44,7 @@ extension View {
       .safeAreaInset(edge: .top) {
         PrimaryNavigationBar(
           viewType: viewType,
+          leadingButtonType: leadingButtonType,
           onLeadingButtonTap: onLeadingButtonTap,
           trailingButtonType: trailingButtonType,
           onTrailingButtonTap: onTrailingButtonTap,

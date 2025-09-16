@@ -26,19 +26,10 @@ struct PrimaryNavigationBar: View {
         return "Photos"
       }
     }
-    
-    var isLeadingButtonHidden: Bool {
-      switch self {
-      case .main, .gallry, .camera:
-        return true
-      default:
-        return false
-      }
-    }
   }
   
-  enum ButtonType{
-    case cancel, home, album, confirm
+  enum ButtonType {
+    case cancel, home, album, confirm, today
     
     var imageName: String {
       switch self {
@@ -50,48 +41,30 @@ struct PrimaryNavigationBar: View {
         return "xmark_button"
       case .album:
         return "triangle_button"
+      case .today:
+        return "blue_button"
       }
     }
   }
   
   var viewType: ViewType
+  var leadingButtonType: ButtonType?
   var onLeadingButtonTap: (() -> Void)?
   var trailingButtonType: ButtonType?
   var onTrailingButtonTap: (() -> Void)?
   @Binding var centerButtonRotated: Bool
   var onCenterButtonTap: (() -> Void)?
   
-  private let imageSize = CGSize(width: 35, height: 35)
-  
-  var body: some View {
+  private let buttonSize = CGSize(width: 28, height: 28)
     
+  var body: some View {
     ZStack {
-      HStack(spacing: 0){
-        let buttonWidth: CGFloat = imageSize.height * 0.75
-        
-        if !viewType.isLeadingButtonHidden {
-          Button(action: {
-            onLeadingButtonTap?()
-          }) {
-            Image(ButtonType.cancel.imageName)
-              .resizable()
-              .frame(width: buttonWidth, height: buttonWidth)
-          }
-          .padding(.leading, .mediumPadding)
-        }
+      HStack(spacing: 0) {
+        leadingButton()
         
         Spacer()
         
-        if let trailingButtonType {
-          Button(action: {
-            onTrailingButtonTap?()
-          }) {
-            Image(trailingButtonType.imageName)
-              .resizable()
-              .frame(width: buttonWidth, height: buttonWidth)
-          }
-          .padding(.trailing, .mediumPadding)
-        }
+        trailingButton()
       }
       
       HStack{
@@ -99,20 +72,7 @@ struct PrimaryNavigationBar: View {
           .foregroundColor(Colors.titleBlack)
           .font(.system(size: 20, weight: .semibold))
         
-        if viewType == .gallry {
-          Button(action: {
-            onCenterButtonTap?()
-          }) {
-            Image(ButtonType.album.imageName)
-              .resizable()
-              .frame(width: 12, height: 10)
-              .rotationEffect(.degrees(centerButtonRotated ? 180 : 0))
-              .animation(nil, value: centerButtonRotated)
-          }
-          .padding(.top, 3)
-          .padding(.leading, 3)
-          .frame(width: 20, height: 20)
-        }
+        centerButton()
       }
     }
     .padding(.vertical, .smallPadding)
@@ -127,5 +87,66 @@ struct PrimaryNavigationBar: View {
         endPoint: .bottom
       )
     )
+  }
+}
+
+// MARK: - Subviews
+extension PrimaryNavigationBar {
+  @ViewBuilder
+  private func leadingButton() -> some View {
+    if let leadingButtonType {
+      Button {
+        onLeadingButtonTap?()
+      } label: {
+        switch leadingButtonType {
+        case .today:
+          Image(ButtonType.today.imageName)
+            .resizable()
+            .frame(width: 65, height: buttonSize.height)
+            .overlay {
+              Text("Today")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(.white)
+            }
+        default:
+          Image(ButtonType.cancel.imageName)
+            .resizable()
+            .frame(width: buttonSize.width, height: buttonSize.width)
+        }
+      }
+      .padding(.leading, .mediumPadding)
+    }
+  }
+  
+  @ViewBuilder
+  private func trailingButton() -> some View {
+    if let trailingButtonType {
+      Button(action: {
+        onTrailingButtonTap?()
+      }) {
+        Image(trailingButtonType.imageName)
+          .resizable()
+          .frame(width: buttonSize.width, height: buttonSize.width)
+      }
+      .padding(.trailing, .mediumPadding)
+    }
+  }
+  
+  @ViewBuilder
+  private func centerButton() -> some View {
+    if viewType == .gallry {
+      Button(action: {
+        onCenterButtonTap?()
+      }) {
+        Image(ButtonType.album.imageName)
+          .resizable()
+          .frame(width: 12, height: 10)
+          .rotationEffect(.degrees(centerButtonRotated ? 180 : 0))
+          .animation(nil, value: centerButtonRotated)
+      }
+      .padding(.top, 3)
+      .padding(.leading, 3)
+      .frame(width: 20, height: 20)
+    }
   }
 }
