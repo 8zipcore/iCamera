@@ -16,7 +16,6 @@
 		3605F5662C917CDD00665348 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605F5652C917CDD00665348 /* CameraView.swift */; };
 		3605F5682C917DBF00665348 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605F5672C917DBF00665348 /* CameraManager.swift */; };
 		3605F56E2C91957600665348 /* FlashButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605F56D2C91957600665348 /* FlashButtonView.swift */; };
-		36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */; };
 		361BAB942CE85F180091346B /* EditStickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB932CE85F180091346B /* EditStickerView.swift */; };
 		361BAB962CE87B970091346B /* StoredStickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB952CE87B970091346B /* StoredStickerManager.swift */; };
 		361BAB982CE882940091346B /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BAB972CE882940091346B /* Sticker.swift */; };
@@ -129,7 +128,6 @@
 		3605F5652C917CDD00665348 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		3605F5672C917DBF00665348 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		3605F56D2C91957600665348 /* FlashButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashButtonView.swift; sourceTree = "<group>"; };
-		36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewWithOnScrollChanged.swift; sourceTree = "<group>"; };
 		361BAB932CE85F180091346B /* EditStickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStickerView.swift; sourceTree = "<group>"; };
 		361BAB952CE87B970091346B /* StoredStickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredStickerManager.swift; sourceTree = "<group>"; };
 		361BAB972CE882940091346B /* Sticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sticker.swift; sourceTree = "<group>"; };
@@ -577,7 +575,6 @@
 			children = (
 				36AFA2D32D1DADCA00215534 /* CommentsTextView.swift */,
 				3692E40B2CC4E540003CBACB /* CustomTextEditor.swift */,
-				36130FB42C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift */,
 				365FF5122CE232A300D6EE8B /* SelectedTextCell.swift */,
 				36F84FB52CD1EA7D008275F5 /* CalendarCell.swift */,
 			);
@@ -1039,7 +1036,6 @@
 				36EEABFB2E77C43D00BB1404 /* UIImage+Extension.swift in Sources */,
 				362BD6B72CAAE3ED000955D5 /* EditMenuViewModel.swift in Sources */,
 				3601C59D2C954E6800E71978 /* AlbumView.swift in Sources */,
-				36130FB52C98507100BAD2F8 /* ScrollViewWithOnScrollChanged.swift in Sources */,
 				36EEABFD2E77C91F00BB1404 /* CameraPreview.swift in Sources */,
 				3697D1B32C9FEF990012ABDC /* NotificationName.swift in Sources */,
 				362BD6B32CAADB4C000955D5 /* FilterManager.swift in Sources */,

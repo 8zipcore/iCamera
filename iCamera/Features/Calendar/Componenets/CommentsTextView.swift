@@ -39,6 +39,7 @@ struct CommentsTextView: UIViewRepresentable {
     if let lineHeight = uiView.font?.lineHeight {
       textViewSize.width = uiView.getWidthOfLine(line: Int(textViewSize.height / lineHeight) - 1)
     }
+    
     onSizeChange(textViewSize)
   }
   

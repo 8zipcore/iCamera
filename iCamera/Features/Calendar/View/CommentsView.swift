@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct CommentsView: View {
-  enum PreviousViewType{
+  
+  enum PreviousViewType {
     case calendar, main
   }
   
+  enum NavigationDestination {
+    case gallery
+  }
+  
+  @Environment(\.dismiss) var dismiss
+  
   @State var text: String = ""
-  @State private var height: CGFloat = 40 // 초기 높이 설정
+  @State private var height: CGFloat = 40
   
   @Binding var navigationPath: NavigationPath
   @StateObject var calendarManager: CalendarManager
@@ -29,297 +36,286 @@ struct CommentsView: View {
   @State private var contentOffset: CGPoint?
   @State private var previousCursorPosition: CGPoint = .zero
   
+  @State private var selectedImage: UIImage? = nil
   @State private var calendarData: CalendarData = CalendarData(date: Date(), comments: "")
   @State private var textData: TextData = .emptyTextData()
-  @State private var isNavigationLinkActive = false
   
   @State private var isFocused: Bool = false
-  @Environment(\.dismiss) var dismiss
   
-  var body: some View {
-    NavigationView{
-      GeometryReader { geometry in
-        let viewWidth = geometry.size.width
-        let viewHeight = geometry.size.height
-        let imageWidth = viewWidth
-        let barSize = CGSize(width: viewWidth, height: viewHeight * 0.05)
-        let buttonSize = CGSize(width: barSize.height * 0.75, height: barSize.height * 0.75)
-        let titleViewHeight = viewWidth * 110 / 1134
-        
-        ZStack{
-          GradientRectangleView()
-        }
-        
-        VStack{
-          VStack(spacing: 0){
-            
-//            PrimaryNavigationBar(title: "Comments",
-//                       imageSize: topBarSize,
-//                       isLeadingButtonHidden: viewType == .main,
-//                       isTrailingButtonHidden: false,
-//                       buttonManager: topBarViewButtonManager)
-//            .frame(width: topBarSize.width, height: topBarSize.height)
-//            .padding(.bottom, 3)
-//            .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-//              switch buttonType{
-//              case .cancel:
-//                dismiss()
-//              case .home:
-//                if viewType == .calendar{
-//                  navigationPath.removeLast(navigationPath.count)
-//                } else {
-//                  dismiss()
-//                }
-//              default:
-//                break
-//              }
-//            }
-            
-            ScrollViewWithOnScrollChanged(
-              scrollViewHeight: 30,
-//              scrollViewHeight: viewHeight - topBarSize.height,
-              contentOffset: $contentOffset,
-              content: {
-                VStack(spacing: 0){
-                  ZStack{
-                    if let imageData = calendarData.image, let image = UIImage(data: imageData) {
-                      ZStack{
-                        NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumVM: albumManager), isActive: $isNavigationLinkActive){
-                          Image(uiImage: image)
-                            .resizable()
-                            .onTapGesture {
-                              isNavigationLinkActive = true
-                            }
-                        }
-                        
-                        VStack{
-                          Spacer()
-                          HStack{
-                            Spacer()
-                            let imageWidth: CGFloat = viewWidth * 0.16
-                            let imageHeight: CGFloat = imageWidth * 101 / 238
-                            ZStack{
-                              Image("blue_button")
-                                .resizable()
-                                .frame(width: imageWidth, height: imageHeight)
-                              Text("Delete")
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(.white)
-                            }
-                          }
-                        }
-                        .padding([.bottom, .trailing], 15)
-                        .onTapGesture{
-                          calendarData.image = nil
-                          imageViewHeight = .zero
-                        }
-                      }
-                      
-                    } else {
-                      NavigationLink(destination: GalleryView(navigationPath: $navigationPath, viewType: .comments, calendarManager: calendarManager, albumVM: albumManager), isActive: $isNavigationLinkActive){
-                        ZStack{
-                          let buttonWidth = viewWidth * 0.08
-                          Rectangle()
-                            .fill(.white)
-                          Image("plus_button")
-                            .resizable()
-                            .frame(width: buttonWidth, height: buttonWidth)
-                        }
-                      }
-                    }
-                  } // Zstack 끝
-                  .frame(height: imageViewHeight == .zero ? viewWidth * 667 / 1125 : imageViewHeight)
-                  
-                  /*
-                   1. 키보드 올라가면 topbarview + 키보드view + 키보드 위에 bar View 제외한 값 구해서 스크롤뷰 높이로 설정해줌
-                   2. textView 밑에 spacer 추가해서 글자수 적을때 스크롤 시점 commentsTitle로 고정시킴
-                   3. 글자수 많으면 스크롤 시점 바닥으로 변경해서 타이핑 시점 따라가게 함
-                   */
-                  
-                  HStack{
-                    Image("pink_circle")
-                      .resizable()
-                      .frame(width: viewWidth * 0.03, height: viewWidth * 0.03)
-                    Text(calendarManager.dateComment)
-                      .font(.system(size: 15, weight: .medium))
-                      .foregroundStyle(.black)
-                    Spacer()
-                  }
-                  .id("commentsTitle")
-                  .frame(minHeight: titleViewHeight)
-                  .padding([.leading, .trailing], 15)
-                  
-                  let textEditorCornerRadius: CGFloat = 10
-                  let textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-                  
-                  CommentsTextView(textData: $textData,
-                                   textContainerInset: textContainerInset,
-                                   textViewWidth: viewWidth * 0.88,
-                                   onTextChange: { calendarData.comments = $0 },
-                                   onSizeChange: { newSize in
-                    if textViewSize == .zero{
-                      DispatchQueue.main.async{
-                        textViewSize = newSize
-                      }
-                    } else {
-                      if newSize != textViewSize { textViewSize = newSize }
-                    }
-                  },
-                                   onCursorChange: { caretRect, globalCaretRect in
-                    let keyboardBarYPosition = viewHeight - keyboardObserver.keyboardHeight - barSize.height
-                    let minimumBottomPadding: CGFloat = 20
-                    
-                    if textViewSize.height > scrollViewHeight && (textViewSize.height - scrollViewHeight) / 2 < caretRect.y {
-                      scrollToBottom(-1)
-                    } else if (globalCaretRect.y > keyboardBarYPosition - minimumBottomPadding) && previousCursorPosition.y != globalCaretRect.y && spacerHeight < 0{
-                      scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.font.pointSize)
-                    }
-                    
-                    previousCursorPosition = globalCaretRect
-                  })
-                  .animation(nil, value: scrollViewHeight)
-                  .background(Color.white)
-                  .cornerRadius(textEditorCornerRadius)
-                  .overlay(
-                    RoundedRectangle(cornerRadius: textEditorCornerRadius)
-                      .stroke(Color.black, lineWidth: 1)
-                  )
-                  .frame(width: viewWidth * 0.88, height: textViewSize.height)
-                  .frame(minHeight: 50)
-                  .position(x: viewWidth / 2, y: (textViewSize.height / 2))
-                  .id("textView")
-                  .onChange(of: textViewSize) { _ in
-                    if isFocused {
-                      spacerHeight = scrollViewHeight - titleViewHeight - textViewSize.height
-                      
-                      if spacerHeight > 0 {
-                        scrollToTop()
-                      }
-                    }
-                  }
-                  
-                  if isFocused{
-                    Spacer(minLength: keyboardObserver.keyboardHeight + barSize.height + max(spacerHeight, 0))
-                  }
-                }
-                .onReceive(calendarManager.selectedImage){ (albumManager, asset) in
-                  Task {
-                    await self.albumManager.fetchSelectedPhoto(for: asset)
-                  }
-                  /*
-                    imageViewHeight = imageWidth * image.size.height / image.size.width
-                    calendarData.image = image.jpegData(compressionQuality: 0.7)
-                   */
-                }
-                
-              }, scrollViewDidScroll: {scrollView in })
-//            .frame(width: viewWidth, height: viewHeight - topBarSize.height)
-            .onChange(of: keyboardObserver.keyboardHeight) { focused in
-              print(keyboardObserver.keyboardHeight)
-              if keyboardObserver.keyboardHeight > 0{
-                if originKeyboardHeight == .zero {
-                  originKeyboardHeight = keyboardObserver.keyboardHeight
-                }
-//                scrollViewHeight = viewHeight - topBarSize.height - barSize.height - keyboardObserver.keyboardHeight
-                spacerHeight = scrollViewHeight - titleViewHeight - textViewSize.height
-                
-                
-                if spacerHeight > 0 {
-                  scrollToTop()
-                } else {
-                  let keyboardBarYPosition = viewHeight - keyboardObserver.keyboardHeight - barSize.height
-                  let minimumBottomPadding: CGFloat = 20
-                  
-                  if previousCursorPosition == .zero{
-                    scrollToBottom(-1)
-                  } else if (previousCursorPosition.y > keyboardBarYPosition - minimumBottomPadding) {
-                    scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.font.pointSize)
-                  }
-                }
-                
-                isFocused = true
-              }
-            }
-          } // VStack 끝
-        }
-        .onAppear{
-          if let index = calendarManager.calendarDataArrayIndex(){
-            print(index)
-            self.calendarData = calendarManager.calendarDataArray[index]
-            if let imageData = calendarData.image, let image = UIImage(data: imageData) {
-              imageViewHeight = imageWidth * image.size.height / image.size.width
-            }
-          } else {
-            calendarData = CalendarData(date: calendarManager.selectedDate()!, image: nil, comments: "")
-          }
-          self.textData = TextData(
-            text: calendarData.comments,
-            textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: "System"),
-            textAlignment: .left,
-            textColor: .black,
-            backgroundColor: .clear,
-            location: .zero,
-            size: .zero,
-            textBackgroundSizes: [],
-            scale: 1.0,
-            angle: .zero,
-            isSelected: false
-          )
-          isNavigationLinkActive = false
-        }
-        /* KeyboardView */
-        if isFocused{
-          ZStack{
-            GradientRectangleView()
-            HStack{
-              Spacer()
-              Button(action: {
-                isFocused = false
-                hideKeyboard()
-              }) {
-                Image("xmark_button")
-                  .resizable()
-                  .frame(width: buttonSize.width, height: buttonSize.height)
-              }
-              .padding(.trailing, 10)
-            }
-          }
-          .frame(width: viewWidth, height: barSize.height)
-          .position(x: viewWidth / 2, y: viewHeight - keyboardObserver.keyboardHeight - (barSize.height / 2))
-          .onAppear{
-            print("onAppear")
-          }
-        }
-      }
-      .edgesIgnoringSafeArea(.bottom)
-      .onDisappear{
-        calendarManager.updateData(calendarData)
-      }
-    }
-    .navigationBarHidden(true)
+  private let titleViewHeight: CGFloat = 40
+  private let keyboardToolBarHeight: CGFloat = 40
+  
+  private var scrollViewBottomPadding: CGFloat {
+    keyboardToolBarHeight + keyboardObserver.keyboardHeight
   }
   
+  var body: some View {
+    GeometryReader { geometry in
+      ScrollView {
+        VStack {
+          imageSection()
+          
+          titleSection()
+          
+          commentsSection(containerSize: geometry.size)
+          
+          Spacer()
+        }
+        .navigationBar(
+          .comments,
+          onLeadingButtonTap: {
+            dismiss()
+          },
+          trailingButtonType: .home,
+          onTrailingButtonTap: {
+            if viewType == .calendar{
+              navigationPath.removeLast(navigationPath.count)
+            } else {
+              dismiss()
+            }
+          }
+        )
+      }
+      .scrollIndicators(.hidden)
+      .padding(.bottom, isFocused ? scrollViewBottomPadding : .zero)
+      .onChange(of: keyboardObserver.keyboardHeight) { focused in
+        if keyboardObserver.keyboardHeight > 0 {
+          isFocused = true
+        }
+      }
+      .background(GradientRectangleView())
+      .overlay {
+        keyboardToolBar(containerSize: geometry.size)
+      }
+      .navigationDestination(for: NavigationDestination.self) { destination in
+        switch destination {
+        case .gallery:
+          GalleryView(
+            navigationPath: $navigationPath,
+            viewType: .comments,
+            calendarManager: calendarManager,
+            albumVM: albumManager
+          )
+        }
+      }
+      .onReceive(calendarManager.selectedImage) { albumManager, asset in
+        Task {
+          self.albumManager.fetchSelectedPhoto(for: asset)
+        }
+      }
+      .onChange(of: albumManager.selectedImage) { _ in
+        if let image = albumManager.selectedImage {
+          selectedImage = image
+          calendarData.image = image.jpegData(compressionQuality: 0.5)
+        }
+      }
+      .onAppear {
+        if let index = calendarManager.calendarDataArrayIndex() {
+          self.calendarData = calendarManager.calendarDataArray[index]
+          
+          if let imageData = calendarData.image,
+             let image = UIImage(data: imageData) {
+            selectedImage = image
+            imageViewHeight = geometry.size.width * image.size.height / image.size.width
+          }
+        } else {
+          calendarData = CalendarData(date: calendarManager.selectedDate()!, image: nil, comments: "")
+        }
+        
+        self.textData = TextData(
+          text: calendarData.comments,
+          textFont: TextFont(
+            font: UIFont.systemFont(ofSize: 15),
+            fontName: "System"
+          ),
+          textAlignment: .left,
+          textColor: .black,
+          backgroundColor: .clear,
+          location: .zero,
+          size: .zero,
+          textBackgroundSizes: [],
+          scale: 1.0,
+          angle: .zero,
+          isSelected: false
+        )
+      }
+    }
+    .ignoresSafeArea(edges: .bottom)
+    .onDisappear {
+      calendarManager.updateData(calendarData)
+    }
+  }
+}
+
+// MARK: - Subviews
+extension CommentsView {
+  @ViewBuilder
+  private func imageSection() -> some View {
+    if let image = selectedImage {
+      ZStack {
+        Button {
+          navigationPath.append(NavigationDestination.gallery)
+        } label: {
+          Image(uiImage: image)
+            .resizable()
+            .scaledToFit()
+        }
+        
+        VStack {
+          Spacer()
+          
+          HStack {
+            Spacer()
+            
+            Button {
+              selectedImage = nil
+              calendarData.image = nil
+              imageViewHeight = .zero
+            } label: {
+              Image("blue_button")
+                .resizable()
+                .frame(width: 80, height: 30)
+                .overlay {
+                  Text("Delete")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.white)
+                }
+            }
+          }
+        }
+        .padding([.bottom, .trailing], 15)
+      }
+    } else {
+      VStack {
+        Button {
+          navigationPath.append(NavigationDestination.gallery)
+        } label: {
+          ZStack {
+            Rectangle()
+              .fill(.white)
+            
+            Image("plus_button")
+              .resizable()
+              .frame(width: 30, height: 30)
+          }
+        }
+      }
+      .frame(height: 300)
+    }
+  }
+  
+  @ViewBuilder
+  private func titleSection() -> some View {
+    HStack{
+      Image("pink_circle")
+        .resizable()
+        .frame(width: 10, height: 10)
+      
+      Text(calendarManager.dateComment)
+        .font(.system(size: 15, weight: .medium))
+        .foregroundStyle(.black)
+      
+      Spacer()
+    }
+    .frame(height: titleViewHeight)
+    .padding([.leading, .trailing], 15)
+  }
+  
+  @ViewBuilder
+  private func commentsSection(containerSize: CGSize) -> some View {
+    let textEditorCornerRadius: CGFloat = 10
+    let textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    
+    CommentsTextView(
+      textData: $textData,
+      textContainerInset: textContainerInset,
+      textViewWidth: containerSize.width * 0.88,
+      onTextChange: { calendarData.comments = $0 },
+      onSizeChange: { newSize in
+        Task { @MainActor in
+          if textViewSize == .zero {
+            textViewSize = newSize
+          } else {
+            if newSize != textViewSize { textViewSize = newSize }
+          }
+        }
+      },
+      onCursorChange: { caretRect, globalCaretRect in
+        let keyboardBarYPosition = containerSize.height - keyboardObserver.keyboardHeight - keyboardToolBarHeight
+        let minimumBottomPadding: CGFloat = 20
+        
+        if textViewSize.height > scrollViewHeight && (textViewSize.height - scrollViewHeight) / 2 < caretRect.y {
+          scrollToBottom(-1)
+        } else if (globalCaretRect.y > keyboardBarYPosition - minimumBottomPadding) && previousCursorPosition.y != globalCaretRect.y && spacerHeight < 0{
+          scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.font.pointSize)
+        }
+        
+        previousCursorPosition = globalCaretRect
+      }
+    )
+    .background(Color.white)
+    .cornerRadius(textEditorCornerRadius)
+    .overlay(
+      RoundedRectangle(cornerRadius: textEditorCornerRadius)
+        .stroke(Color.black, lineWidth: 1)
+    )
+    .frame(width: containerSize.width * 0.88, height: textViewSize.height)
+    .frame(minHeight: textData.textFont.font.pointSize + .smallPadding)
+    .padding(.bottom, .defaultPadding)
+  }
+  
+  @ViewBuilder
+  private func keyboardToolBar(containerSize: CGSize) -> some View {
+    if isFocused {
+      VStack {
+        Spacer()
+        
+        HStack {
+          Spacer()
+          
+          Button {
+            isFocused = false
+            hideKeyboard()
+          } label: {
+            Image("confirm_button")
+              .resizable()
+              .frame(width: 28, height: 28)
+          }
+          .padding(.trailing, 10)
+        }
+        .frame(width: containerSize.width, height: keyboardToolBarHeight)
+        .background(GradientRectangleView())
+      }
+      .padding(.bottom, keyboardObserver.keyboardHeight)
+      .onDisappear {
+        isFocused = false
+      }
+    }
+  }
+}
+
+extension CommentsView {
   private func calculateHeight() {
     let font = UIFont.systemFont(ofSize: 16)
-    let width = UIScreen.main.bounds.width - 32 // 패딩 고려
+    let width = UIScreen.main.bounds.width - 32
     let textHeight = text.boundingRect(
       with: CGSize(width: width, height: .greatestFiniteMagnitude),
       options: [.usesLineFragmentOrigin, .usesFontLeading],
       attributes: [.font: font],
       context: nil
     ).height
-    self.height = textHeight + 16 // 여백 추가
+    
+    self.height = textHeight + .defaultPadding
   }
   
-  private func scrollToTop(){
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.03){
+  private func scrollToTop() {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
       contentOffset = CGPoint(x: 0, y: imageViewHeight)
     }
   }
   
-  private func scrollToBottom(_ yPosition: CGFloat){
-    print("bottom \(yPosition)")
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.03){
+  private func scrollToBottom(_ yPosition: CGFloat) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
       contentOffset = CGPoint(x: -1, y: yPosition)
     }
   }
