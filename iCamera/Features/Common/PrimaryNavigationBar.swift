@@ -121,9 +121,9 @@ extension PrimaryNavigationBar {
   @ViewBuilder
   private func trailingButton() -> some View {
     if let trailingButtonType {
-      Button(action: {
+      Button {
         onTrailingButtonTap?()
-      }) {
+      } label: {
         Image(trailingButtonType.imageName)
           .resizable()
           .frame(width: buttonSize.width, height: buttonSize.width)
@@ -135,9 +135,9 @@ extension PrimaryNavigationBar {
   @ViewBuilder
   private func centerButton() -> some View {
     if viewType == .gallry {
-      Button(action: {
+      Button{
         onCenterButtonTap?()
-      }) {
+      } label: {
         Image(ButtonType.album.imageName)
           .resizable()
           .frame(width: 12, height: 10)

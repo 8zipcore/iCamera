@@ -16,28 +16,28 @@ struct TextMenuView: View {
   
   var body: some View {
     HStack(spacing: 25) {
-      Button(action: {
+      Button {
         textManager.setCurrentTextMenu(.font)
-      }){
+      } label: {
         Text("Aa")
           .font(.system(size: 18, weight: .regular))
           .foregroundStyle(.black)
       }
       .foregroundStyle(.black)
       
-      Button(action: {
+      Button {
         textManager.setTextAlignment()
         currentAlignmentIndex = (currentAlignmentIndex + 1) % 3
-      }) {
+      } label: {
         Image(alignmentImageStringArray[currentAlignmentIndex])
           .resizable()
           .frame(width: 17, height: 17)
       }
       .foregroundStyle(.black)
       
-      Button(action: {
+      Button {
         textManager.setCurrentTextMenu(.color)
-      }) {
+      } label: {
         Image("color")
           .resizable()
           .frame(width: 22, height: 22)

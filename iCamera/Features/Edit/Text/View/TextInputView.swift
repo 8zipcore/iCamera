@@ -66,9 +66,9 @@ extension TextInputView {
     )
     
     HStack {
-      Button(action: {
+      Button {
         textManager.textInputCancelButtonTapped.send(textData)
-      }) {
+      } label: {
         Image("xmark_button")
           .resizable()
           .frame(width: buttonSize.width, height: buttonSize.height)
@@ -77,12 +77,12 @@ extension TextInputView {
       
       Spacer()
       
-      Button(action: {
+      Button {
         textData.text = textInput
         textData.textBackgroundSizes = textBackgroundSizes
         textData.size = textViewSize
         textManager.textInputConfirmButtonTapped.send(textData)
-      }) {
+      } label: {
         Image("confirm_button")
           .resizable()
           .frame(width: buttonSize.width, height: buttonSize.height)

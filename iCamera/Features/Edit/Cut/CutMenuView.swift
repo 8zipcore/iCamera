@@ -14,18 +14,18 @@ struct CutMenuView: View {
   
   var body: some View {
     HStack(spacing: 0) {
-      Button(action: {
+      Button {
         pixCropManager.flipHorizontally()
-      }) {
+      } label: {
         Image("flip_horizontally")
           .resizable()
           .frame(width: 25, height: 25)
           .padding(.trailing, 25)
       }
       
-      Button(action: {
+      Button {
         pixCropManager.rotateLeft()
-      }) {
+      } label: {
         Image("rotation")
           .resizable()
           .frame(width: 30, height: 30)

@@ -123,9 +123,9 @@ extension CameraView {
           
           Spacer()
           
-          Button(action: {
+          Button {
             cameraManager.switchCamera()
-          }) {
+          } label: {
             Image("camera_switch_button")
               .resizable()
               .frame(
@@ -135,12 +135,12 @@ extension CameraView {
           }
         }
         
-        Button(action: {
+        Button {
           if !cameraButtonControlFlag{
             cameraManager.takePhoto()
             cameraButtonControlFlag = true
           }
-        }) {
+        } label: {
           Image("camera_button")
             .resizable()
             .frame(
