@@ -1,0 +1,24 @@
+{
+  "originHash" : "f47ee2d2ff194ee63448d198eb28fe6fc78e040ba6a4c99f5c6e2cf582448600",
+  "pins" : [
+    {
+      "identity" : "pixcrop",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/8zipcore/PixCrop",
+      "state" : {
+        "revision" : "e163ef83b615d9a37f2e0dcac21301f8d3cb54f9",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
+        "version" : "5.7.1"
+      }
+    }
+  ],
+  "version" : 3
+}
