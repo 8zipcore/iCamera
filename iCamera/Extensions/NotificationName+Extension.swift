@@ -1,5 +1,5 @@
 //
-//  NotificationName.swift
+//  NotificationName+Extension.swift
 //  iCamera
 //
 //  Created by 홍승아 on 9/22/24.
