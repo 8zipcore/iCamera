@@ -89,7 +89,7 @@ struct CustomTextView: UIViewRepresentable {
     textView.isScrollEnabled = false
     textView.backgroundColor = .clear
     textView.setAttributedString(from: textData)
-    textView.font = textData.textFont.font
+    textView.font = textData.textFont.uiFont
     textView.textAlignment = textData.textAlignment
     textView.delegate = context.coordinator
     textView.textContainerInset = textContainerInset
@@ -101,10 +101,10 @@ struct CustomTextView: UIViewRepresentable {
   
   func updateUIView(_ uiView: UITextView, context: Context) {
     uiView.setAttributedString(from: textData)
-    uiView.font = textData.textFont.font
+    uiView.font = textData.textFont.uiFont
     uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-    let lineHeight = textData.textFont.font.lineHeight
+    let lineHeight = textData.textFont.uiFont.lineHeight
     let textViewSize = uiView.sizeThatFits(CGSize(width: uiView.frame.width, height: .infinity))
     let lineNumber = Int(textViewSize.height / lineHeight)
       

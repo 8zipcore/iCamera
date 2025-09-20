@@ -34,7 +34,7 @@ struct EditTextView: View {
             HStack(spacing: 10){
               ForEach(textManager.fontArray.indices, id: \.self){ index in
                 let textFont = textManager.fontArray[index]
-                SelectedTextCell(title: textFont.fontName, font: Font(textFont.font), isSelected: textManager.isSameFont(textFont))
+                SelectedTextCell(title: textFont.type.title, font: Font(textFont.uiFont), isSelected: textManager.isSameFont(textFont))
                   .onTapGesture{
                     textManager.updateFont(textFont)
                   }
@@ -70,7 +70,7 @@ struct EditTextView: View {
   
   private func fontSizeToPercentage(minFontSize: CGFloat, maxFontSize: CGFloat) -> CGFloat{
     if let selectedText = textManager.selectedText{
-      return (selectedText.textFont.font.pointSize - minFontSize) / (maxFontSize - minFontSize)
+      return (selectedText.textFont.uiFont.pointSize - minFontSize) / (maxFontSize - minFontSize)
     }
     return 0
   }

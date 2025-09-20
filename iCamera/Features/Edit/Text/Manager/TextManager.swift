@@ -43,7 +43,7 @@ struct TextData: Equatable{
   static func emptyTextData() -> TextData{
     return TextData(
       text: "",
-      textFont: TextFont(font: UIFont.systemFont(ofSize: 15), fontName: ""),
+      textFont: TextFont(type: .system, size: 15),
       textAlignment: .left,
       textColor: .black,
       backgroundColor: .clear,
@@ -58,8 +58,12 @@ struct TextData: Equatable{
 }
 
 struct TextFont: Hashable{
-  var font: UIFont
-  var fontName: String
+  var type: AppFont
+  var size: CGFloat
+  
+  var uiFont: UIFont {
+    UIFont(type, size: size)
+  }
 }
 
 enum TextMenu{
@@ -83,14 +87,10 @@ class TextManager: ObservableObject{
   
   var showTextInputView: Bool = false
   
-  private var fontManager = FontManager()
-  
   var fontArray: [TextFont] {
     var textFontArray: [TextFont] = []
-    FontManager.Font.allCases.forEach{ font in
-      let fontName = fontManager.fontNameToString(font)
-      let uiFont = fontManager.fontToUIFont(font, size: 18)
-      textFontArray.append(TextFont(font:uiFont, fontName: fontName))
+    AppFont.allCases.forEach{ font in
+      textFontArray.append(TextFont(type: font, size: 18))
     }
     return textFontArray
   }
@@ -129,7 +129,7 @@ class TextManager: ObservableObject{
     textArray.indices.forEach{ textArray[$0].isSelected = false}
     let textData = TextData(
       text: "",
-      textFont: TextFont(font: fontManager.fontToUIFont(.myungjo, size: 15), fontName: fontManager.fontNameToString(.myungjo)),
+      textFont: TextFont(type: .myungjo, size: 15),
       textAlignment: .center,
       textColor: .black,
       backgroundColor: .clear,
@@ -138,7 +138,8 @@ class TextManager: ObservableObject{
       textBackgroundSizes: [],
       scale: 1,
       angle: Angle(degrees: 0),
-      isSelected: true)
+      isSelected: true
+    )
     textArray.append(textData)
     selectedText = textData
   }
@@ -194,7 +195,7 @@ class TextManager: ObservableObject{
   
   func isSameFont(_ font: TextFont) -> Bool{
     if let selectedText = selectedText{
-      return selectedText.textFont.fontName == font.fontName
+      return selectedText.textFont.type == font.type
     }
     return false
   }
@@ -238,7 +239,7 @@ class TextManager: ObservableObject{
   func updateFont(_ textFont: TextFont){
     if let index = selectedTextIndex(){
       var textFont = textFont
-      textFont.font = textFont.font.withSize(textArray[index].textFont.font.pointSize)
+      textFont.size = textArray[index].textFont.size
       textArray[index].textFont = textFont
       selectedText = textArray[index]
     }
@@ -246,8 +247,7 @@ class TextManager: ObservableObject{
   
   func setFontSize(_ size: CGFloat){
     if let index = selectedTextIndex(){
-      let font = textArray[index].textFont.font
-      textArray[index].textFont.font = font.withSize(size)
+      textArray[index].textFont.size = size
       selectedText = textArray[index]
     }
   }
@@ -267,13 +267,13 @@ class TextManager: ObservableObject{
   func updateText(text: TextData, size: CGSize, location: CGPoint) -> TextData{
     var text = text
     
-    let font = text.textFont.font
-    let fontSize = font.pointSize
+    let font = text.textFont
+    let fontSize = CGFloat(text.textFont.size)
     let newFontSize = fontSize * size.height / text.size.height
-    text.textFont.font = font.withSize(newFontSize)
+    text.textFont.size = newFontSize
     
-    let previousLineHeight = font.lineHeight
-    let newFontLineHeight = text.textFont.font.lineHeight
+    let previousLineHeight = font.uiFont.lineHeight
+    let newFontLineHeight = text.textFont.uiFont.lineHeight
     
     for index in text.textBackgroundSizes.indices{
       let width = text.textBackgroundSizes[index].width
@@ -283,6 +283,7 @@ class TextManager: ObservableObject{
     
     text.size = size
     text.location = location
+    
     return text
   }
 }

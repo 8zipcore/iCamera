@@ -22,7 +22,7 @@ struct CommentsTextView: UIViewRepresentable {
     textView.isScrollEnabled = false
     textView.backgroundColor = .clear
     textView.setAttributedString(from: textData)
-    textView.font = textData.textFont.font
+    textView.font = textData.textFont.uiFont
     textView.textAlignment = textData.textAlignment
     textView.delegate = context.coordinator
     textView.textContainerInset = textContainerInset

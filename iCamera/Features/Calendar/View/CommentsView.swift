@@ -125,8 +125,8 @@ struct CommentsView: View {
         self.textData = TextData(
           text: calendarData.comments,
           textFont: TextFont(
-            font: UIFont.systemFont(ofSize: 15),
-            fontName: "System"
+            type: .system,
+            size: 15
           ),
           textAlignment: .left,
           textColor: .black,
@@ -247,7 +247,7 @@ extension CommentsView {
         if textViewSize.height > scrollViewHeight && (textViewSize.height - scrollViewHeight) / 2 < caretRect.y {
           scrollToBottom(-1)
         } else if (globalCaretRect.y > keyboardBarYPosition - minimumBottomPadding) && previousCursorPosition.y != globalCaretRect.y && spacerHeight < 0{
-          scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.font.pointSize)
+          scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.uiFont.pointSize)
         }
         
         previousCursorPosition = globalCaretRect
@@ -260,7 +260,7 @@ extension CommentsView {
         .stroke(Color.black, lineWidth: 1)
     )
     .frame(width: containerSize.width * 0.88, height: textViewSize.height)
-    .frame(minHeight: textData.textFont.font.pointSize + .smallPadding)
+    .frame(minHeight: textData.textFont.uiFont.pointSize + .smallPadding)
     .padding(.bottom, .defaultPadding)
   }
   

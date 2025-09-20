@@ -65,7 +65,7 @@ extension UITextView{
     let attributedString = NSMutableAttributedString(string: nsString as String)
     
     attributedString.addAttribute(.foregroundColor, value: UIColor(textData.textColor), range: range)
-    attributedString.addAttribute(.font, value: textData.textFont.font, range: range)
+    attributedString.addAttribute(.font, value: textData.textFont.uiFont, range: range)
     
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.alignment = textData.textAlignment
