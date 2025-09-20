@@ -31,7 +31,11 @@ struct GalleryCollectionView: UIViewRepresentable {
   }
   
   func updateUIView(_ uiView: UICollectionView, context: Context) {
-    uiView.reloadData()
+    let oldAssets = context.coordinator.assets
+    if oldAssets != assets {
+      context.coordinator.assets = assets
+      uiView.reloadData()
+    }
   }
   
   func makeCoordinator() -> Coordinator {
@@ -41,6 +45,7 @@ struct GalleryCollectionView: UIViewRepresentable {
   class Coordinator: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
     var parent: GalleryCollectionView
     let imageManager = PHCachingImageManager()
+    var assets: [PHAsset] = []
     
     init(parent: GalleryCollectionView) {
       self.parent = parent
