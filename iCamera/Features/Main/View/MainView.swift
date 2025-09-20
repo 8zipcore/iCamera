@@ -14,7 +14,6 @@ struct MainView: View {
     case gallery
     case calendar
     case comments
-    case test
     
     var title: String {
       switch self {
@@ -35,7 +34,7 @@ struct MainView: View {
   
   var body: some View {
     NavigationStack(path: $navigationPath) {
-      VStack(spacing: .mediumPadding){
+      VStack(spacing: .mediumPadding) {
         menuSection()
         
         calendarSection()
@@ -59,8 +58,6 @@ struct MainView: View {
             calendarManager: calendarManager,
             viewType: .main
           )
-        default:
-          TestPhotoView(navigationPath: $navigationPath, image: UIImage(named: "test") ?? UIImage(), albumManager: AlbumViewModel())
         }
       }
       .navigationBar(.main)
@@ -105,7 +102,7 @@ extension MainView {
           .font(.system(size: 60, weight: .medium))
           .foregroundStyle(Color.titleGray)
         
-        VStack(spacing: 3){
+        VStack(spacing: 3) {
           Group {
             Text(calendarManager.getWeekdays())
               .font(.system(size: 17, weight: .medium))

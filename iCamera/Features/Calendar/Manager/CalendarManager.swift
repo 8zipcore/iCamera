@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import Photos
 
-enum Week: String, CaseIterable{
+enum Week: String, CaseIterable {
   case sun = "Sun"
   case mon = "Mon"
   case tue = "Tue"
@@ -19,7 +19,7 @@ enum Week: String, CaseIterable{
   case sat = "Sat"
 }
 
-class CalendarManager: ObservableObject{
+class CalendarManager: ObservableObject {
   static let shared = CalendarManager()
   
   var week: [Week] = []
@@ -36,7 +36,7 @@ class CalendarManager: ObservableObject{
   @Published var dateComment: String = ""
   
   private let monthArray: [String] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  var monthToString: String{
+  var monthToString: String {
     return monthArray[selectedMonth - 1]
   }
   
@@ -44,15 +44,15 @@ class CalendarManager: ObservableObject{
   @Published var calendarDataArray: [CalendarData] = []
   private var cancellables = Set<AnyCancellable>()
   
-  init(){
-    week = Week.allCases.map{ return $0 }
+  init() {
+    week = Week.allCases.map { return $0 }
     selectedYear = currentYear
     selectedMonth = currentMonth
     selectedDay = currentDay
     weeks = 5
   }
   
-  func todayDate(){
+  func todayDate() {
     selectedYear = currentYear
     selectedMonth = currentMonth
     selectedDay = currentDay
@@ -73,7 +73,7 @@ class CalendarManager: ObservableObject{
     return range?.count
   }
   
-  func lastWeek() -> Int{
+  func lastWeek() -> Int {
     guard let startDay = startOfMonth(year: selectedYear, month: selectedMonth),
           let lastDay = daysInMonth(year: selectedYear, month: selectedMonth) else { return 5 }
     let daysOfWeek = 7
@@ -84,7 +84,7 @@ class CalendarManager: ObservableObject{
     return weeks + 1
   }
   
-  func previousMonth(){
+  func previousMonth() {
     if selectedMonth == 1 {
       selectedMonth = 12
       selectedYear -= 1
@@ -95,7 +95,7 @@ class CalendarManager: ObservableObject{
     selectedDay = 0
   }
   
-  func nextMonth(){
+  func nextMonth() {
     if selectedMonth == 12 {
       selectedMonth = 1
       selectedYear += 1
@@ -106,7 +106,7 @@ class CalendarManager: ObservableObject{
     selectedDay = 0
   }
   
-  func startOfMonth(year: Int, month: Int) -> Int?{
+  func startOfMonth(year: Int, month: Int) -> Int? {
     let calendar = Calendar.current
     
     var dateComponents = DateComponents()
@@ -123,7 +123,7 @@ class CalendarManager: ObservableObject{
     return weekday
   }
   
-  func dayToString(week: Int, day: Int) -> String{
+  func dayToString(week: Int, day: Int) -> String {
     let day = dayOfMonth(week: week, day: day)
     if day < 0 {
       return ""
@@ -136,13 +136,13 @@ class CalendarManager: ObservableObject{
           let lastDay = daysInMonth(year: selectedYear, month: selectedMonth) else { return -1 }
     let daysOfWeek = 7
     let day = (week * daysOfWeek) - (daysOfWeek - day) - startDay + 1
-    if day < 1 || day > lastDay{
+    if day < 1 || day > lastDay {
       return -1
     }
     return day
   }
   
-  func yearToString() -> String{
+  func yearToString() -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal // 기본 숫자 스타일 설정
     if let formattedString = formatter.string(from: NSNumber(value: selectedYear)) {
@@ -153,7 +153,7 @@ class CalendarManager: ObservableObject{
   
   func dateCommentToString() -> String {
     var day: String = ""
-    switch selectedDay{
+    switch selectedDay {
     case 1:
       day = "1st"
     case 2:
@@ -178,11 +178,11 @@ class CalendarManager: ObservableObject{
     return calendar.date(from: dateComponents)
   }
   
-  func selectedDate() -> Date?{
+  func selectedDate() -> Date? {
     return createDate(year: selectedYear, month: selectedMonth, day: selectedDay)
   }
   
-  func selectedCommnets() -> String{
+  func selectedCommnets() -> String {
     let nothingComments = "nothing . . ."
     if let index = calendarDataArrayIndex() {
       if calendarDataArray[index].comments.count == 0 {
@@ -193,12 +193,12 @@ class CalendarManager: ObservableObject{
     return nothingComments
   }
 }
-// CalendarData
-extension CalendarManager{
-  func calendarDataArrayIndex(week: Int, day: Int) -> Int?{
-    if let date = createDate(year: selectedYear, month: selectedMonth, day: dayOfMonth(week: week, day: day)){
-      for index in calendarDataArray.indices{
-        if date == calendarDataArray[index].date{
+
+extension CalendarManager {
+  func calendarDataArrayIndex(week: Int, day: Int) -> Int? {
+    if let date = createDate(year: selectedYear, month: selectedMonth, day: dayOfMonth(week: week, day: day)) {
+      for index in calendarDataArray.indices {
+        if date == calendarDataArray[index].date {
           return index
         }
       }
@@ -206,11 +206,11 @@ extension CalendarManager{
     return nil
   }
   
-  func calendarDataArrayIndex() -> Int?{
-    if let selectedDate = createDate(year: selectedYear, month: selectedMonth, day: selectedDay){
-      for index in calendarDataArray.indices{
+  func calendarDataArrayIndex() -> Int? {
+    if let selectedDate = createDate(year: selectedYear, month: selectedMonth, day: selectedDay) {
+      for index in calendarDataArray.indices {
         let date = calendarDataArray[index].date
-        if Calendar.current.isDate(selectedDate, inSameDayAs: date){
+        if Calendar.current.isDate(selectedDate, inSameDayAs: date) {
           return index
         }
       }
@@ -218,7 +218,7 @@ extension CalendarManager{
     return nil
   }
   
-  func updateData(_ calendarData: CalendarData){
+  func updateData(_ calendarData: CalendarData) {
     if calendarDataArray.filter({ $0.id == calendarData.id }).count == 0 {
       if calendarData.comments.isEmpty && calendarData.image == nil { return }
       
@@ -235,10 +235,10 @@ extension CalendarManager{
     }
   }
   
-  func fetchData(){
+  func fetchData() {
     CoreDataManager.shared.fetchData()
       .sink(receiveCompletion: { completion in
-        switch completion{
+        switch completion {
         case .finished:
           print("finish")
         case .failure(_):

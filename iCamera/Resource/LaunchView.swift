@@ -13,7 +13,7 @@ struct LaunchView: View {
       let viewWidth = geometry.size.width
       let viewHeight = geometry.size.height
       
-      ZStack{
+      ZStack {
         LinearGradient(
           gradient: Gradient(stops: [
             .init(color: .white, location: 0.2),

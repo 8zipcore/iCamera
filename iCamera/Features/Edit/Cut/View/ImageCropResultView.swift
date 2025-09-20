@@ -8,13 +8,13 @@
 import SwiftUI
 import PixCrop
 
-struct ImageCropResultView: UIViewRepresentable{
+struct ImageCropResultView: UIViewRepresentable {
   @ObservedObject var pixCropManager: PixCropManager
   var frame: CGRect
   var image: UIImage?
   var oppacity: CGFloat = 1
   
-  func makeUIView(context: Context) -> PixCropResultView{
+  func makeUIView(context: Context) -> PixCropResultView {
     var pixCropView = pixCropManager.pixCropView
     
     if let image = image, pixCropManager.isInitialized == false {

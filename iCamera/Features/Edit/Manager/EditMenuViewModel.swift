@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct MenuButton: Hashable{
+struct MenuButton: Hashable {
   enum ButtonType: Int {
     case filter, cut, sticker, text
   }
@@ -30,7 +30,7 @@ struct MenuButton: Hashable{
   }
 }
 
-final class EditMenuViewModel: ObservableObject{
+final class EditMenuViewModel: ObservableObject {
   @Published var menuButtons: [MenuButton] = []
   var buttonClicked = PassthroughSubject<MenuButton.ButtonType, Never>()
 
@@ -43,14 +43,14 @@ final class EditMenuViewModel: ObservableObject{
     ]
   }
   
-  func setSelected(_ selectedIndex: Int){
-    for index in menuButtons.indices{
+  func setSelected(_ selectedIndex: Int) {
+    for index in menuButtons.indices {
       menuButtons[index].isSelected = false
     }
     menuButtons[selectedIndex].isSelected = true
   }
   
-  func isSelected(_ type: MenuButton.ButtonType) -> Bool{
+  func isSelected(_ type: MenuButton.ButtonType) -> Bool {
     return menuButtons[type.rawValue].isSelected
   }
 }

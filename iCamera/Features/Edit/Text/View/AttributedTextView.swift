@@ -22,8 +22,8 @@ struct AttributedTextView: View {
       let viewWidth = geometry.size.width
       let viewHeight = geometry.size.height
       
-      ZStack{
-        ForEach(textBackgroundSizes.indices, id: \.self){ index in
+      ZStack {
+        ForEach(textBackgroundSizes.indices, id: \.self) { index in
           let backgroundViewSize = textBackgroundSizes[index]
           let position = backgroundArrayPosition(index: index, viewSize: geometry.size)
           
@@ -49,14 +49,14 @@ struct AttributedTextView: View {
     }
   }
   
-  private func multiple(index: Int) -> CGFloat{
+  private func multiple(index: Int) -> CGFloat {
     let arrayCount = textBackgroundSizes.count
     let centerIndex = arrayCount % 2 == 0 ?
     CGFloat(arrayCount - 1) / 2 : CGFloat(arrayCount / 2)
     return CGFloat(index) - centerIndex
   }
   
-  private func backgroundArrayPosition(index: Int, viewSize: CGSize) -> CGPoint{
+  private func backgroundArrayPosition(index: Int, viewSize: CGSize) -> CGPoint {
     let size = textBackgroundSizes[index]
     var position: CGPoint = .zero
     switch textData.textAlignment {
@@ -109,11 +109,12 @@ struct CustomTextView: UIViewRepresentable {
     let lineNumber = Int(textViewSize.height / lineHeight)
       
     var textBackgroundSizes: [CGSize] = []
-    for line in 0..<lineNumber{
+    for line in 0..<lineNumber {
       let lineWidth = uiView.getWidthOfLine(line: line)
       textBackgroundSizes.append(CGSize(width: lineWidth, height: round(lineHeight)))
     }
-    DispatchQueue.main.async{
+    
+    DispatchQueue.main.async {
       updateData(textBackgroundSizes, textViewSize)
     }
   }
@@ -139,7 +140,7 @@ struct CustomTextView: UIViewRepresentable {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-      DispatchQueue.main.async{
+      DispatchQueue.main.async {
         self.parent.textData.text = textView.text
         self.parent.onTextChange(textView.text)
       }

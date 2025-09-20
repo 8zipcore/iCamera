@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import Combine
 
-class CoreDataManager{
+class CoreDataManager {
   static let shared = CoreDataManager()
   
   private let containerName = "iCamera"
@@ -32,9 +32,9 @@ class CoreDataManager{
     return persistentContainer.viewContext
   }
   
-  private func saveContext(){
-    if context.hasChanges{
-      do{
+  private func saveContext() {
+    if context.hasChanges {
+      do {
         try context.save()
         print("✅ 저장")
       } catch {
@@ -44,8 +44,8 @@ class CoreDataManager{
     }
   }
 }
-/* CalendarData */
-extension CoreDataManager{
+
+extension CoreDataManager {
   func fetchData() -> AnyPublisher<[CalendarData], Error> {
     Future { [context] promise in
       context.perform {
@@ -72,7 +72,7 @@ extension CoreDataManager{
   }
   
   
-  func saveData(_ data: CalendarData){
+  func saveData(_ data: CalendarData) {
     if let entity = NSEntityDescription.entity(forEntityName: calendarEntity, in: context){
       let calendar = NSManagedObject(entity: entity, insertInto: context)
       calendar.setValue(data.id, forKey: "id")
@@ -83,11 +83,11 @@ extension CoreDataManager{
     }
   }
   
-  func updateData(_ data: CalendarData){
+  func updateData(_ data: CalendarData) {
     let fetchRequest: NSFetchRequest<ICalendar> = ICalendar.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "id == %@", data.id.uuidString)
     do {
-      if let calendar = try context.fetch(fetchRequest).first{
+      if let calendar = try context.fetch(fetchRequest).first {
         calendar.comments = data.comments
         calendar.image = data.image
         
@@ -98,11 +98,11 @@ extension CoreDataManager{
     }
   }
   
-  func deleteData(_ data: CalendarData){
+  func deleteData(_ data: CalendarData) {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: calendarEntity)
     fetchRequest.predicate = NSPredicate(format: "id == %@", data.id.uuidString)
     do {
-      if let object = try context.fetch(fetchRequest).first as? NSManagedObject{
+      if let object = try context.fetch(fetchRequest).first as? NSManagedObject {
         context.delete(object)
       }
       saveContext()
@@ -121,23 +121,23 @@ extension CoreDataManager{
     }
   }
 }
-/* Sticker Data */
-extension CoreDataManager{
+
+extension CoreDataManager {
   func fetchStickerData() -> AnyPublisher<[StickerData], Error> {
     Future { [context] promise in
       context.perform {
         let request: NSFetchRequest<ISticker> = ISticker.fetchRequest()
-        do{
+        do {
           let stickerArray = try context.fetch(request)
           var stickerDataArray: [StickerData] = []
-          stickerArray.forEach{
-            if let id = $0.id, let image = $0.image == nil ? nil : UIImage(data: $0.image!){
+          stickerArray.forEach {
+            if let id = $0.id, let image = $0.image == nil ? nil : UIImage(data: $0.image!) {
               let data = StickerData(id: id, image: image)
               stickerDataArray.append(data)
             }
           }
           promise(.success(stickerDataArray))
-        } catch{
+        } catch {
           promise(.failure(error))
         }
       }
@@ -145,8 +145,8 @@ extension CoreDataManager{
     .eraseToAnyPublisher()
   }
   
-  func saveData(_ data: StickerData){
-    if let entity = NSEntityDescription.entity(forEntityName: stickerEntity, in: context){
+  func saveData(_ data: StickerData) {
+    if let entity = NSEntityDescription.entity(forEntityName: stickerEntity, in: context) {
       let sticker = NSManagedObject(entity: entity, insertInto: context)
       sticker.setValue(data.id, forKey: "id")
       let imageData = data.image.pngData()
@@ -156,11 +156,11 @@ extension CoreDataManager{
     }
   }
   
-  func deleteData(_ data: StickerData){
+  func deleteData(_ data: StickerData) {
     let fetchRequest: NSFetchRequest<ISticker> = ISticker.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "id == %@", data.id.uuidString)
     do {
-      if let sticker = try context.fetch(fetchRequest).first{
+      if let sticker = try context.fetch(fetchRequest).first {
         context.delete(sticker)
         
         saveContext()

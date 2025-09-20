@@ -21,21 +21,15 @@ struct CaptureImageView: View {
   var body: some View {
     GeometryReader { geometry in
       let viewSize = geometry.size
-      ZStack{
-        /*
-         Rectangle()
-         .stroke(.white, lineWidth: 1.0)
-         .frame(width: imageSize.width, height: imageSize.height)
-         */
-        
+      
+      ZStack {
         ImageCropResultView(pixCropManager: pixCropManager, frame: CGRect(origin: .zero, size: viewSize))
         
         if let filteredImage = filterManager.applyFilters(to: image) {
           ImageCropResultView(pixCropManager: pixCropManager, frame: CGRect(origin: .zero, size: viewSize), image: filteredImage, oppacity: filterManager.filterValue)
         }
         
-        /* ⭐️ StickerView 시작 */
-        ForEach(stickerManager.stickerArray.indices, id:\.self){ index in
+        ForEach(stickerManager.stickerArray.indices, id:\.self) { index in
           let sticker = stickerManager.stickerArray[index]
           let newSize = updateSize(size: sticker.size, viewSize: viewSize)
           let newLocation = updatePosition(position: sticker.location, viewSize: viewSize)
@@ -44,41 +38,20 @@ struct CaptureImageView: View {
             .frame(width: newSize.width, height: newSize.height)
             .position(newLocation)
         }
-        /* ⭐️ StickerView 끝 (ForEach) */
-        /* ⭐️ TextView 시작 */
-        /*
-        ForEach(textManager.textArray.indices, id: \.self){ index in
-          let text = textManager.setTextPlaceHolder(index: index)
-          let newSize = updateSize(size: text.size, viewSize: viewSize)
-          let newLocation = updatePosition(position: text.location, viewSize: viewSize)
-          let newText = textManager.updateText(text: text, size: newSize, location: newLocation)
-          TextView(
-            index: index,
-            textData: newText,
-            textSize: newText.size,
-            textManager: textManager,
-            editManager: EditManager(),
-            editImageViewPositionArray: [],
-            textBackgroundSizes: newText.textBackgroundSizes 
-          )
-          //                        .frame(width: text.size.width, height: text.size.height)
-            .position(newLocation)
-        }
-         */
       }
       .navigationBarHidden(true)
       .ignoresSafeArea(.all, edges: .bottom)
     }
   }
   
-  private func updateSize(size: CGSize, viewSize: CGSize) -> CGSize{
+  private func updateSize(size: CGSize, viewSize: CGSize) -> CGSize {
     let lastFrameSize = pixCropManager.maskSize
     let newFramSize = cutImageManager.imageSize(imageSize: lastFrameSize, viewSize: viewSize)
     let scale = min(newFramSize.width / lastFrameSize.width, newFramSize.height / lastFrameSize.height)
     return CGSize(width: size.width * scale, height: size.height * scale)
   }
   
-  private func updatePosition(position: CGPoint, viewSize: CGSize) -> CGPoint{
+  private func updatePosition(position: CGPoint, viewSize: CGSize) -> CGPoint {
     let lastCenter = pixCropManager.pixCropView.center
     let lastFrameSize = pixCropManager.maskSize
     let newFramSize = cutImageManager.imageSize(imageSize: lastFrameSize, viewSize: viewSize)

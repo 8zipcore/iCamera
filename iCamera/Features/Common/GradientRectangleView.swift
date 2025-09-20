@@ -16,8 +16,8 @@ struct GradientRectangleView: View {
             .init(color: .white, location: 0.05),
             .init(color: .silver, location: 1.0)
           ]),
-          startPoint: .top, // 시작점
-          endPoint: .bottom // 끝점
+          startPoint: .top,
+          endPoint: .bottom
         )
       )
       .ignoresSafeArea()

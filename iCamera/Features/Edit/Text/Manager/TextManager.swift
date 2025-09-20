@@ -9,8 +9,8 @@ import SwiftUI
 import Combine
 import UIKit
 
-struct TextData: Equatable{
-  enum Alignment: Int{
+struct TextData: Equatable {
+  enum Alignment: Int {
     case center, leading, trailing
   }
   var id = UUID()
@@ -40,7 +40,7 @@ struct TextData: Equatable{
     return lhs.text == rhs.text && lhs.textBackgroundSizes == rhs.textBackgroundSizes && lhs.size == rhs.size
   }
   
-  static func emptyTextData() -> TextData{
+  static func emptyTextData() -> TextData {
     return TextData(
       text: "",
       textFont: TextFont(type: .system, size: 15),
@@ -57,7 +57,7 @@ struct TextData: Equatable{
   }
 }
 
-struct TextFont: Hashable{
+struct TextFont: Hashable {
   var type: AppFont
   var size: CGFloat
   
@@ -66,11 +66,11 @@ struct TextFont: Hashable{
   }
 }
 
-enum TextMenu{
+enum TextMenu {
   case font, alignment, color
 }
 
-class TextManager: ObservableObject{
+class TextManager: ObservableObject {
   var fontButtonTapped = PassthroughSubject<TextFont, Never>()
   var textInputCancelButtonTapped = PassthroughSubject<TextData, Never>()
   var textInputConfirmButtonTapped = PassthroughSubject<TextData, Never>()
@@ -89,7 +89,7 @@ class TextManager: ObservableObject{
   
   var fontArray: [TextFont] {
     var textFontArray: [TextFont] = []
-    AppFont.allCases.forEach{ font in
+    AppFont.allCases.forEach { font in
       textFontArray.append(TextFont(type: font, size: 18))
     }
     return textFontArray
@@ -99,15 +99,15 @@ class TextManager: ObservableObject{
   
   var isFirstDrag = true
   
-  func isHidden(index: Int) -> Bool{
+  func isHidden(index: Int) -> Bool {
     return textArray[index].isSelected
   }
   
-  func selectedTextData() -> TextData?{
+  func selectedTextData() -> TextData? {
     return textArray.filter({ $0.isSelected }).first
   }
   
-  func setTextData(textData: TextData){
+  func setTextData(textData: TextData) {
     for index in textArray.indices {
       if textArray[index].id == textData.id {
         textArray[index] = textData
@@ -117,7 +117,7 @@ class TextManager: ObservableObject{
     }
   }
   
-  func restoreTextData(textData: TextData){
+  func restoreTextData(textData: TextData) {
     if let selectedText = selectedText, selectedText.id == textData.id {
       if let index = textArray.firstIndex(where: { $0.id == selectedText.id }) {
         textArray[index].text = selectedText.text
@@ -125,8 +125,8 @@ class TextManager: ObservableObject{
     }
   }
   
-  func addNewText(location: CGPoint, size: CGSize){
-    textArray.indices.forEach{ textArray[$0].isSelected = false}
+  func addNewText(location: CGPoint, size: CGSize) {
+    textArray.indices.forEach { textArray[$0].isSelected = false}
     let textData = TextData(
       text: "",
       textFont: TextFont(type: .myungjo, size: 15),
@@ -144,48 +144,48 @@ class TextManager: ObservableObject{
     selectedText = textData
   }
   
-  func addText(textData: TextData){
-    textArray.indices.forEach{ textArray[$0].isSelected = false}
+  func addText(textData: TextData) {
+    textArray.indices.forEach { textArray[$0].isSelected = false}
     textArray.append(textData)
   }
   
-  func removeText(_ index: Int){
+  func removeText(_ index: Int) {
     textArray.remove(at: index)
   }
   
   func selectText(index: Int) {
-    if textArray[index].isSelected{
+    if textArray[index].isSelected {
       return
     }
-    textArray.indices.forEach{ textArray[$0].isSelected = false }
+    textArray.indices.forEach { textArray[$0].isSelected = false }
     textArray[index].isSelected = true
     selectedText = textArray[index]
   }
   
-  func deleteText(index: Int){
-    if textArray[index].isSelected{
+  func deleteText(index: Int) {
+    if textArray[index].isSelected {
       selectedText = nil
     }
     textArray.remove(at: index)
   }
   
-  func setCurrentTextMenu(_ textMenu: TextMenu){
+  func setCurrentTextMenu(_ textMenu: TextMenu) {
     currentTextMenu = textMenu
   }
   
-  func isSelected(_ textMenu: TextMenu) -> Bool{
+  func isSelected(_ textMenu: TextMenu) -> Bool {
     return currentTextMenu == textMenu
   }
   
-  func isSelected(_ textData: TextData) -> Bool{
+  func isSelected(_ textData: TextData) -> Bool {
     return textData.id == selectedText?.id
   }
   
-  func isExistSeletedText() -> Bool{
+  func isExistSeletedText() -> Bool {
     return selectedText != nil
   }
   
-  func deselectAll(){
+  func deselectAll() {
     textArray.indices.forEach{ textArray[$0].isSelected = false }
   }
   
@@ -193,38 +193,38 @@ class TextManager: ObservableObject{
     return textArray.firstIndex(where: {$0.isSelected})
   }
   
-  func isSameFont(_ font: TextFont) -> Bool{
-    if let selectedText = selectedText{
+  func isSameFont(_ font: TextFont) -> Bool {
+    if let selectedText = selectedText {
       return selectedText.textFont.type == font.type
     }
     return false
   }
   
   func setAlignment() {
-    if let index = selectedTextIndex(){
+    if let index = selectedTextIndex() {
       let currentAlignment = textArray[index].textAlignment.rawValue
       textArray[index].textAlignment = NSTextAlignment(rawValue: (currentAlignment + 1) % 3) ?? .center
     }
   }
   
-  func setTextColor(color: Color){
-    if let index = selectedTextIndex(){
+  func setTextColor(color: Color) {
+    if let index = selectedTextIndex() {
       textArray[index].textColor = color
     }
   }
   
-  func setBackgroundColor(color: Color){
-    if let index = selectedTextIndex(){
+  func setBackgroundColor(color: Color) {
+    if let index = selectedTextIndex() {
       textArray[index].backgroundColor = color
     }
   }
   
-  func textInput() -> String{
+  func textInput() -> String {
     guard let selectedText = selectedText else { return "" }
     return selectedText.text
   }
   
-  func setTextPlaceHolder(index: Int) -> TextData{
+  func setTextPlaceHolder(index: Int) -> TextData {
     var textData = textArray[index]
     if textData.text.count == 0{
       textData.text = textPlaceHolder
@@ -232,12 +232,12 @@ class TextManager: ObservableObject{
     return textData
   }
   
-  func setTextLocation(index: Int, translation: CGSize){
+  func setTextLocation(index: Int, translation: CGSize) {
     textArray[index].location = CGPoint(x: translation.width, y: translation.height)
   }
   
-  func updateFont(_ textFont: TextFont){
-    if let index = selectedTextIndex(){
+  func updateFont(_ textFont: TextFont) {
+    if let index = selectedTextIndex() {
       var textFont = textFont
       textFont.size = textArray[index].textFont.size
       textArray[index].textFont = textFont
@@ -245,18 +245,18 @@ class TextManager: ObservableObject{
     }
   }
   
-  func setFontSize(_ size: CGFloat){
-    if let index = selectedTextIndex(){
+  func setFontSize(_ size: CGFloat) {
+    if let index = selectedTextIndex() {
       textArray[index].textFont.size = size
       selectedText = textArray[index]
     }
   }
   
-  func setTextAlignment(){
-    if let selectedIndex = selectedTextIndex(){
+  func setTextAlignment() {
+    if let selectedIndex = selectedTextIndex() {
       let alignmentArray: [NSTextAlignment] = [.center, .left, .right]
-      for index in alignmentArray.indices{
-        if alignmentArray[index] == textArray[selectedIndex].textAlignment{
+      for index in alignmentArray.indices {
+        if alignmentArray[index] == textArray[selectedIndex].textAlignment {
           textArray[selectedIndex].textAlignment = alignmentArray[(index + 1) % alignmentArray.count]
           break
         }
@@ -264,7 +264,7 @@ class TextManager: ObservableObject{
     }
   }
   
-  func updateText(text: TextData, size: CGSize, location: CGPoint) -> TextData{
+  func updateText(text: TextData, size: CGSize, location: CGPoint) -> TextData {
     var text = text
     
     let font = text.textFont
@@ -275,7 +275,7 @@ class TextManager: ObservableObject{
     let previousLineHeight = font.uiFont.lineHeight
     let newFontLineHeight = text.textFont.uiFont.lineHeight
     
-    for index in text.textBackgroundSizes.indices{
+    for index in text.textBackgroundSizes.indices {
       let width = text.textBackgroundSizes[index].width
       text.textBackgroundSizes[index].width = width * newFontLineHeight / previousLineHeight
       text.textBackgroundSizes[index].height = newFontLineHeight

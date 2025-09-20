@@ -15,14 +15,14 @@ struct SelectColorView: View {
   @State private var backgroundColor: [Color] = [.clear]
   
   var body: some View {
-    VStack{
-      HStack(spacing: 15){
+    VStack {
+      HStack(spacing: 15) {
         Image("text_color")
           .resizable()
           .frame(width: 30, height: 30)
-        ScrollView(.horizontal, showsIndicators: false){
-          HStack(spacing: 10){
-            ForEach(textColor, id: \.self){ color in
+        ScrollView(.horizontal, showsIndicators: false) {
+          HStack(spacing: 10) {
+            ForEach(textColor, id: \.self) { color in
               Circle()
                 .fill(color)
                 .frame(width: 25, height: 25)
@@ -34,13 +34,13 @@ struct SelectColorView: View {
         }
       }
       
-      HStack(spacing: 10){
+      HStack(spacing: 10) {
         Image("background_text_color")
           .resizable()
           .frame(width: 30, height: 30)
-        ScrollView(.horizontal, showsIndicators: false){
-          HStack(spacing: 10){
-            ForEach(backgroundColor, id: \.self){ color in
+        ScrollView(.horizontal, showsIndicators: false) {
+          HStack(spacing: 10) {
+            ForEach(backgroundColor, id: \.self) { color in
               if color == .clear {
                 Circle()
                   .stroke(.black, lineWidth: 1.0)
@@ -64,9 +64,9 @@ struct SelectColorView: View {
     }
     .padding()
     .background(.clear)
-    .onAppear{
+    .onAppear {
       textColor =  [.black, .white, .red, .orange, .yellow, .green, .mint, .blue, .indigo, .pink, .cyan, .purple, .brown]
-      textColor.forEach{
+      textColor.forEach {
         backgroundColor.append($0)
       }
     }

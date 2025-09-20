@@ -17,22 +17,21 @@ struct Sticker {
   var isSelected: Bool
 }
 
-enum EditStickerButtonType: CaseIterable{
+enum EditStickerButtonType: CaseIterable {
   case remove
-  // top, trailing-top, leading-center, trailing-center, leading-bottom, bottom
   case top, bottom, leading, trailing
   case resize
 }
 
-struct EditStickerButtonData{
+struct EditStickerButtonData {
   var type: EditStickerButtonType
   var location: CGPoint
 }
 
-struct EditStickerButton: Hashable{
+struct EditStickerButton: Hashable {
   var type: EditStickerButtonType
   
-  var position: CGPoint{
+  var position: CGPoint {
     switch type {
     case .remove:
       return CGPoint(x: -1, y: -1)

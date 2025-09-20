@@ -27,26 +27,26 @@ struct StickerView: View {
       let imageWidth = sticker.size.width
       let imageHeight = sticker.size.height
       
-      ZStack{
+      ZStack {
         Image(uiImage: sticker.image)
           .resizable()
           .frame(width: imageWidth, height: imageHeight)
           .position(x: viewWidth / 2, y: viewHeight / 2)
         
-        if sticker.isSelected{
+        if sticker.isSelected {
           Rectangle()
             .stroke(.white, lineWidth: 2.0)
             .frame(width: imageWidth, height: imageHeight)
             .position(x: viewWidth / 2, y: viewHeight / 2)
           
-          ForEach(stickerManager.editStickerButtonArray, id: \.self){ editStickerButton in
+          ForEach(stickerManager.editStickerButtonArray, id: \.self) { editStickerButton in
             let x = (viewWidth / 2) + (imageWidth / 2) * editStickerButton.position.x
             let y = (viewHeight / 2) + (imageHeight / 2) * editStickerButton.position.y
             
             let type = editStickerButton.type
             
             if type == .remove {
-              ZStack{
+              ZStack {
                 Image("xmark_button")
                   .resizable()
                   .frame(width: buttonWidth, height: buttonWidth)
@@ -54,11 +54,11 @@ struct StickerView: View {
               .frame(width: 30, height: 30)
               .contentShape(Rectangle())
               .position(x: x, y: y)
-              .onTapGesture{
+              .onTapGesture {
                 stickerButtonTapped(data: EditStickerButtonData(type: type, location: .zero))
               }
             } else if type == .resize {
-              ZStack{
+              ZStack {
                 Image("resize_button")
                   .resizable()
                   .frame(width: buttonWidth, height: buttonWidth)
@@ -68,12 +68,12 @@ struct StickerView: View {
               .position(x: x, y: y)
               .gesture(
                 DragGesture()
-                  .onChanged{ value in
+                  .onChanged { value in
                     stickerButtonTapped(data: EditStickerButtonData(type: type, location: value.location))
                   }
               )
             } else {
-              ZStack{
+              ZStack {
                 Circle()
                   .fill(.white)
                   .frame(width: 10, height: 10)
@@ -83,7 +83,7 @@ struct StickerView: View {
               .position(x: x, y: y)
               .gesture(
                 DragGesture()
-                  .onChanged{ value in
+                  .onChanged { value in
                     stickerButtonTapped(data: EditStickerButtonData(type: type, location: value.location))
                   }
               )
@@ -98,16 +98,16 @@ struct StickerView: View {
             .onChanged { value in
               stickerManager.stickerArray[index].angle = lastAngle + value
             }
-            .onEnded{ _ in
+            .onEnded { _ in
               lastAngle = stickerManager.stickerArray[index].angle
             },
           DragGesture()
-            .onChanged{ value in
+            .onChanged { value in
               var newLocation = CGPoint(x: sticker.location.x + value.translation.width, y: sticker.location.y + value.translation.height)
               // StickerView 드래그 범위 제한
               newLocation = updateStickerViewPosition(stickerSize: sticker.size, location: newLocation)
               
-              if stickerManager.isFirstDrag{
+              if stickerManager.isFirstDrag {
                 stickerManager.selectSticker(index: index)
                 editManager.selectSticker.send()
                 stickerManager.isFirstDrag = false
@@ -115,7 +115,7 @@ struct StickerView: View {
               
               stickerManager.updateStickerLocation(id: sticker.id, location: newLocation)
             }
-            .onEnded{ _ in
+            .onEnded { _ in
               stickerManager.isFirstDrag = true
             }
         )

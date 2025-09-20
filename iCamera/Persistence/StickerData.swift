@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct StickerData{
+struct StickerData {
   var id = UUID()
   var image: UIImage
 }

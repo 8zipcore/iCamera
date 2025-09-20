@@ -8,7 +8,7 @@
 import UIKit
 import Photos
 
-enum AlbumError: Error{
+enum AlbumError: Error {
   case loading
 }
 

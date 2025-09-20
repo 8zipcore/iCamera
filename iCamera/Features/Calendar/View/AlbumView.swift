@@ -20,10 +20,11 @@ struct AlbumView: View {
       let albumCellWidth = viewWidth * 0.93
       let albumCellHeight = albumCellWidth * 240 / 1025
       
-      ScrollView{
+      ScrollView {
         ForEach(albums.indices, id: \.self) { index in
           let album = albums[index]
-          VStack(spacing: 0){
+          
+          VStack(spacing: 0) {
             Spacer()
             
             HStack(spacing: 20) {
@@ -53,7 +54,7 @@ struct AlbumView: View {
             
             Spacer()
             
-            if !(index == albums.count - 1){
+            if !(index == albums.count - 1) {
               Rectangle()
                 .fill(Color.silver.opacity(0.8))
                 .frame(width: albumCellWidth, height: 0.8)

@@ -9,7 +9,7 @@ import SwiftUI
 import Photos
 
 struct GalleryView: View {
-  enum PreviousViewType{
+  enum PreviousViewType {
     case main, camera, comments
   }
   
@@ -28,10 +28,10 @@ struct GalleryView: View {
     AlbumView(
       navigationPath: $navigationPath,
       albums: albumVM.albums
-    ){ album in
+    ) { album in
       isShowingAlbumView = false
       
-      Task{
+      Task {
         await albumVM.resetAlbum(album)
         loadPhotos()
       }
@@ -117,24 +117,3 @@ extension GalleryView {
     }
   }
 }
-
-
-//          PrimaryNavigationBar(title: "Photos",
-//                     imageSize: topBarSize,
-//                     isLeadingButtonHidden: viewType == .main,
-//                     isTrailingButtonHidden: false,
-//                     isAlbumButtonHidden: false,
-//                     buttonManager: topBarViewButtonManager)
-//          .frame(width: topBarSize.width, height: topBarSize.height)
-//          .onReceive(topBarViewButtonManager.buttonClicked){ buttonType in
-//            switch buttonType{
-//            case .cancel:
-//              dismiss()
-//            case .home:
-//              navigationPath.removeLast(navigationPath.count)
-//            case .album:
-//              isShowingAlbumView = true
-//            default:
-//              break
-//            }
-//          }

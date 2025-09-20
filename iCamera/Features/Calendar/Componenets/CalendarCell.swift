@@ -18,7 +18,8 @@ struct CalendarCell: View {
     GeometryReader { geometry in
       let viewWidth = geometry.size.width
       let viewHeight = geometry.size.height
-      ZStack{
+      
+      ZStack {
         if let imageData = image, let image = UIImage(data: imageData) {
           let imageSize = imageSize(image: image, viewWidth: viewWidth, viewHeight: viewHeight)
           Image(uiImage: image)
@@ -27,25 +28,29 @@ struct CalendarCell: View {
             .position(x: viewWidth / 2, y: viewHeight / 2)
             .clipped()
         }
-        HStack{
+        
+        HStack {
           Spacer()
           Rectangle()
             .fill(lineColor)
             .frame(width: lineWidth)
         }
-        VStack{
+        
+        VStack {
           Rectangle()
             .fill(lineColor)
             .frame(height: lineWidth)
-          HStack{
+          
+          HStack {
             Spacer()
             Text(day)
               .font(.system(size: 12))
               .foregroundStyle(.black)
           }
           .padding(.trailing, 5)
-          // .zIndex(1)
+          
           Spacer()
+          
           Rectangle()
             .fill(lineColor)
             .frame(height: lineWidth)
@@ -56,7 +61,7 @@ struct CalendarCell: View {
     }
   }
   
-  private func imageSize(image: UIImage, viewWidth: CGFloat, viewHeight: CGFloat) -> CGSize{
+  private func imageSize(image: UIImage, viewWidth: CGFloat, viewHeight: CGFloat) -> CGSize {
     var imageWidth = image.size.width * viewHeight / image.size.height
     var imageHeight = viewHeight
     if imageWidth < viewWidth {

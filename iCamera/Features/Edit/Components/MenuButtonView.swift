@@ -14,7 +14,7 @@ struct MenuButtonView: View {
   @ObservedObject var editMenuVM: EditMenuViewModel
   
   var body: some View {
-    ZStack{
+    ZStack {
       let isSelected = menuButton.isSelected
       let backgroundImage = isSelected ? "selected_menu_button" : "menu_button"
       let textColor: Color = isSelected ? .titleGray : .white
@@ -22,10 +22,10 @@ struct MenuButtonView: View {
       Image(backgroundImage)
         .resizable()
       
-      VStack{
+      VStack {
         Spacer()
         
-        HStack{
+        HStack {
           Text(menuButton.title)
             .font(.system(size: 12, weight: .semibold))
             .foregroundStyle(textColor)

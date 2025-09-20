@@ -49,7 +49,7 @@ struct SavePhotoView: View {
 // MARK: - Subviews
 extension SavePhotoView {
   private func titleSection(containerHeight: CGFloat) -> some View {
-    VStack{
+    VStack {
       Spacer()
       
       Text("Upload Your Lucky Photo! ࣪ꕤ˚₊⊹")
@@ -77,7 +77,7 @@ extension SavePhotoView {
       let imageWidth: CGFloat = containerWidth * 0.19
       let imageHeight: CGFloat = imageWidth * 54 / 119
       
-      ZStack{
+      ZStack {
         Image(isSaved ? "gray_button" : "blue_button")
           .resizable()
           .frame(width: imageWidth, height: imageHeight)
@@ -96,7 +96,7 @@ extension SavePhotoView {
       let imageWidth: CGFloat = containerSize.width * 0.19
       let imageHeight: CGFloat = imageWidth * 54 / 119
       
-      ZStack{
+      ZStack {
         Image("blue_button")
           .resizable()
           .frame(width: imageWidth, height: imageHeight)

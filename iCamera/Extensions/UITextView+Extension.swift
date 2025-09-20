@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UITextView{
+extension UITextView {
   func getWidthOfLine(line: Int) -> CGFloat {
     let layoutManager = self.layoutManager
     let textStorage = self.textStorage

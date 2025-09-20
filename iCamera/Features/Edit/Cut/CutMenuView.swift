@@ -13,7 +13,7 @@ struct CutMenuView: View {
   @StateObject var pixCropManager: PixCropManager
   
   var body: some View {
-    HStack(spacing: 0){
+    HStack(spacing: 0) {
       Button(action: {
         pixCropManager.flipHorizontally()
       }) {
@@ -32,7 +32,7 @@ struct CutMenuView: View {
           .padding(.trailing, 20)
       }
       
-      VStack{
+      VStack {
         if cutImageManager.currentRatioDirection == .vertical{
           Image("ratio_direction")
             .resizable()

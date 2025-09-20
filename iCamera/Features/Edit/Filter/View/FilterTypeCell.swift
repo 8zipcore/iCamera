@@ -14,18 +14,20 @@ struct FilterTypeCell: View {
   @State private var filterManager = FilterManager()
   
   var body: some View {
-    GeometryReader{ geometry in
+    GeometryReader { geometry in
       let viewWidth = geometry.size.width
-      ZStack{
+      
+      ZStack {
         if let filterImage = filterManager.previewFilterImage(filter: filter){
           Image(uiImage: filterImage)
             .resizable()
             .scaledToFill()
         }
         
-        VStack{
+        VStack {
           Spacer()
-          ZStack{
+          
+          ZStack {
             Rectangle()
               .fill(.black.opacity(0.4))
             

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ImageInfo{
+struct ImageInfo {
   var frameLocation: CGPoint = .zero
   var maskRectangleViewLocation: CGPoint = .zero
   var imagePosition: CGPoint = .zero

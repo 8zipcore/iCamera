@@ -25,9 +25,9 @@ enum RatioDirection{
   case horizontal, vertical
 }
 
-class CutImageManager: ObservableObject{
+class CutImageManager: ObservableObject {
   @Published var imageRatio: CGSize = .zero {
-    didSet{
+    didSet {
       ratioArray = [
         FrameRatio(widthRatio: imageRatio.width, heightRatio: imageRatio.height),
         frameRatio(aspectRatio: CGSize(width: 1, height: 1)),
@@ -44,14 +44,14 @@ class CutImageManager: ObservableObject{
   
   var ratioArray: [FrameRatio] = []
   
-  func ratioDriectionToggle(){
+  func ratioDriectionToggle() {
     currentRatioDirection = currentRatioDirection == .horizontal ? .vertical : .horizontal
     
     ratioArray = ratioArray.map { return FrameRatio(widthRatio: $0.heightRatio, heightRatio: $0.widthRatio)}
   }
   
   func frameRatio(aspectRatio: CGSize) -> FrameRatio {
-    if currentRatioDirection == .horizontal{
+    if currentRatioDirection == .horizontal {
       return FrameRatio(widthRatio: max(aspectRatio.width, aspectRatio.height), heightRatio: min(aspectRatio.width, aspectRatio.height))
     } else {
       return FrameRatio(widthRatio: min(aspectRatio.width, aspectRatio.height), heightRatio: max(aspectRatio.width, aspectRatio.height))

@@ -61,16 +61,10 @@ struct CommentsTextView: UIViewRepresentable {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { // 10ms 지연
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
         if let selectedRange = textView.selectedTextRange {
           let caretRect = textView.caretRect(for: selectedRange.start)
-          
-          // 텍스트뷰 기준 커서 좌표
-          //                    print("Caret Rect in TextView: \(caretRect.minX) \(caretRect.minY)")
-          
-          // 화면 전체 기준 커서 좌표
           let globalCaretRect = textView.convert(caretRect, to: nil)
-          //                    print("Caret Rect in Window: \(globalCaretRect.minX) \(globalCaretRect.minY)")
           
           self.parent.onCursorChange((CGPoint(x: caretRect.minX, y: caretRect.maxY), CGPoint(x: globalCaretRect.minX, y: globalCaretRect.minY)))
         }

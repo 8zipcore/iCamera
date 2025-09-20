@@ -246,7 +246,7 @@ extension CommentsView {
         
         if textViewSize.height > scrollViewHeight && (textViewSize.height - scrollViewHeight) / 2 < caretRect.y {
           scrollToBottom(-1)
-        } else if (globalCaretRect.y > keyboardBarYPosition - minimumBottomPadding) && previousCursorPosition.y != globalCaretRect.y && spacerHeight < 0{
+        } else if (globalCaretRect.y > keyboardBarYPosition - minimumBottomPadding) && previousCursorPosition.y != globalCaretRect.y && spacerHeight < 0 {
           scrollToBottom(keyboardObserver.keyboardHeight - originKeyboardHeight + textData.textFont.uiFont.pointSize)
         }
         

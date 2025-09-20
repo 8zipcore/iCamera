@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-class CustomSliderManager: ObservableObject{
+class CustomSliderManager: ObservableObject {
   var onChange = PassthroughSubject<CGFloat, Never>()
 }
 
@@ -20,12 +20,13 @@ struct CustomSlider: View {
   @State var pointerXPosition: CGFloat = .zero
   
   var body: some View {
-    GeometryReader{ geometry in
+    GeometryReader { geometry in
       let barHeight: CGFloat = 11
       let imageWidth: CGFloat = 25
       let minXPosition = imageWidth / 2
       let maxXPosition = geometry.size.width - minXPosition
-      ZStack{
+      
+      ZStack {
         RoundedRectangle(cornerRadius: 25)
           .fill(
             LinearGradient(
@@ -33,8 +34,8 @@ struct CustomSlider: View {
                 .init(color: .white, location: 0.05),
                 .init(color: .sliderSliver, location: 1.0)
               ]),
-              startPoint: .top, // 시작점
-              endPoint: .bottom // 끝점
+              startPoint: .top,
+              endPoint: .bottom
             )
           )
           .frame(height: barHeight)
@@ -46,8 +47,8 @@ struct CustomSlider: View {
           .position(x: pointerXPosition, y: geometry.size.height / 2)
           .gesture(
             DragGesture()
-              .onChanged{ value in
-                if !isAvailableDrag{ return }
+              .onChanged { value in
+                if !isAvailableDrag { return }
                 if value.location.x < minXPosition {
                   pointerXPosition = minXPosition
                 } else if value.location.x > maxXPosition {
@@ -59,17 +60,17 @@ struct CustomSlider: View {
                 let value = (pointerXPosition - minXPosition) / barWidth
                 customSliderManager.onChange.send(value)
               }
-              .onEnded{ _ in
+              .onEnded { _ in
                 
               }
           )
-          .onChange(of: value){ newValue in
+          .onChange(of: value) { newValue in
             pointerXPosition = newValue == .zero ? minXPosition : (maxXPosition - minXPosition) * newValue
           }
       }
       .background(.clear)
       .ignoresSafeArea()
-      .onAppear{
+      .onAppear {
         pointerXPosition = value == .zero ? minXPosition : (maxXPosition - minXPosition) * value
       }
     }

@@ -16,7 +16,7 @@ struct FlashButtonView: View {
   var body: some View {
     let cornerRadius: CGFloat = 20
     
-    HStack(spacing: 0){
+    HStack(spacing: 0) {
       Image("flash")
         .resizable()
         .frame(width: imageWidth, height: imageWidth)
@@ -41,7 +41,7 @@ struct FlashButtonView: View {
   }
   
   private func flashTypeToString(_ type: AVCaptureDevice.FlashMode) -> String {
-    switch type{
+    switch type {
     case .auto:
       return "Auto"
     case .on:

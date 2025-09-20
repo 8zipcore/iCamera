@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class EditManager: ObservableObject{
+class EditManager: ObservableObject {
   var selectText = PassthroughSubject<Void, Never>()
   var selectSticker = PassthroughSubject<Void, Never>()
 }

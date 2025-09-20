@@ -52,7 +52,7 @@ struct CameraView: View {
           GalleryView(navigationPath: $navigationPath, viewType: .camera)
         }
       }
-      .onAppear{
+      .onAppear {
         cameraButtonControlFlag = false
         albumManager.fetchRecentlyPhoto()
       }
@@ -90,7 +90,7 @@ extension CameraView {
       .gesture(
         MagnificationGesture()
           .onChanged { value in
-            if cameraManager.isBackCamera{
+            if cameraManager.isBackCamera {
               let delta = value / self.backZoomScale
               let currentZoomFactor = self.cameraManager.currentCamera?.videoZoomFactor ?? 1.0
               let newZoomFactor = currentZoomFactor * delta

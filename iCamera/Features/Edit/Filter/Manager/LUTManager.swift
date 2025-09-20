@@ -12,7 +12,7 @@ struct CubeData{
   var cubeData: Data
 }
 
-class LUTManager{
+class LUTManager {
   static let shared = LUTManager()
   var cubeDataSet: [String : CubeData] = [:]
   let context = CIContext()

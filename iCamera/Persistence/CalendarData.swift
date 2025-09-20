@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-struct CalendarData{
+struct CalendarData {
   var id = UUID()
   var date: Date
   var image: Data?

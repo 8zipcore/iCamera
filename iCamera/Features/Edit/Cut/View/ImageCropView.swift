@@ -8,7 +8,7 @@
 import SwiftUI
 import PixCrop
 
-struct ImageCropView: UIViewRepresentable{
+struct ImageCropView: UIViewRepresentable {
   @Binding var pixCropView: PixCropView
   
   func makeUIView(context: Context) -> PixCropView {

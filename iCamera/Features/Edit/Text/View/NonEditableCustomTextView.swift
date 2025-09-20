@@ -43,7 +43,7 @@ struct NonEditableCustomTextView: UIViewRepresentable {
     let lineNumber = Int(textViewSize.height / lineHeight)
     var textBackgroundSizes: [CGSize] = []
     
-    uiView.getWidthOfLineArray(lineNumber: lineNumber).forEach{
+    uiView.getWidthOfLineArray(lineNumber: lineNumber).forEach {
       textBackgroundSizes.append(CGSize(width: $0, height: round(lineHeight)))
     }
     

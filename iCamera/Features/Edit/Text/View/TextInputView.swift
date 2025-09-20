@@ -42,7 +42,7 @@ struct TextInputView: View {
         .position(x: viewWidth * 0.9 / 2, y: textViewMaxHeight / 2)
         .frame(maxWidth: viewWidth * 0.9)
         .padding(.top, topPadding)
-        .onAppear{
+        .onAppear {
           isFocused = true
         }
         
@@ -51,7 +51,7 @@ struct TextInputView: View {
       .background(Color.black.opacity(0.3))
       .ignoresSafeArea(edges: .bottom)
     }
-    .onAppear{
+    .onAppear {
       textInput = textManager.textInput()
     }
   }
@@ -65,7 +65,7 @@ extension TextInputView {
       height: barSize.height * 0.75
     )
     
-    HStack{
+    HStack {
       Button(action: {
         textManager.textInputCancelButtonTapped.send(textData)
       }) {

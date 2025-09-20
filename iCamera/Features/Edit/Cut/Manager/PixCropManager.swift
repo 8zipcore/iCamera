@@ -11,7 +11,7 @@ import PixCrop
 class PixCropManager: ObservableObject, Equatable {
   @Published var pixCropView: PixCropView = PixCropView()
   
-  var maskSize: CGSize{
+  var maskSize: CGSize {
     return pixCropView.maskSize
   }
   
@@ -27,7 +27,7 @@ class PixCropManager: ObservableObject, Equatable {
     pixCropView = PixCropView()
   }
   
-  func initPixCropView(size: CGSize, image: UIImage){
+  func initPixCropView(size: CGSize, image: UIImage) {
     pixCropView = PixCropView(frame: CGRect(origin: .zero, size: size), image: image)
   }
   

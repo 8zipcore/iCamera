@@ -15,19 +15,20 @@ struct SelectedTextCell: View {
   @State private var textSize: CGSize = .zero
   
   var body: some View {
-    ZStack{
-      if isSelected{
+    ZStack {
+      if isSelected {
         Image("selected")
           .resizable()
           .frame(width: textSize.width, height: 40)
       }
+      
       Text(title)
         .font(font)
         .padding([.leading, .trailing], 10)
         .foregroundStyle(.black)
         .background(
-          GeometryReader{ geometry in
-            Color.clear.onAppear{
+          GeometryReader { geometry in
+            Color.clear.onAppear {
               textSize = geometry.size
             }
           }
@@ -35,8 +36,3 @@ struct SelectedTextCell: View {
     }
   }
 }
-/*
- #Preview {
- SelectedTextCell(title: "Tfdfddffdfdfdfdfdfdfdfdfddfdf", font: .system(size: 15), isSelected: true)
- }
- */

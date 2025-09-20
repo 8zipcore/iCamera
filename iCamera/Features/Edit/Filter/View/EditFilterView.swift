@@ -13,13 +13,13 @@ struct EditFilterView: View {
   @StateObject var customSliderManager = CustomSliderManager()
   
   var body: some View {
-    GeometryReader{ geometry in
+    GeometryReader { geometry in
       let viewWidth = geometry.size.width
-      VStack{
-        ScrollView(.horizontal, showsIndicators: false){
-          HStack(spacing: 0){
+      VStack {
+        ScrollView(.horizontal, showsIndicators: false) {
+          HStack(spacing: 0) {
             let cellWidth = viewWidth * 0.17
-            ForEach(filterManager.filters, id:\.self){ filter in
+            ForEach(filterManager.filters, id:\.self) { filter in
               FilterTypeCell(filter: filter)
                 .frame(width: cellWidth, height: cellWidth)
                 .onTapGesture {
@@ -41,7 +41,7 @@ struct EditFilterView: View {
           CustomSlider(value: percentage, customSliderManager: customSliderManager)
             .frame(width: viewWidth * 0.9, height: 30)
             .padding(.top, 15)
-            .onReceive(customSliderManager.onChange){ value in
+            .onReceive(customSliderManager.onChange) { value in
               let adjustedValue = minFilterValue + (value * (maxFilterValue - minFilterValue))
               filterManager.setFilterValue(adjustedValue)
             }

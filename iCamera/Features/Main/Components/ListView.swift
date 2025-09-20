@@ -12,7 +12,7 @@ struct ListView: View {
   @State var title: String
   
   var body: some View {
-    HStack{
+    HStack {
       Text(title)
         .multilineTextAlignment(.leading)
         .font(.system(size: 18, weight: .semibold))

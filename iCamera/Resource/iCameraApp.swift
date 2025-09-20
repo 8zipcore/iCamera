@@ -22,7 +22,6 @@ struct iCameraApp: App {
       }
       .animation(.easeInOut(duration: 0.1), value: isActive)
       .onAppear {
-        // Launch Screen을 일정 시간 동안 보여주기
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
           isActive = true
         }

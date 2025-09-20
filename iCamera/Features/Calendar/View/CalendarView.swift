@@ -74,8 +74,8 @@ extension CalendarView {
       
       Spacer()
       
-      ZStack{
-        VStack{
+      ZStack {
+        VStack {
           Text(calendarManager.yearToString())
             .font(.system(size: 13))
             .foregroundStyle(.black)
@@ -124,7 +124,7 @@ extension CalendarView {
     let weekViewHeight = containerSize.width * 88 / 1125
     
     HStack(spacing: 0) {
-      ForEach(calendarManager.week.indices, id: \.self){ index in
+      ForEach(calendarManager.week.indices, id: \.self) { index in
         let cellWidth: CGFloat = containerSize.width / CGFloat(7)
         let xPosition: CGFloat = cellWidth / 2
         let weekToString = calendarManager.week[index].rawValue

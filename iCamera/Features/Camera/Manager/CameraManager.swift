@@ -30,7 +30,7 @@ class CameraManager: NSObject, ObservableObject {
     self.configure()
   }
   
-  private func configure(){
+  private func configure() {
     // 카메라 세션 설정
     guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: currentCameraPosition) else { return print("🌀 AVCaptureDevice error ") }
     

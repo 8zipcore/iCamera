@@ -7,24 +7,24 @@
 
 import Foundation
 
-struct SelectionFrameRectangleData{
+struct SelectionFrameRectangleData {
   var selectionFrameRectangle: SelectionFrameRectangle
   var position: CGPoint
 }
 
-struct SelectionFrameRectangle: Hashable{
-  enum Location: CaseIterable{
+struct SelectionFrameRectangle: Hashable {
+  enum Location: CaseIterable {
     case lt, t, tt
     case lc, tc
     case lb, b, tb
   }
   
-  enum LocationType{
+  enum LocationType {
     case vertex, edge
   }
   
   var location: Location
-  var type: LocationType{
+  var type: LocationType {
     switch location {
     case .lt: fallthrough
     case .tt: fallthrough
@@ -39,7 +39,7 @@ struct SelectionFrameRectangle: Hashable{
     }
   }
   
-  var scale: CGPoint{
+  var scale: CGPoint {
     switch location {
     case .lt:
       return CGPoint(x: -1, y: -1)
@@ -60,14 +60,14 @@ struct SelectionFrameRectangle: Hashable{
     }
   }
   
-  func maskRectangleSize(lineSize: CGSize) -> CGSize{
+  func maskRectangleSize(lineSize: CGSize) -> CGSize {
     let lineWidth = lineSize.width
     let lineHeight = lineSize.height
-    switch type{
+    switch type {
     case .vertex:
       return CGSize(width: lineHeight - lineWidth, height: lineHeight - lineWidth)
     case.edge:
-      if location == .t || location == .b{
+      if location == .t || location == .b {
         return CGSize(width: lineHeight, height: lineHeight - lineWidth)
       } else {
         return CGSize(width: lineHeight - lineWidth, height: lineHeight)
@@ -75,7 +75,7 @@ struct SelectionFrameRectangle: Hashable{
     }
   }
   
-  func maskPosition(lineSize: CGSize) -> CGPoint{
+  func maskPosition(lineSize: CGSize) -> CGPoint {
     let lineWidth = lineSize.width
     switch location {
     case .lt:

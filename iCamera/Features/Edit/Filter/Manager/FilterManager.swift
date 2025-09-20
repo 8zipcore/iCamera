@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-enum FilterType{
+enum FilterType {
   case none
   case bloom
   case fuji
@@ -21,7 +21,7 @@ enum FilterType{
   case daily
 }
 
-struct Filter: Hashable, Equatable{
+struct Filter: Hashable, Equatable {
   var type: FilterType
   var title: String {
     switch type {

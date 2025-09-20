@@ -161,7 +161,7 @@ extension EditPhotoView {
         editManager.selectSticker.send()
       }
       .position(sticker.location)
-      .onReceive(editManager.selectText){ _ in
+      .onReceive(editManager.selectText) { _ in
         stickerManager.deselectAll()
       }
     }
@@ -169,7 +169,7 @@ extension EditPhotoView {
   
   @ViewBuilder
   private func textSection(_ imageViewPositions: [CGPoint]) -> some View {
-    ForEach(textManager.textArray.indices, id: \.self){ index in
+    ForEach(textManager.textArray.indices, id: \.self) { index in
       let data = textManager.setTextPlaceHolder(index: index)
       TextView(
         index: index,
@@ -185,10 +185,10 @@ extension EditPhotoView {
         textManager.selectText(index: index)
         editManager.selectText.send()
       }
-      .onReceive(textManager.editTextButtonTapped){
+      .onReceive(textManager.editTextButtonTapped) {
         showTextInputView = true
       }
-      .onReceive(editManager.selectSticker){ _ in
+      .onReceive(editManager.selectSticker) { _ in
         textManager.deselectAll()
       }
     }
@@ -214,7 +214,7 @@ extension EditPhotoView {
   
   @ViewBuilder
   private func menuButtonSection() -> some View {
-    HStack(spacing: 10){
+    HStack(spacing: 10) {
       let menuButtons = editMenuVM.menuButtons
       let menuButtonViewWidth = (viewWidth * 0.6) / CGFloat(menuButtons.count)
       let menuButtonViewHeight = menuButtonViewWidth * 10 / 17
@@ -228,7 +228,7 @@ extension EditPhotoView {
       }
     }
     .padding(.top, 10)
-    .onReceive(editMenuVM.buttonClicked){ type in
+    .onReceive(editMenuVM.buttonClicked) { type in
       deselectAll()
       
       let selectIndex = type.rawValue
@@ -239,7 +239,7 @@ extension EditPhotoView {
   
   @ViewBuilder
   private func filterMenuSection() -> some View {
-    if editMenuVM.isSelected(.filter){
+    if editMenuVM.isSelected(.filter) {
       EditFilterView(
         navigationPath: $navigationPath,
         filterManager: filterManager
@@ -266,8 +266,8 @@ extension EditPhotoView {
   @ViewBuilder
   private func cutMenuSection() -> some View {
     if editMenuVM.isSelected(.cut){
-      ScrollView(.horizontal, showsIndicators: false){
-        HStack(spacing: 20){
+      ScrollView(.horizontal, showsIndicators: false) {
+        HStack(spacing: 20) {
           ForEach(cutImageManager.ratioArray.indices, id: \.self) { index in
             let ratio = cutImageManager.ratioArray[index]
             Button {
@@ -297,9 +297,9 @@ extension EditPhotoView {
   
   @ViewBuilder
   private func textMenuSection() -> some View {
-    if editMenuVM.isSelected(.text){
+    if editMenuVM.isSelected(.text) {
       EditTextView(textManager: textManager)
-        .onReceive(textManager.textAddButtonTapped){ _ in
+        .onReceive(textManager.textAddButtonTapped) { _ in
           textManager.addNewText(
             location: CGPoint(
               x: viewWidth / 2,
@@ -314,12 +314,12 @@ extension EditPhotoView {
 }
 
 extension EditPhotoView {
-  private func imageViewPositions(editImageViewHeight: CGFloat, viewSize: CGSize) -> [CGPoint]{
+  private func imageViewPositions(editImageViewHeight: CGFloat, viewSize: CGSize) -> [CGPoint] {
     let padding: CGFloat = 7
     return [CGPoint(x: padding, y: padding), CGPoint(x: viewSize.width - padding, y: editImageViewHeight - padding)]
   }
   
-  private func saveData(viewSize: CGSize){
+  private func saveData(viewSize: CGSize) {
     if textManager.textArray.count > 0 {
       NotificationCenter.default.post(name: .saveTextInfo, object: nil)
     } else {
@@ -327,14 +327,14 @@ extension EditPhotoView {
     }
   }
   
-  private func createImage(viewSize: CGSize){
-    if let image = renderAsImage(viewSize: viewSize){
+  private func createImage(viewSize: CGSize) {
+    if let image = renderAsImage(viewSize: viewSize) {
       self.renderedImage = image
       navigationPath.append(NavigationDestination.savePhoto)
     }
   }
   
-  private func renderAsImage(viewSize: CGSize) -> UIImage?{
+  private func renderAsImage(viewSize: CGSize) -> UIImage? {
     guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene,
           let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {
       print("No active UIWindowScene found")
@@ -382,7 +382,7 @@ extension EditPhotoView {
     return renderImage
   }
   
-  private func deselectAll(){
+  private func deselectAll() {
     textManager.deselectAll()
     stickerManager.deselectAll()
   }

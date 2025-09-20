@@ -41,14 +41,17 @@ struct EditStickerView: View {
                 isExistImageInClipBoard = false
               }
             }
+          
           let editButtonImage = isEditMode ? "confirm_pink_button" : "edit_pink_button"
+          
           Image(editButtonImage)
             .resizable()
             .frame(width: buttonWidth, height: buttonWidth)
             .onTapGesture {
               isEditMode.toggle()
             }
-        }.padding(.trailing, 15)
+        }
+        .padding(.trailing, 15)
         
         if storedStickerManager.stickerArray.count == 0 {
           Text("Copy your special sticker\nand then press the Add button!")
@@ -56,22 +59,24 @@ struct EditStickerView: View {
             .multilineTextAlignment(.center)
             .foregroundStyle(.black)
             .padding(.top, 20)
+          
           Spacer()
         } else {
           let scrollViewWidth = viewWidth - 10
-          ScrollView(showsIndicators: false){
-            VStack{
+          ScrollView(showsIndicators: false) {
+            VStack {
               let rowNumber = 5
               let stickerArrayCount = storedStickerManager.stickerArray.count
-              var lastNumber = ((stickerArrayCount + rowNumber - 1) / rowNumber) * rowNumber
+              let lastNumber = ((stickerArrayCount + rowNumber - 1) / rowNumber) * rowNumber
               let rangeArray = Array(0..<lastNumber)
               let padding: CGFloat = 5
               ForEach(rangeArray.chunked(into: rowNumber), id: \.self) { indexArray in
-                HStack(spacing: padding){
+                HStack(spacing: padding) {
                   ForEach(indexArray, id: \.self) { index in
                     let imageWidth: CGFloat = (scrollViewWidth - (padding * CGFloat(rowNumber - 1))) / CGFloat(rowNumber)
-                    ZStack{
-                      if index < stickerArrayCount{
+                    
+                    ZStack {
+                      if index < stickerArrayCount {
                         let sticker = storedStickerManager.stickerArray[index]
                         Image(uiImage: sticker.image)
                           .resizable()
@@ -95,9 +100,10 @@ struct EditStickerView: View {
                           .fill(.clear)
                           .frame(width: imageWidth, height: imageWidth)
                       }
-                      if isEditMode && index < stickerArrayCount{
-                        VStack{
-                          HStack{
+                      
+                      if isEditMode && index < stickerArrayCount {
+                        VStack {
+                          HStack {
                             Spacer()
                             Image("xmark_button")
                               .resizable()
@@ -106,6 +112,7 @@ struct EditStickerView: View {
                                 storedStickerManager.deleteSticker(index: index)
                               }
                           }
+                          
                           Spacer()
                         }
                       }
