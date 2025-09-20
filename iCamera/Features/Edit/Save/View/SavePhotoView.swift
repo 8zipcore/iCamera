@@ -84,7 +84,7 @@ extension SavePhotoView {
         
         Text(isSaved ? "Complete" : "Save")
           .font(.system(size: isSaved ? 12 : 14, weight: .semibold))
-          .foregroundStyle(isSaved ? Colors.titleGray : .white)
+          .foregroundStyle(isSaved ? Color.titleGray : .white)
       }
     }
   }

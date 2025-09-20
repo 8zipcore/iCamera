@@ -14,7 +14,7 @@ struct CalendarCell: View {
   
   var body: some View {
     let lineWidth: CGFloat = 1
-    let lineColor: Color = Colors.silver.opacity(0.5)
+    let lineColor: Color = .silver.opacity(0.5)
     GeometryReader { geometry in
       let viewWidth = geometry.size.width
       let viewHeight = geometry.size.height

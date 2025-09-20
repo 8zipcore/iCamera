@@ -103,7 +103,7 @@ extension MainView {
       NavigationLink(value: Screen.comments) {
         Text("\(calendarManager.selectedDay)")
           .font(.system(size: 60, weight: .medium))
-          .foregroundStyle(Colors.titleGray)
+          .foregroundStyle(Color.titleGray)
         
         VStack(spacing: 3){
           Group {

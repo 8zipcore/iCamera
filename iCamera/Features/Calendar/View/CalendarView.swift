@@ -110,7 +110,7 @@ extension CalendarView {
           LinearGradient(
             gradient: Gradient(stops: [
               .init(color: .white, location: 0.07),
-              .init(color: Colors.silver, location: 1.0)
+              .init(color: .silver, location: 1.0)
             ]),
             startPoint: .top,
             endPoint: .bottom

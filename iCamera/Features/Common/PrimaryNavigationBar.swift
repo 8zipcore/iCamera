@@ -69,7 +69,7 @@ struct PrimaryNavigationBar: View {
       
       HStack{
         Text(viewType.title)
-          .foregroundColor(Colors.titleBlack)
+          .foregroundColor(.titleBlack)
           .font(.system(size: 20, weight: .semibold))
         
         centerButton()
@@ -80,8 +80,8 @@ struct PrimaryNavigationBar: View {
       LinearGradient(
         gradient: Gradient(stops: [
           .init(color: .white, location: 0),
-          .init(color: RGB(red: 227, green: 249, blue: 255), location: 0.4),
-          .init(color: RGB(red: 198, green: 244, blue: 255), location: 1.0)
+          .init(color: .init(red: 227, green: 249, blue: 255), location: 0.4),
+          .init(color: .init(red: 198, green: 244, blue: 255), location: 1.0)
         ]),
         startPoint: .top,
         endPoint: .bottom

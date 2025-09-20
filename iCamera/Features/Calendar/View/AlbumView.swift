@@ -55,7 +55,7 @@ struct AlbumView: View {
             
             if !(index == albums.count - 1){
               Rectangle()
-                .fill(Colors.silver.opacity(0.8))
+                .fill(Color.silver.opacity(0.8))
                 .frame(width: albumCellWidth, height: 0.8)
             }
           }

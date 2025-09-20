@@ -17,7 +17,7 @@ struct MenuButtonView: View {
     ZStack{
       let isSelected = menuButton.isSelected
       let backgroundImage = isSelected ? "selected_menu_button" : "menu_button"
-      let textColor: Color = isSelected ? Colors.titleGray : .white
+      let textColor: Color = isSelected ? .titleGray : .white
       
       Image(backgroundImage)
         .resizable()

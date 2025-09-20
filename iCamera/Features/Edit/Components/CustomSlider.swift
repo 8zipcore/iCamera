@@ -31,7 +31,7 @@ struct CustomSlider: View {
             LinearGradient(
               gradient: Gradient(stops: [
                 .init(color: .white, location: 0.05),
-                .init(color: Colors.sliderSliver, location: 1.0)
+                .init(color: .sliderSliver, location: 1.0)
               ]),
               startPoint: .top, // 시작점
               endPoint: .bottom // 끝점
